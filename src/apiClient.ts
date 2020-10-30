@@ -1,4 +1,3 @@
-import { Recipe } from '@alwaystudios/recipe-bible-sdk'
 import request, { SuperAgentRequest } from 'superagent'
 
 const BASE_URL =
@@ -8,7 +7,10 @@ const BASE_URL =
 
 export const getRecipes = (): SuperAgentRequest => request.get(`${BASE_URL}/recipe`)
 
-export const postCreateRecipe = (recipe: Recipe, accessToken: string): SuperAgentRequest =>
+export const postCreateRecipe = (
+  recipe: { title: string },
+  accessToken: string,
+): SuperAgentRequest =>
   request
     .post(`${BASE_URL}/recipe`)
     .send(recipe)

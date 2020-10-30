@@ -21,12 +21,13 @@
   dependencies:
     promised-csv "^1.0.1"
 
-"@alwaystudios/recipe-bible-sdk@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@alwaystudios/recipe-bible-sdk/-/recipe-bible-sdk-1.0.4.tgz#24a742baf55f7437903a940a32eb8803fc6dbc5f"
-  integrity sha512-aJzoUh2NPODbq8pKhKLQbSFkYmP0hqRLueqUyLs483ZkseSxEcTSOHcoIqm4R2LITu6H1k5WwD6WSFhblaCnKQ==
+"@alwaystudios/recipe-bible-sdk@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@alwaystudios/recipe-bible-sdk/-/recipe-bible-sdk-1.0.5.tgz#5a5a49bd5ba4c71acd91d33516b993972bc02103"
+  integrity sha512-HchBmHLZhokMvZ6gJBEFGrgvh/FiykRL6/05V4/mRa2c1eRh3q0Bs4o58BvVVE7WFUm4k24aKfK7ykzjvVT7MA==
   dependencies:
     jsonschema "^1.4.0"
+    ramda "^0.27.1"
 
 "@auth0/auth0-react@^1.1.0":
   version "1.1.0"
@@ -9429,6 +9430,11 @@ railroad-diagrams@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/railroad-diagrams/-/railroad-diagrams-1.0.0.tgz#eb7e6267548ddedfb899c1b90e57374559cddb7e"
   integrity sha1-635iZ1SN3t+4mcG5Dlc3RVnN234=
+
+ramda@^0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.1.tgz#66fc2df3ef873874ffc2da6aa8984658abacf5c9"
+  integrity sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==
 
 randexp@0.4.6:
   version "0.4.6"

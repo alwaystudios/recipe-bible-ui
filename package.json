@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@alwaystudios/as-ui-components": "^1.0.22",
-    "@alwaystudios/recipe-bible-sdk": "^1.0.4",
+    "@alwaystudios/recipe-bible-sdk": "^1.0.5",
     "@auth0/auth0-react": "^1.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
