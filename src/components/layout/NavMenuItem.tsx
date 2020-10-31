@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
+import { small } from '../../config'
 
 const MenuLink = styled.div`
   color: white;
@@ -11,6 +12,10 @@ const MenuLink = styled.div`
   &:hover {
     color: black;
     background-color: pink;
+  }
+
+  @media only screen and (max-width: ${small}px) {
+    padding: 0.5rem;
   }
 `
 

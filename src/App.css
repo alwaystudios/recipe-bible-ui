@@ -1,5 +1,6 @@
 .rb {
   text-align: center;
+  overflow-x: hidden;
 }
 
 .rb-logo {
@@ -7,25 +8,10 @@
   pointer-events: none;
 }
 
-.rb-header {
-  background-color: #4cc912;
-  min-height: 10vh;
+.rb-div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(8px + 2vmin);
-  color: white;
-}
-
-.rb-nav {
-  display: flex;
-  flex-direction: row;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.rb-div {
   color: #0f62fe;
   background-color: #bddebd;
   border: 2px solid #3db505;

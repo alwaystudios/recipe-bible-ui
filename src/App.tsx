@@ -9,23 +9,32 @@ import { About } from './components/pages/About'
 import { Auth } from './components/pages/Auth'
 import { useAuthentication } from './hooks/useAuthentication'
 import { AdminOptions } from './components/pages/AdminOptions'
+import { ChefPhoto } from './components/domain/ChefPhoto'
+import { Logo } from './components/layout/Logo'
+import { Header } from './components/layout/Header'
+import { ASSETS_URL } from './config'
+import { Nav } from './components/layout/Nav'
 
 export const App: FunctionComponent = () => {
-  const {
-    user: { roles },
-  } = useAuthentication(false)
+  const { user } = useAuthentication(false)
   return (
     <div className="rb">
       <Router>
-        <header className="rb-header">
-          <nav className="rb-nav">
+        <Header>
+          <Logo baseContent={ASSETS_URL} />
+          <Nav>
             <NavMenuItem title="Recipes" location="/recipes" />
             <NavMenuItem title="Cookbook" location="/account" />
             <NavMenuItem title="Create" location="/recipes/create" />
             <NavMenuItem title="About" location="/about" />
-            {roles.includes('admin') && <NavMenuItem title="Admin" location="/admin" />}
-          </nav>
-        </header>
+            {user.roles.includes('admin') && <NavMenuItem title="Admin" location="/admin" />}
+          </Nav>
+          {user && (
+            <span className="user-photo">
+              <ChefPhoto src={user.picture} name={user.name} size="small" />
+            </span>
+          )}
+        </Header>
         <Switch>
           <Route path="/recipes/create">
             <CreateRecipe />
@@ -42,7 +51,7 @@ export const App: FunctionComponent = () => {
           <Route path="/auth">
             <Auth />
           </Route>
-          {roles.includes('admin') && (
+          {user.roles.includes('admin') && (
             <Route path="/admin">
               <AdminOptions />
             </Route>

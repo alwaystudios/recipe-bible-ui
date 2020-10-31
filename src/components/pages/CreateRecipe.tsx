@@ -4,6 +4,7 @@ import React, { FunctionComponent, useState } from 'react'
 import styled from 'styled-components'
 import { postCreateRecipe } from '../../apiClient'
 import { useHistory } from 'react-router-dom'
+import { BeatLoader } from 'react-spinners'
 
 const Container = styled.div`
   align-items: center;
@@ -33,22 +34,26 @@ export const CreateRecipe: FunctionComponent = () => {
       })
   }
 
-  return isLoading ? (
-    <>Loading...</>
-  ) : (
+  return (
     <Container>
-      <h2>Create a recipe</h2>
-      <TextInput
-        style={{ width: '300px' }}
-        value={title}
-        onChange={(event) => setTitle(event.currentTarget.value)}
-        isInvalid={error}
-        onClear={() => {
-          setError(false)
-          setTitle('')
-        }}
-      />
-      <Button onClick={onClick} text="Create" isSubmit={false} />
+      {isLoading ? (
+        <BeatLoader />
+      ) : (
+        <>
+          <h2>Create a recipe</h2>
+          <TextInput
+            style={{ width: '300px' }}
+            value={title}
+            onChange={(event) => setTitle(event.currentTarget.value)}
+            isInvalid={error}
+            onClear={() => {
+              setError(false)
+              setTitle('')
+            }}
+          />
+          <Button onClick={onClick} text="Create" isSubmit={false} />
+        </>
+      )}
     </Container>
   )
 }

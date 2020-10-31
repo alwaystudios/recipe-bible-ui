@@ -1,18 +1,14 @@
 import request, { SuperAgentRequest } from 'superagent'
+import { API_URI } from './config'
 
-const BASE_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3001/api/v2'
-    : 'http://todo-somewhere-on-aws/api/v2'
-
-export const getRecipes = (): SuperAgentRequest => request.get(`${BASE_URL}/recipe`)
+export const getRecipes = (): SuperAgentRequest => request.get(`${API_URI}/recipe`)
 
 export const postCreateRecipe = (
   recipe: { title: string },
   accessToken: string,
 ): SuperAgentRequest =>
   request
-    .post(`${BASE_URL}/recipe`)
+    .post(`${API_URI}/recipe`)
     .send(recipe)
     .set('Access-Control-Allow-Origin', '*')
     .set('Content-Type', 'application/json')
