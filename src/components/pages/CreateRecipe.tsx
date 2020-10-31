@@ -1,9 +1,8 @@
 import { Button, TextInput } from '@alwaystudios/as-ui-components'
-import { useAuth0 } from '@auth0/auth0-react'
-import { useAccessToken } from '../hooks/useAccessToken'
+import { useAuthentication } from '../../hooks/useAuthentication'
 import React, { FunctionComponent, useState } from 'react'
 import styled from 'styled-components'
-import { postCreateRecipe } from '../apiClient'
+import { postCreateRecipe } from '../../apiClient'
 import { useHistory } from 'react-router-dom'
 
 const Container = styled.div`
@@ -14,8 +13,7 @@ const Container = styled.div`
 
 export const CreateRecipe: FunctionComponent = () => {
   const [title, setTitle] = useState<string>('')
-  const { isAuthenticated } = useAuth0()
-  const { accessToken, isLoading } = useAccessToken()
+  const { accessToken, isLoading } = useAuthentication()
   const history = useHistory()
   const [error, setError] = useState<boolean>(false)
 
@@ -44,14 +42,13 @@ export const CreateRecipe: FunctionComponent = () => {
         style={{ width: '300px' }}
         value={title}
         onChange={(event) => setTitle(event.currentTarget.value)}
-        disabled={!isAuthenticated}
         isInvalid={error}
         onClear={() => {
           setError(false)
           setTitle('')
         }}
       />
-      <Button onClick={onClick} text="Create" isSubmit={false} disabled={!isAuthenticated} />
+      <Button onClick={onClick} text="Create" isSubmit={false} />
     </Container>
   )
 }

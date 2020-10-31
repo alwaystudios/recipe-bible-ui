@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react'
 import { useRouteMatch, Link, Switch, Route } from 'react-router-dom'
 import { Recipe } from './Recipe'
-import { useApiRequest } from '../hooks/useApiRequest'
-import { getRecipes } from '../apiClient'
+import { useApiRequest } from '../../hooks/useApiRequest'
+import { getRecipes } from '../../apiClient'
 
 export const Recipes: FunctionComponent = () => {
   const match = useRouteMatch()

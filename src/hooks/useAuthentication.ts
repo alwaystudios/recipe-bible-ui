@@ -3,13 +3,23 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-export const useAccessToken = (): {
+type User = {
+  name: string
+  email: string
+  roles: string[]
+  picture: string
+}
+
+export const useAuthentication = (
+  redirectOnFailure = true,
+): {
   accessToken: string
   isLoading: boolean
+  user: User
 } => {
   const [accessToken, setAccessToken] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const { getAccessTokenSilently } = useAuth0()
+  const { getAccessTokenSilently, user } = useAuth0()
   const history = useHistory()
 
   const { callback } = useAsync(() =>
@@ -22,13 +32,22 @@ export const useAccessToken = (): {
         setIsLoading(false)
       })
       .catch(() => {
-        history.push('/account')
+        setIsLoading(false)
+        if (redirectOnFailure) {
+          history.push('/auth')
+        }
       }),
   )
 
   useEffect(() => {
-    callback()
+    if (!accessToken) {
+      callback()
+    }
   }, [])
 
-  return { accessToken, isLoading }
+  return {
+    accessToken,
+    user: { ...user, roles: user ? user['https://recipebible.net/roles'] : [] },
+    isLoading,
+  }
 }

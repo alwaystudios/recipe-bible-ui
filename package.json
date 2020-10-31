@@ -14,7 +14,7 @@
     "format": "prettier --write './src/**/*.{ts,tsx,json,css,md}'",
     "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
     "clean": "sh cleanup.sh",
-    "upgrade-libs": "yarn upgrade @alwaystudios/as-ui-components@latest @alwaystudios/recipe-bible-sdk@latest"
+    "upgrade-libs": "yarn upgrade @alwaystudios/as-ui-components@latest @alwaystudios/recipe-bible-sdk@latest @alwaystudios/as-utils@latest"
   },
   "husky": {
     "hooks": {
@@ -42,12 +42,14 @@
   },
   "dependencies": {
     "@alwaystudios/as-ui-components": "^1.0.22",
-    "@alwaystudios/recipe-bible-sdk": "^1.0.5",
+    "@alwaystudios/as-utils": "^1.0.8",
+    "@alwaystudios/recipe-bible-sdk": "^1.0.6",
     "@auth0/auth0-react": "^1.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
+    "shortid": "^2.2.16",
     "styled-components": "^5.2.0",
     "superagent": "^6.1.0",
     "typescript": "^4.0.3"
@@ -61,6 +63,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.6",
+    "@types/shortid": "^0.0.29",
     "@types/styled-components": "^5.1.4",
     "@types/superagent": "^4.1.10",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
