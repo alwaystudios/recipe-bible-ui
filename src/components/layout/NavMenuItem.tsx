@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import { small } from '../../config'
+import { smallScreen } from '../../config'
 
 const MenuLink = styled.div`
   color: white;
@@ -14,7 +14,7 @@ const MenuLink = styled.div`
     background-color: pink;
   }
 
-  @media only screen and (max-width: ${small}px) {
+  @media only screen and (max-width: ${smallScreen}px) {
     padding: 0.5rem;
   }
 `

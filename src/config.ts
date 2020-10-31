@@ -1,8 +1,8 @@
 export const ASSETS_URL =
   process.env.NODE_ENV === 'development' ? './' : 'http://todo-somewhere-on-aws-s3'
 
-export const medium = 700
-export const small = 500
+export const mediumScreen = 700
+export const smallScreen = 500
 
 export const API_URI =
   process.env.NODE_ENV === 'development'

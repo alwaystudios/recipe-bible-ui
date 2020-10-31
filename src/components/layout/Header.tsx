@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
-import { medium, small } from '../../config'
+import { mediumScreen, smallScreen } from '../../config'
 
 const Container = styled.header`
   background-color: #4cc912;
@@ -13,11 +13,11 @@ const Container = styled.header`
   color: white;
   padding: 0 1rem 0 0;
 
-  @media only screen and (max-width: ${medium}px) {
+  @media only screen and (max-width: ${mediumScreen}px) {
     font-size: 1rem;
   }
 
-  @media only screen and (max-width: ${small}px) {
+  @media only screen and (max-width: ${smallScreen}px) {
     font-size: 0.75rem;
 
     > .user-photo {
