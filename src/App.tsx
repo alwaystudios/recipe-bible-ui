@@ -14,6 +14,10 @@ import { Logo } from './components/layout/Logo'
 import { Header } from './components/layout/Header'
 import { ASSETS_URL } from './config'
 import { Nav } from './components/layout/Nav'
+import { Footer } from './components/layout/Footer'
+import { Privacy } from './components/pages/Privacy'
+import { Terms } from './components/pages/Terms'
+import { Chefs } from './components/pages/Chefs'
 
 export const App: FunctionComponent = () => {
   const { user } = useAuthentication(false)
@@ -39,9 +43,6 @@ export const App: FunctionComponent = () => {
           <Route path="/recipes/create">
             <CreateRecipe />
           </Route>
-          <Route path="/recipes">
-            <Recipes />
-          </Route>
           <Route path="/account">
             <Profile />
           </Route>
@@ -51,12 +52,25 @@ export const App: FunctionComponent = () => {
           <Route path="/auth">
             <Auth />
           </Route>
+          <Route path="/terms">
+            <Terms />
+          </Route>
+          <Route path="/privacy">
+            <Privacy />
+          </Route>
+          <Route path="/chefs">
+            <Chefs />
+          </Route>
           {user.roles.includes('admin') && (
             <Route path="/admin">
               <AdminOptions />
             </Route>
           )}
+          <Route path={['/recipes', '/']}>
+            <Recipes />
+          </Route>
         </Switch>
+        <Footer />
       </Router>
     </div>
   )

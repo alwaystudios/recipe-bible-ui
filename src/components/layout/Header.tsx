@@ -4,7 +4,7 @@ import { mediumScreen, smallScreen } from '../../config'
 
 const Container = styled.header`
   background-color: #4cc912;
-  min-height: 10vh;
+  min-height: 5vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

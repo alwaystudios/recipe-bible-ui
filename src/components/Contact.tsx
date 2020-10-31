@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { TwitterIcon, FacebookIcon, EmailIcon } from 'react-share'
 import styled from 'styled-components'
 import { ExternalLink } from './ExternalLink'
@@ -12,7 +12,7 @@ const Container = styled.div`
   }
 `
 
-export const Contact = () => (
+export const Contact: FunctionComponent = () => (
   <Box title="Contact us">
     <Container style={{ flexDirection: 'column' }}>
       <ExternalLink href="mailto:recipebiblecontact@gmail.com">
