@@ -1,3 +1,4 @@
+import { InstagramIcon } from '@alwaystudios/as-ui-components'
 import React, { FunctionComponent } from 'react'
 import { TwitterIcon, FacebookIcon, EmailIcon } from 'react-share'
 import styled from 'styled-components'
@@ -24,9 +25,9 @@ export const Contact: FunctionComponent = () => (
       <ExternalLink href="https://twitter.com/RecipeBibleUK">
         <TwitterIcon borderRadius={50} size={30} />
       </ExternalLink>
-      {/* <ExternalLink href="https://www.instagram.com/recipebibleuk">
-        <LogoInstagram32 /> todo: ui components needs instagram icon
-      </ExternalLink> */}
+      <ExternalLink href="https://www.instagram.com/recipebibleuk">
+        <InstagramIcon size="30px" />
+      </ExternalLink>
     </Container>
   </Box>
 )
