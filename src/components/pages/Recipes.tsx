@@ -1,12 +1,26 @@
 import React, { FunctionComponent } from 'react'
-import { useRouteMatch, Link, Switch, Route } from 'react-router-dom'
+import { useRouteMatch, Switch, Route } from 'react-router-dom'
 import { Recipe } from './Recipe'
 import { useApiRequest } from '../../hooks/useApiRequest'
 import { getRecipes } from '../../apiClient'
+import { CATEGORIES, RecipeList } from '@alwaystudios/recipe-bible-sdk'
+import { WarningIcon } from '@alwaystudios/as-ui-components'
+import { BeatLoader } from 'react-spinners'
+import { RecipeGallery } from '../domain/RecipeGallery'
 
 export const Recipes: FunctionComponent = () => {
   const match = useRouteMatch()
-  const { data, error } = useApiRequest<[{ title: string }]>(getRecipes())
+  const { data, error, loading } = useApiRequest<RecipeList>(getRecipes())
+  const recipes = data || []
+  const focusedRecipes = () => recipes.filter((r) => r.metadata.focused)
+  const LATEST = 'Latest'
+
+  const options: Record<string, (recipes: RecipeList) => RecipeList> = CATEGORIES.reduce(
+    (acc, category) => {
+      return { ...acc, [category]: () => recipes.filter((r) => r.categories.includes(category)) }
+    },
+    { [LATEST]: focusedRecipes },
+  )
 
   return (
     <Switch>
@@ -14,22 +28,18 @@ export const Recipes: FunctionComponent = () => {
         <Recipe />
       </Route>
       <Route path={match.path}>
-        {error ? (
-          <>
-            <h2>Error</h2>
-            An error has occured
-          </>
-        ) : (
-          <>
-            <h2>Recipes</h2>
-            {data &&
-              data.map(({ title }) => (
-                <div key={title}>
-                  <Link to={`${match.url}/${title}`}>{title}</Link>
-                </div>
-              ))}
-          </>
-        )}
+        <div className="flex-col rb-center">
+          {error ? (
+            <>
+              <WarningIcon size="30px" />
+              Failed to load recipe data
+            </>
+          ) : loading || !data ? (
+            <BeatLoader />
+          ) : (
+            <RecipeGallery recipes={data} options={options} defaultOption={LATEST} />
+          )}
+        </div>
       </Route>
     </Switch>
   )

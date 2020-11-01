@@ -19,7 +19,7 @@ const Photo = styled.img`
 type Props = {
   src: string
   name: string
-  size: 'small' | 'regular'
+  size?: 'small' | 'regular'
 }
 
 export const ChefPhoto: FunctionComponent<Props> = ({ src, name, size = 'regular' }) => (

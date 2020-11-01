@@ -12,12 +12,12 @@ import { AdminOptions } from './components/pages/AdminOptions'
 import { ChefPhoto } from './components/domain/ChefPhoto'
 import { Logo } from './components/layout/Logo'
 import { Header } from './components/layout/Header'
-import { ASSETS_URL } from './config'
 import { Nav } from './components/layout/Nav'
 import { Footer } from './components/layout/Footer'
 import { Privacy } from './components/pages/Privacy'
 import { Terms } from './components/pages/Terms'
 import { Chefs } from './components/pages/Chefs'
+import { SocialMedia } from './components/domain/SocialMedia'
 
 export const App: FunctionComponent = () => {
   const { user } = useAuthentication(false)
@@ -25,7 +25,7 @@ export const App: FunctionComponent = () => {
     <div className="rb">
       <Router>
         <Header>
-          <Logo baseContent={ASSETS_URL} />
+          <Logo />
           <Nav>
             <NavMenuItem title="Recipes" location="/recipes" />
             <NavMenuItem title="Cookbook" location="/account" />
@@ -39,6 +39,7 @@ export const App: FunctionComponent = () => {
             </span>
           )}
         </Header>
+        <SocialMedia />
         <Switch>
           <Route path="/recipes/create">
             <CreateRecipe />

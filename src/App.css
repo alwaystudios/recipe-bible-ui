@@ -16,6 +16,22 @@
   background-color: #bddebd;
   border: 2px solid #3db505;
   padding: 2rem;
-  margin-top: 2rem;
 }
 
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.flex-col {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+
+.rb-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

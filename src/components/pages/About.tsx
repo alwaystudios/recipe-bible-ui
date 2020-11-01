@@ -58,7 +58,7 @@ export const About: React.FunctionComponent = () => {
   return (
     <Container>
       <div className="flex-row">
-        <p className="rb-banner">
+        <p style={{ margin: 'auto' }} className="rb-banner">
           <b>Recipe Bible</b>, the world's online cookbook
         </p>
       </div>

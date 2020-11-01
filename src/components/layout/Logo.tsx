@@ -9,11 +9,7 @@ const Img = styled.img`
   cursor: pointer;
 `
 
-type Props = {
-  baseContent: string
-}
-
-export const Logo: FunctionComponent<Props> = ({ baseContent }) => {
+export const Logo: FunctionComponent = () => {
   const history = useHistory()
-  return <Img onClick={() => history.push('/about')} src={`${baseContent}/logo.png`} />
+  return <Img onClick={() => history.push('/about')} src={`${window.location.origin}/logo.png`} />
 }

@@ -26,18 +26,10 @@ export const Footer: FunctionComponent = () => {
     <Container>
       <Hr />
       <div>
-        <Link to="/about">
-          <a>About</a>
-        </Link>
-        <Link to="/terms">
-          <a>Terms and conditions</a>
-        </Link>
-        <Link to="/privacy">
-          <a>Privacy policy</a>
-        </Link>
-        <Link to="/chefs">
-          <a>Chefs</a>
-        </Link>
+        <Link to="/about">About</Link>
+        <Link to="/terms">Terms and conditions</Link>
+        <Link to="/privacy">Privacy policy</Link>
+        <Link to="/chefs">Chefs</Link>
       </div>
     </Container>
   )
