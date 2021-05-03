@@ -11,8 +11,6 @@ module.exports = {
 		'plugin:import/typescript',
 		'plugin:import/errors',
 		'plugin:import/warnings',
-		'plugin:prettier/recommended',
-		'prettier/@typescript-eslint',
 	],
 	rules: {
 		'react/prop-types': 'off',
