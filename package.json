@@ -5,7 +5,16 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "webpack serve --config webpack.dev.js",
-		"test": "jest --coverage"
+		"test": "jest --coverage",
+		"lint": "eslint .",
+		"format": "prettier --write 'src/**/*.{js,ts,tsx,json,md}'",
+		"typecheck": "tsc --noEmit"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run lint && npm test",
+			"pre-push": "npm run typecheck"
+		}
 	},
 	"repository": {
 		"type": "git",
@@ -42,6 +51,7 @@
 		"favicons-webpack-plugin": "^5.0.2",
 		"html-webpack-plugin": "^5.3.1",
 		"html-webpack-template": "^6.2.0",
+		"husky": "^6.0.0",
 		"jest": "^26.6.3",
 		"mini-css-extract-plugin": "^1.6.0",
 		"ts-jest": "^26.5.5",
