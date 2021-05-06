@@ -23,7 +23,6 @@ module.exports = {
 		'import/no-mutable-exports': 'error',
 		'functional/no-let': 'error',
 		'functional/immutable-data': 'warn',
-		'newline-before-return': 'error',
 		'no-mixed-spaces-and-tabs': 'error',
 		'no-multi-spaces': 'error',
 		'no-multiple-empty-lines': ['error', { max: 1 }],
