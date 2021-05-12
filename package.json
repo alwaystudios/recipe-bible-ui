@@ -1,79 +1,80 @@
 {
-	"name": "recipe-bible-ui",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"dev": "webpack serve --config webpack.dev.js",
-		"build": "webpack --config webpack.prod.js",
-		"test": "jest --coverage",
-		"lint": "eslint .",
-		"format": "prettier --write 'src/**/*.{js,ts,tsx,json,md}'",
-		"typecheck": "tsc --noEmit"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm run lint && npm test",
-			"pre-push": "npm run typecheck"
-		}
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/alwaystudios/recipe-bible-ui.git"
-	},
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/alwaystudios/recipe-bible-ui/issues"
-	},
-	"homepage": "https://github.com/alwaystudios/recipe-bible-ui#readme",
-	"dependencies": {
-		"@emotion/core": "^11.0.0",
-		"@emotion/react": "^11.1.5",
-		"@emotion/styled": "^11.3.0",
-		"auth0-js": "^9.16.0",
-		"lodash": "^4.17.21",
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2",
-		"react-router-dom": "^5.2.0",
-		"react-use": "^17.2.4",
-		"superagent": "^6.1.0"
-	},
-	"devDependencies": {
-		"@testing-library/jest-dom": "^5.12.0",
-		"@testing-library/react": "^11.2.6",
-		"@testing-library/react-hooks": "^5.1.2",
-		"@types/auth0-js": "^9.14.4",
-		"@types/jest": "^26.0.23",
-		"@types/lodash": "^4.14.168",
-		"@types/react": "^17.0.4",
-		"@types/react-dom": "^17.0.3",
-		"@types/react-router-dom": "^5.1.7",
-		"@types/superagent": "^4.1.10",
-		"@typescript-eslint/eslint-plugin": "^4.22.0",
-		"@typescript-eslint/parser": "^4.22.0",
-		"clean-webpack-plugin": "^4.0.0-alpha.0",
-		"css-loader": "^5.2.4",
-		"dotenv-webpack": "^7.0.2",
-		"eslint": "^7.25.0",
-		"eslint-import-resolver-typescript": "^2.4.0",
-		"eslint-plugin-deprecation": "^1.2.0",
-		"eslint-plugin-functional": "^3.2.1",
-		"eslint-plugin-import": "^2.22.1",
-		"eslint-plugin-react": "^7.23.2",
-		"favicons-webpack-plugin": "^5.0.2",
-		"html-webpack-plugin": "^5.3.1",
-		"html-webpack-template": "^6.2.0",
-		"husky": "^4.3.8",
-		"jest": "^26.6.3",
-		"mini-css-extract-plugin": "^1.6.0",
-		"prettier": "^2.2.1",
-		"ts-jest": "^26.5.5",
-		"ts-loader": "^9.1.1",
-		"typescript": "^4.2.4",
-		"webpack": "^5.36.2",
-		"webpack-cli": "^4.6.0",
-		"webpack-dev-server": "^3.11.2",
-		"webpack-merge": "^5.7.3"
-	}
+  "name": "recipe-bible-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "test": "jest --coverage",
+    "lint": "eslint .",
+    "format": "prettier --write 'src/**/*.{js,ts,tsx,json,md}'",
+    "typecheck": "tsc --noEmit"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn test",
+      "pre-push": "yarn typecheck"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alwaystudios/recipe-bible-ui.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alwaystudios/recipe-bible-ui/issues"
+  },
+  "homepage": "https://github.com/alwaystudios/recipe-bible-ui#readme",
+  "dependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.3.0",
+    "auth0-js": "^9.16.0",
+    "ramda": "^0.27.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-use": "^17.2.4",
+    "superagent": "^6.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/react-hooks": "^5.1.2",
+    "@types/auth0-js": "^9.14.4",
+    "@types/jest": "^26.0.23",
+    "@types/ramda": "^0.27.40",
+    "@types/react": "^17.0.4",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/superagent": "^4.1.10",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^5.2.4",
+    "dotenv-webpack": "^7.0.2",
+    "eslint": "^7.25.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-deprecation": "^1.2.0",
+    "eslint-plugin-functional": "^3.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-react": "^7.23.2",
+    "favicons-webpack-plugin": "^5.0.2",
+    "html-webpack-plugin": "^5.3.1",
+    "html-webpack-template": "^6.2.0",
+    "husky": "^4.3.8",
+    "jest": "^26.6.3",
+    "mini-css-extract-plugin": "^1.6.0",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.5.5",
+    "ts-loader": "^9.1.1",
+    "typescript": "^4.2.4",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
+  }
 }

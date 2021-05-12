@@ -7,5 +7,4 @@ setup-jest.js
 src/globals.d.ts
 .eslintrc.js
 webpack.common.js
-storybook-static
-.storybook
+jest.setup.js
