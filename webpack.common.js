@@ -41,7 +41,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'global.[contenthash].css',
     }),
-    new FaviconsWebpackPlugin('./src/images/favicon.ico'),
+    new FaviconsWebpackPlugin('./src/images/favicon.png'),
     new HtmlWebpackPlugin({
       title: 'Recipe Bible',
       template: htmlWebpackTemplate,
