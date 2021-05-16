@@ -19,9 +19,12 @@ export const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
 
   const expiresAt = pathOr(0, ['expiresAt'], tokens)
   const tokenExpired = Date.now() > expiresAt
+  console.log('accessToken', pathOr('', ['accessToken'], tokens))
+  console.log('idToken', pathOr('', ['idToken'], tokens))
   console.log('expiresAt', expiresAt)
   console.log('now', Date.now())
   console.log('tokenExpired', tokenExpired)
+  console.log('remaining', Date.now() - expiresAt)
 
   if (!user || tokenExpired) {
     login()

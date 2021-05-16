@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import auth0 from 'auth0-js'
@@ -16,27 +17,28 @@ export const useAuth = () => {
   const [tokens, setTokens] = useState()
   const history = useHistory()
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const setSession = (cb = () => {}) => (err: any, authResult: any) => {
-    if (err) {
-      history.push('/')
-      cb()
-      return
-    }
+  const setSession =
+    (cb = () => {}) =>
+    (err: any, authResult: any) => {
+      if (err) {
+        history.push('/')
+        cb()
+        return
+      }
 
-    if (authResult && authResult.accessToken && authResult.idToken) {
-      const expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
-      const { accessToken, idToken } = authResult
-      setUser(authResult.idTokenPayload)
-      setTokens({
-        accessToken,
-        idToken,
-        expiresAt,
-      } as any)
-      history.push('/account')
-      cb()
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        const expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
+        const { accessToken, idToken } = authResult
+        setUser(authResult.idTokenPayload)
+        setTokens({
+          accessToken,
+          idToken,
+          expiresAt,
+        } as any)
+        history.push('/account')
+        cb()
+      }
     }
-  }
 
   return {
     tokens,
