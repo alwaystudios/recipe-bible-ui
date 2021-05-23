@@ -8,17 +8,19 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: yarn && AUTH0_DOMAIN=$AUTH0_DOMAIN AUTH0_CLIENTID=$AUTH0_CLIENTID AUTH0_CALLBACK=$AUTH0_CALLBACK BASE_URL=$BASE_URL yarn build
+      - run: yarn && AWS_S3_BUCKET=$AWS_S3_BUCKET API_BASE_URL=$API_BASE_URL AUTH0_DOMAIN=$AUTH0_DOMAIN AUTH0_CLIENTID=$AUTH0_CLIENTID AUTH0_CALLBACK=$AUTH0_CALLBACK BASE_URL=$BASE_URL yarn build
         env:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           AUTH0_CLIENTID: ${{ secrets.AUTH0_CLIENTID }}
           AUTH0_CALLBACK: ${{ secrets.AUTH0_CALLBACK }}
           BASE_URL: ${{ secrets.BASE_URL }}
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --delete
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_S3_BUCKET: 'recipe-bible'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'eu-west-1'

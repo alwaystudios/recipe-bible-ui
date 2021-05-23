@@ -1,4 +1,3 @@
-import { pathOr } from 'ramda'
 import React, { useContext } from 'react'
 import { Route, Switch } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -9,12 +8,10 @@ import { getRecipes } from '../service/recipeService'
 
 // todo: extract
 const Account: React.FunctionComponent = () => {
-  const { user, tokens } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   const handleOnClick = () => {
-    const token = pathOr(undefined, ['idToken'], tokens)
-
-    getRecipes(token).then(console.log)
+    getRecipes().then(console.log)
   }
 
   return (
@@ -25,7 +22,7 @@ const Account: React.FunctionComponent = () => {
   )
 }
 
-const Loggout: React.FC = () => {
+const Logout: React.FC = () => {
   const { logout } = useContext(AuthContext)
   logout()
   return null
@@ -37,11 +34,11 @@ export const App: React.FC = () => {
     <AuthProvider>
       <Link to="/">Home</Link>
       <Link to="/account">Account</Link>
-      <Link to="/loggout">Loggout</Link>
+      <Link to="/logout">Logout</Link>
       <Switch>
         <AuthenticatedRoute path="/account" component={Account} />
         <Route path="/auth" component={Callback} />
-        <Route path="/loggout" component={Loggout} />
+        <Route path="/logout" component={Logout} />
       </Switch>
     </AuthProvider>
   )
