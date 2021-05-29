@@ -7,7 +7,7 @@ const logout = jest.fn()
 describe('Logout', () => {
   beforeEach(jest.clearAllMocks)
 
-  it('renders a route for an authenticated user', () => {
+  it('handles logout', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ logout })
     render(<Logout />)
     expect(logout).toHaveBeenCalledTimes(1)

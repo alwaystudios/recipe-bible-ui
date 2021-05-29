@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { InferProps } from 'prop-types'
 import { Route } from 'react-router-dom'
 import { AuthContext } from './AuthContext'
-import { pathOr } from 'ramda'
 
 type AuthenticatedRouteProps = {
   component: React.ElementType
@@ -15,9 +14,7 @@ export const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
   path,
   rest,
 }: InferProps<typeof AuthenticatedRoute.propTypes>) => {
-  const { login, user, tokens, tokenExpired } = useContext(AuthContext)
-
-  console.log('idToken', pathOr('', ['idToken'], tokens))
+  const { login, user, tokenExpired } = useContext(AuthContext)
 
   if (!user || tokenExpired) {
     login()

@@ -7,7 +7,7 @@ const handleAuthentication = jest.fn()
 describe('Callback', () => {
   beforeEach(jest.clearAllMocks)
 
-  it('renders a route for an authenticated user', () => {
+  it('handles authentication', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ handleAuthentication })
     render(<Callback />)
     expect(handleAuthentication).toHaveBeenCalledTimes(1)
