@@ -15,16 +15,9 @@ export const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
   path,
   rest,
 }: InferProps<typeof AuthenticatedRoute.propTypes>) => {
-  const { login, user, tokens } = useContext(AuthContext)
+  const { login, user, tokens, tokenExpired } = useContext(AuthContext)
 
-  const expiresAt = pathOr(0, ['expiresAt'], tokens)
-  const tokenExpired = Date.now() > expiresAt
-  console.log('accessToken', pathOr('', ['accessToken'], tokens))
   console.log('idToken', pathOr('', ['idToken'], tokens))
-  console.log('expiresAt', expiresAt)
-  console.log('now', Date.now())
-  console.log('tokenExpired', tokenExpired)
-  console.log('remaining', Date.now() - expiresAt)
 
   if (!user || tokenExpired) {
     login()
