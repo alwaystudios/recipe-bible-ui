@@ -65,6 +65,7 @@
     "eslint-plugin-react": "^7.23.2",
     "favicons": "^6.2.2",
     "favicons-webpack-plugin": "^5.0.2",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
     "html-webpack-template": "^6.2.0",
     "husky": "^4.3.8",

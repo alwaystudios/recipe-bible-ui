@@ -4,7 +4,8 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   moduleNameMapper: {
-    '\\.(css)$': '<rootDir>/__mocks__/styleMock.ts',
+    '\\.(css)$': '<rootDir>/__mocks__/mock.ts',
+    '\\.(png)$': '<rootDir>/__mocks__/mock.ts',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
 }

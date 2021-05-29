@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { RB_GREEN } from './colors'
+import Logo from '../images/logo.png'
 
 const StyledHeading = styled.header`
   color: white;
@@ -32,6 +33,10 @@ const StyledHeading = styled.header`
   & > div:nth-of-type(2) {
     flex-grow: 1;
   }
+
+  & > img {
+    max-height: 4rem;
+  }
 `
 
 type Props = {
@@ -42,6 +47,7 @@ type Props = {
 export const Header: React.FC<Props> = ({ mainText, children, accountComponent }) => {
   return (
     <StyledHeading>
+      <img src={Logo} />
       <div>{mainText}</div>
       <div>{children}</div>
       {accountComponent}
