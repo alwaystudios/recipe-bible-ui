@@ -11,6 +11,13 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ttf$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name].[hash][ext][query]',
+        },
+      },
+      {
         test: /\.(png|jpe?g|svg)$/,
         loader: 'file-loader',
         options: {

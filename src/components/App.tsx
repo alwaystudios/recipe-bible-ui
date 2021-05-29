@@ -21,7 +21,7 @@ export const App: React.FC = () => {
 
   return (
     <AuthProvider>
-      <Header mainText="Recipe Bible">
+      <Header mainText="RecipeBible.net">
         <MenuItem
           selected={router.pathname === '/'}
           label="What's cooking"

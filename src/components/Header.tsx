@@ -5,7 +5,6 @@ import Logo from '../images/logo.png'
 
 const StyledHeading = styled.header`
   color: white;
-  font-weight: bold;
   background-color: ${RB_GREEN};
   display: flex;
   flex-direction: row;
@@ -25,7 +24,8 @@ const StyledHeading = styled.header`
   }
 
   & > div:nth-of-type(1) {
-    font-size: large;
+    font-size: x-large;
+    font-weight: bold;
     padding-right: 4rem;
     padding-left: 1rem;
   }

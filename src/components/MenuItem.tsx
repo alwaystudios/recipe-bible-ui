@@ -11,7 +11,7 @@ const StyledMenu = styled.div<{ selected: boolean }>`
     padding-left: 5px;
     margin-right: 1.5rem;
     border-bottom: 2px solid ${selected ? RB_BLUE : 'white'};
-    font-weight: ${selected ? '500' : '300'};
+    font-weight: ${selected ? 'bold' : 'normal'};
     cursor: pointer;
   `}
 `
