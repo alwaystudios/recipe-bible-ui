@@ -2,8 +2,17 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import auth0 from 'auth0-js'
+import { User } from '@alwaystudios/recipe-bible-sdk'
 
-export const useAuth = () => {
+interface UseAuth {
+  tokens: undefined
+  user: User
+  login: () => void
+  logout: () => void
+  handleAuthentication: () => void
+}
+
+export const useAuth = (): UseAuth => {
   const auth = new auth0.WebAuth({
     domain: process.env.AUTH0_DOMAIN,
     clientID: process.env.AUTH0_CLIENTID,
@@ -12,8 +21,7 @@ export const useAuth = () => {
     scope: 'openid profile email',
   })
 
-  // todo: use proper types
-  const [user, setUser] = useState()
+  const [user, setUser] = useState<User>()
   const [tokens, setTokens] = useState()
   const history = useHistory()
 
