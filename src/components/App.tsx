@@ -4,11 +4,11 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { AuthProvider } from '../auth/AuthContext'
 import { AuthenticatedRoute } from '../auth/AuthenticatedRoute'
 import { Callback } from '../auth/Callback'
-import { Account } from './Account'
 import { Header } from './Header'
 import { Logout } from './Logout'
 import { MenuItem } from './MenuItem'
 import styled from '@emotion/styled'
+import { MyCookbook } from './MyCookbook'
 
 const Page = styled.div`
   padding: 2rem;
@@ -28,19 +28,15 @@ export const App: React.FC = () => {
           onClick={() => history.push('/')}
         />
         <MenuItem
-          selected={router.pathname === '/account'}
-          label="Account"
-          onClick={() => history.push('/account')}
-        />
-        <MenuItem
-          selected={router.pathname === '/logout'}
-          label="Logout"
-          onClick={() => history.push('/logout')}
+          selected={router.pathname === '/account/cookbook'}
+          label="My cookbook"
+          onClick={() => history.push('/account/cookbook')}
         />
       </Header>
       <Page>
         <Switch>
-          <AuthenticatedRoute path="/account" component={Account} />
+          <AuthenticatedRoute path="/account/cookbook" component={MyCookbook} />
+          <AuthenticatedRoute path="/account" component={() => null} />
           <Route path="/auth" component={Callback} />
           <Route path="/logout" component={Logout} />
         </Switch>
