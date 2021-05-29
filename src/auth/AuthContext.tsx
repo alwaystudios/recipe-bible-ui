@@ -7,14 +7,16 @@ type AuthProviderProps = {
   children: React.ReactNode
 }
 
-export const AuthContext = createContext<{
+export type AuthContextType = {
   user: User
   tokens: Tokens
   login: () => void
   logout: () => void
   handleAuthentication: () => void
   tokenExpired: boolean
-}>({
+}
+
+export const AuthContext = createContext<AuthContextType>({
   user: undefined,
   tokens: undefined,
   login: undefined,
