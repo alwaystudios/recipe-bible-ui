@@ -5,7 +5,7 @@ import auth0 from 'auth0-js'
 import { User } from '@alwaystudios/recipe-bible-sdk'
 
 interface UseAuth {
-  tokens: undefined
+  tokens: Tokens
   user: User
   login: () => void
   logout: () => void
@@ -22,7 +22,7 @@ export const useAuth = (): UseAuth => {
   })
 
   const [user, setUser] = useState<User>()
-  const [tokens, setTokens] = useState()
+  const [tokens, setTokens] = useState<Tokens>()
   const history = useHistory()
 
   const setSession =

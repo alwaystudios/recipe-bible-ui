@@ -9,10 +9,10 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext<{
   user: User
-  tokens: any
-  login: any
-  logout: any
-  handleAuthentication: any
+  tokens: Tokens
+  login: () => void
+  logout: () => void
+  handleAuthentication: () => void
   tokenExpired: boolean
 }>({
   user: undefined,
