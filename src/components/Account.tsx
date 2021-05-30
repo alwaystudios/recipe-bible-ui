@@ -17,6 +17,7 @@ const Container = styled.div`
 
   & p {
     color: black;
+    font-weight: bold;
   }
 `
 

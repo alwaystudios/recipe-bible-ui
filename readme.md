@@ -13,11 +13,13 @@ API_BASE_URL=http://localhost:21111
 AWS_S3_BUCKET=http://localhost:4566/recipe-bible-content
 ```
 
-run with the `recipe-bible-api` see [recipe bible api](https://github.com/alwaystudios/recipe-bible-api) or set API env var to point to AWS
+run with the `recipe-bible-api` see [recipe bible api](https://github.com/alwaystudios/recipe-bible-api) or set `API_BASE_URL` and `AWS_S3_BUCKET` to point to AWS API gateway (some actions require admin role in auth0)
 
 ### Run the site with webpack dev server (runs on port 3000)
 
 ```bash
+nvm use
+
 yarn
 
 yarn dev

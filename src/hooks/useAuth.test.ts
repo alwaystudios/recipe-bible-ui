@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import auth0 from 'auth0-js'
 import { mocked } from 'ts-jest/utils'
+import { AUTH0_DOMAIN, AUTH0_CLIENTID, AUTH0_CALLBACK, BASE_URL } from '../contstants'
 import { useAuth } from './useAuth'
 
 const mockAuth = mocked(auth0)
@@ -27,9 +28,9 @@ describe('useAuth', () => {
 
     expect(mockAuth.WebAuth).toHaveBeenCalledTimes(1)
     expect(mockAuth.WebAuth).toHaveBeenCalledWith({
-      domain: process.env.AUTH0_DOMAIN,
-      clientID: process.env.AUTH0_CLIENTID,
-      redirectUri: process.env.AUTH0_CALLBACK,
+      domain: AUTH0_DOMAIN,
+      clientID: AUTH0_CLIENTID,
+      redirectUri: AUTH0_CALLBACK,
       responseType: 'token id_token',
       scope: 'openid profile email',
     })
@@ -52,7 +53,7 @@ describe('useAuth', () => {
 
     expect(logout).toHaveBeenCalledTimes(1)
     expect(logout).toHaveBeenCalledWith({
-      returnTo: process.env.BASE_URL,
+      returnTo: BASE_URL,
     })
     expect(result.current.user).toBe(undefined)
     expect(result.current.tokens).toBe(undefined)

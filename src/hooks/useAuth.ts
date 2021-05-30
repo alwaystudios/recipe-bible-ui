@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import auth0 from 'auth0-js'
 import { User } from '@alwaystudios/recipe-bible-sdk'
+import { AUTH0_DOMAIN, AUTH0_CLIENTID, AUTH0_CALLBACK, BASE_URL } from '../contstants'
 
 interface UseAuth {
   tokens: Tokens
@@ -14,9 +15,9 @@ interface UseAuth {
 
 export const useAuth = (): UseAuth => {
   const auth = new auth0.WebAuth({
-    domain: process.env.AUTH0_DOMAIN,
-    clientID: process.env.AUTH0_CLIENTID,
-    redirectUri: process.env.AUTH0_CALLBACK,
+    domain: AUTH0_DOMAIN,
+    clientID: AUTH0_CLIENTID,
+    redirectUri: AUTH0_CALLBACK,
     responseType: 'token id_token',
     scope: 'openid profile email',
   })
@@ -56,7 +57,7 @@ export const useAuth = (): UseAuth => {
       setUser(undefined)
       setTokens(undefined)
       auth.logout({
-        returnTo: process.env.BASE_URL,
+        returnTo: BASE_URL,
       })
     },
     handleAuthentication: () => auth.parseHash(setSession()),
