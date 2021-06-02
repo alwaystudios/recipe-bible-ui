@@ -3,6 +3,7 @@ import React from 'react'
 import { RB_GREEN } from './colors'
 import Logo from '../images/logo.png'
 import { Account } from './Account'
+import { useHistory } from 'react-router'
 
 const StyledHeading = styled.header`
   color: white;
@@ -29,6 +30,7 @@ const StyledHeading = styled.header`
     font-weight: bold;
     padding-right: 4rem;
     padding-left: 1rem;
+    cursor: pointer;
   }
 
   & > div:nth-of-type(2) {
@@ -45,10 +47,17 @@ type Props = {
 }
 
 export const Header: React.FC<Props> = ({ mainText, children }) => {
+  const history = useHistory()
+
   return (
     <StyledHeading>
-      <img src={Logo} />
-      <div>{mainText}</div>
+      <img
+        style={{ cursor: 'pointer' }}
+        alt="logo"
+        src={Logo}
+        onClick={() => history.push('/about')}
+      />
+      <div onClick={() => history.push('/')}>{mainText}</div>
       <div>{children}</div>
       <Account />
     </StyledHeading>

@@ -15,10 +15,10 @@ describe('Account', () => {
     expect(container.querySelector('img').src).toBe(user.picture)
   })
 
-  it('renders login when no user is logged in', () => {
+  it('renders login CTA when no user is logged in', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ user: undefined })
     const { getByText, container } = render(<Account />)
-    expect(getByText('Login')).toBeInTheDocument()
+    expect(getByText('My Account')).toBeInTheDocument()
     expect(container.querySelectorAll('img').length).toBe(0)
   })
 })

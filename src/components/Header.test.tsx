@@ -23,6 +23,6 @@ describe('Header', () => {
 
   it('renders account component', () => {
     const { getByText } = renderHeader(<div>children</div>)
-    expect(getByText('Login')).toBeInTheDocument()
+    expect(getByText('My Account')).toBeInTheDocument()
   })
 })
