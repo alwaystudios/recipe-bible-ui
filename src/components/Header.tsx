@@ -3,7 +3,7 @@ import React from 'react'
 import { RB_GREEN } from './colors'
 import Logo from '../images/logo.png'
 import { Account } from './Account'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 
 const StyledHeading = styled.header`
   color: white;
