@@ -1,3 +1,3 @@
 import React from 'react'
 
-export const WhatsCookingPage: React.FunctionComponent = () => <div>todo - whats cooking</div>
+export const WhatsCookingPage: React.FunctionComponent = () => <>todo - whats cooking</>
