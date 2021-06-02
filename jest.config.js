@@ -8,4 +8,5 @@ module.exports = {
     '\\.(png)$': '<rootDir>/__mocks__/mock.ts',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  coveragePathIgnorePatterns: ['useAnalytics*'],
 }
