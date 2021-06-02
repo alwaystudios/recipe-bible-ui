@@ -1,7 +1,7 @@
 import ReactGA from 'react-ga'
 import { IS_OFFLINE } from '../contstants'
 
-// eslint-ignore-next-line @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useAnalytics = () => {
   const pageView = (): void => {
     if (!IS_OFFLINE) {
