@@ -11,6 +11,7 @@ import {
   API_BASE_URL,
   AWS_S3_BUCKET,
   GA_TAG,
+  IS_OFFLINE,
 } from '../contstants'
 import { useAnalytics } from '../hooks/useAnalytics'
 
@@ -20,7 +21,6 @@ export const MyAccountPage: React.FunctionComponent = () => {
   const history = useHistory()
   const [showEnvVars, setShowEnvVars] = useState(false)
   const roles = user['https://recipebible.net/roles']
-  const isAdmin = roles.includes('admin')
 
   pageView()
 
@@ -31,8 +31,8 @@ export const MyAccountPage: React.FunctionComponent = () => {
       </label>
       <label>Roles: {roles}</label>
       <CopyAccessToken />
-      {isAdmin && <Button onClick={() => setShowEnvVars(!showEnvVars)} text="Env" />}
-      {showEnvVars && isAdmin && (
+      {user.isAdmin && <Button onClick={() => setShowEnvVars(!showEnvVars)} text="Env" />}
+      {showEnvVars && user.isAdmin && (
         <>
           <p>AUTH0_DOMAIN: {AUTH0_DOMAIN}</p>
           <p>AUTH0_CLIENTID: {AUTH0_CLIENTID}</p>
@@ -41,6 +41,7 @@ export const MyAccountPage: React.FunctionComponent = () => {
           <p>API_BASE_URL: {API_BASE_URL}</p>
           <p>AWS_S3_BUCKET: {AWS_S3_BUCKET}</p>
           <p>GA_TAG: {GA_TAG}</p>
+          <p>IS_OFFLINE: {JSON.stringify(IS_OFFLINE)}</p>
         </>
       )}
       <Button onClick={() => history.push('/logout')} text="Logout" />

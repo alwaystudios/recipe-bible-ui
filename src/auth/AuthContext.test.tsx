@@ -10,7 +10,6 @@ jest.spyOn(Date, 'now').mockReturnValue(dateNow)
 const login = jest.fn()
 const logout = jest.fn()
 const handleAuthentication = jest.fn()
-const user = testUser()
 const tokens = { accessToken: '1234', idToken: '4567', expiresAt: 12345 }
 
 const useAuth = jest.spyOn(useAuthModule, 'useAuth')
@@ -19,7 +18,12 @@ let valueProp: AuthContextType
 describe('auth context', () => {
   beforeEach(jest.clearAllMocks)
 
-  it('should contain the correct values', () => {
+  test.each([
+    [testUser({ 'https://recipebible.net/roles': ['admin', 'some other role'] }), true],
+    [testUser({ 'https://recipebible.net/roles': ['admin'] }), true],
+    [testUser({ 'https://recipebible.net/roles': [] }), false],
+    [testUser({ 'https://recipebible.net/roles': ['user'] }), false],
+  ])('should contain the correct values given the user role', (user, isAdmin) => {
     useAuth.mockReturnValue({
       user,
       tokens,
@@ -40,7 +44,7 @@ describe('auth context', () => {
       { wrapper }
     )
 
-    expect(valueProp.user).toEqual(user)
+    expect(valueProp.user).toEqual({ ...user, isAdmin })
     expect(valueProp.tokens).toEqual(tokens)
     expect(valueProp.login).toEqual(login)
     expect(valueProp.logout).toEqual(logout)
@@ -51,7 +55,7 @@ describe('auth context', () => {
 
   it('should expire the token', () => {
     useAuth.mockReturnValue({
-      user,
+      user: testUser(),
       tokens: { ...tokens, expiresAt: dateNow - 1 },
       login,
       logout,

@@ -27,13 +27,16 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const { user, login, logout, handleAuthentication, tokens } = useAuth()
+  const _user = user
+    ? { ...user, isAdmin: user['https://recipebible.net/roles'].includes('admin') }
+    : undefined
 
   const expiresAt = pathOr(0, ['expiresAt'], tokens)
   const tokenExpired = Date.now() > expiresAt
 
   return (
     <AuthContext.Provider
-      value={{ user, tokens, login, logout, handleAuthentication, tokenExpired }}
+      value={{ user: _user, tokens, login, logout, handleAuthentication, tokenExpired }}
     >
       {children}
     </AuthContext.Provider>
