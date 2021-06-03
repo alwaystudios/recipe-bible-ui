@@ -53,6 +53,36 @@ describe('auth context', () => {
     expect(useAuth).toHaveBeenCalledTimes(1)
   })
 
+  it('should contain the correct values for a guest user', () => {
+    useAuth.mockReturnValue({
+      user: undefined,
+      tokens: undefined,
+      login,
+      logout,
+      handleAuthentication,
+    })
+
+    const wrapper = ({ children }: any) => <AuthProvider>{children}</AuthProvider>
+
+    render(
+      <AuthContext.Consumer>
+        {(value) => {
+          valueProp = value
+          return <span>Received: {JSON.stringify(value)}</span>
+        }}
+      </AuthContext.Consumer>,
+      { wrapper }
+    )
+
+    expect(valueProp.user).toEqual(undefined)
+    expect(valueProp.tokens).toEqual(undefined)
+    expect(valueProp.login).toEqual(login)
+    expect(valueProp.logout).toEqual(logout)
+    expect(valueProp.handleAuthentication).toEqual(handleAuthentication)
+    expect(valueProp.tokenExpired).toBe(true)
+    expect(useAuth).toHaveBeenCalledTimes(1)
+  })
+
   it('should expire the token', () => {
     useAuth.mockReturnValue({
       user: testUser(),

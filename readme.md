@@ -28,3 +28,17 @@ yarn dev
 ## deployed versions in AWS (s3)
 
 [Staging environment](http://recipe-bible.s3-website-eu-west-1.amazonaws.com/)
+
+## Auth0 configuration
+
+### Allowed Callback URLs
+
+```
+http://localhost:3000/, https://recipebible.net/, http://recipe-bible.s3-website-eu-west-1.amazonaws.com/
+```
+
+### Allowed Logout URLs
+
+```
+http://localhost:3000/, https://recipebible.net/, http://recipe-bible.s3-website-eu-west-1.amazonaws.com/
+```

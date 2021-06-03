@@ -57,7 +57,7 @@ export const Header: React.FC<Props> = ({ mainText, children }) => {
         src={Logo}
         onClick={() => history.push('/about')}
       />
-      <div onClick={() => history.push('/')}>{mainText}</div>
+      <div onClick={() => history.push('/recipes')}>{mainText}</div>
       <div>{children}</div>
       <Account />
     </StyledHeading>

@@ -44,7 +44,7 @@ describe('Header', () => {
     const { getByText } = render(<Header mainText="Heading" />)
     fireEvent.click(getByText('Heading'))
     expect(push).toHaveBeenCalledTimes(1)
-    expect(push).toHaveBeenCalledWith('/')
+    expect(push).toHaveBeenCalledWith('/recipes')
   })
 
   it('links to /about page', () => {

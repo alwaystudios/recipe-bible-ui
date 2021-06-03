@@ -24,9 +24,9 @@ export const App: React.FC = () => (
       <Switch>
         <AuthenticatedRoute path="/account" component={MyAccountPage} />
         <Route path="/about" component={AboutPage} />
-        <Route path="/auth" component={Callback} />
+        <Route path="/recipes" component={WhatsCookingPage} />
         <Route path="/logout" component={Logout} />
-        <Route path="/" component={WhatsCookingPage} />
+        <Route path="/" component={Callback} />
       </Switch>
     </Page>
   </AuthProvider>

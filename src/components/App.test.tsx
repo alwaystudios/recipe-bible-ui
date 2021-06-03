@@ -33,9 +33,11 @@ describe('App', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders the app', () => {
+    jest.spyOn(callbackModule, 'Callback').mockReturnValueOnce(<>redirect from root mock</>)
     const { getByText } = renderApp()
     expect(getByText('RecipeBible.net')).toBeInTheDocument()
     expect(AuthProvider).toHaveBeenCalledTimes(1)
+    expect(getByText('redirect from root mock')).toBeInTheDocument()
   })
 
   it('renders /account route', () => {
@@ -50,21 +52,21 @@ describe('App', () => {
     expect(getByText('about mock')).toBeInTheDocument()
   })
 
-  it('renders /auth route', () => {
-    jest.spyOn(callbackModule, 'Callback').mockReturnValueOnce(<>callback mock</>)
-    const { getByText } = renderApp('/auth')
-    expect(getByText('callback mock')).toBeInTheDocument()
-  })
-
   it('renders /logout route', () => {
     jest.spyOn(logoutModule, 'Logout').mockReturnValueOnce(<>logout mock</>)
     const { getByText } = renderApp('/logout')
     expect(getByText('logout mock')).toBeInTheDocument()
   })
 
-  it('renders / route', () => {
+  it('renders /recipes route', () => {
     jest.spyOn(whatsCookingModule, 'WhatsCookingPage').mockReturnValueOnce(<>whats cooking mock</>)
-    const { getByText } = renderApp('/')
+    const { getByText } = renderApp('/recipes')
     expect(getByText('whats cooking mock')).toBeInTheDocument()
+  })
+
+  it('renders / route', () => {
+    jest.spyOn(callbackModule, 'Callback').mockReturnValueOnce(<>callback mock</>)
+    const { getByText } = renderApp('/auth')
+    expect(getByText('callback mock')).toBeInTheDocument()
   })
 })
