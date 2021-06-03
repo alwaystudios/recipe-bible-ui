@@ -4,8 +4,10 @@ import { useHistory } from 'react-router-dom'
 import auth0 from 'auth0-js'
 import { User } from '@alwaystudios/recipe-bible-sdk'
 import { AUTH0_DOMAIN, AUTH0_CLIENTID, AUTH0_CALLBACK, BASE_URL } from '../contstants'
+import { v4 as uuidv4 } from 'uuid'
 
 interface UseAuth {
+  sessionId: string
   tokens: Tokens
   user: User
   login: () => void
@@ -22,6 +24,7 @@ export const useAuth = (): UseAuth => {
     scope: 'openid profile email',
   })
 
+  const [sessionId, setSessionId] = useState<string>()
   const [user, setUser] = useState<User>()
   const [tokens, setTokens] = useState<Tokens>()
   const history = useHistory()
@@ -38,6 +41,7 @@ export const useAuth = (): UseAuth => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         const expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
         const { accessToken, idToken } = authResult
+        setSessionId(uuidv4())
         setUser(authResult.idTokenPayload)
         setTokens({
           accessToken,
@@ -50,10 +54,12 @@ export const useAuth = (): UseAuth => {
     }
 
   return {
+    sessionId,
     tokens,
     user,
     login: () => auth.authorize(),
     logout: () => {
+      setSessionId(undefined)
       setUser(undefined)
       setTokens(undefined)
       auth.logout({

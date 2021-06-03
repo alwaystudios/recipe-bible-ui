@@ -3,6 +3,7 @@ import { render } from '@testing-library/react'
 import { AuthContext, AuthContextType, AuthProvider } from './AuthContext'
 import * as useAuthModule from '../hooks/useAuth'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
+import { datatype } from 'faker'
 
 const dateNow = 12345
 jest.spyOn(Date, 'now').mockReturnValue(dateNow)
@@ -24,7 +25,9 @@ describe('auth context', () => {
     [testUser({ 'https://recipebible.net/roles': [] }), false],
     [testUser({ 'https://recipebible.net/roles': ['user'] }), false],
   ])('should contain the correct values given the user role', (user, isAdmin) => {
+    const sessionId = datatype.uuid()
     useAuth.mockReturnValue({
+      sessionId,
       user,
       tokens,
       login,
@@ -45,6 +48,7 @@ describe('auth context', () => {
     )
 
     expect(valueProp.user).toEqual({ ...user, isAdmin })
+    expect(valueProp.sessionId).toEqual(sessionId)
     expect(valueProp.tokens).toEqual(tokens)
     expect(valueProp.login).toEqual(login)
     expect(valueProp.logout).toEqual(logout)
@@ -55,6 +59,7 @@ describe('auth context', () => {
 
   it('should contain the correct values for a guest user', () => {
     useAuth.mockReturnValue({
+      sessionId: undefined,
       user: undefined,
       tokens: undefined,
       login,
@@ -85,6 +90,7 @@ describe('auth context', () => {
 
   it('should expire the token', () => {
     useAuth.mockReturnValue({
+      sessionId: datatype.uuid(),
       user: testUser(),
       tokens: { ...tokens, expiresAt: dateNow - 1 },
       login,

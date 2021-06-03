@@ -8,6 +8,7 @@ type AuthProviderProps = {
 }
 
 export type AuthContextType = {
+  sessionId: string
   user: User
   tokens: Tokens
   login: () => void
@@ -17,6 +18,7 @@ export type AuthContextType = {
 }
 
 export const AuthContext = createContext<AuthContextType>({
+  sessionId: undefined,
   user: undefined,
   tokens: undefined,
   login: undefined,
@@ -26,7 +28,7 @@ export const AuthContext = createContext<AuthContextType>({
 })
 
 export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
-  const { user, login, logout, handleAuthentication, tokens } = useAuth()
+  const { user, login, logout, handleAuthentication, tokens, sessionId } = useAuth()
   const _user = user
     ? { ...user, isAdmin: user['https://recipebible.net/roles'].includes('admin') }
     : undefined
@@ -36,7 +38,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
 
   return (
     <AuthContext.Provider
-      value={{ user: _user, tokens, login, logout, handleAuthentication, tokenExpired }}
+      value={{ user: _user, tokens, login, logout, handleAuthentication, tokenExpired, sessionId }}
     >
       {children}
     </AuthContext.Provider>
