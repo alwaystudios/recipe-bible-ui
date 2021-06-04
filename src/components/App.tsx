@@ -9,6 +9,9 @@ import styled from '@emotion/styled'
 import { MyAccountPage } from '../pages/MyAccount'
 import { AboutPage } from '../pages/About'
 import { WhatsCookingPage } from '../pages/WhatsCooking'
+import { Footer } from './Footer'
+import { TermsPage } from '../pages/Terms'
+import { PrivacyPage } from '../pages/Privacy'
 
 const Page = styled.div`
   display: flex;
@@ -26,8 +29,11 @@ export const App: React.FC = () => (
         <Route path="/about" component={AboutPage} />
         <Route path="/recipes" component={WhatsCookingPage} />
         <Route path="/logout" component={Logout} />
+        <Route path="/terms" component={TermsPage} />
+        <Route path="/privacy" component={PrivacyPage} />
         <Route path="/" component={Callback} />
       </Switch>
     </Page>
+    <Footer />
   </AuthProvider>
 )

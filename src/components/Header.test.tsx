@@ -32,12 +32,12 @@ describe('Header', () => {
   })
 
   it('renders account component', () => {
-    const { getByText } = render(
+    const { container } = render(
       <Header mainText="Heading">
         <div>children</div>
       </Header>
     )
-    expect(getByText('My Account')).toBeInTheDocument()
+    expect(container.querySelector('svg')).toBeInTheDocument()
   })
 
   it('links to main page', () => {

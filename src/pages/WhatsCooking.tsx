@@ -1,3 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useAnalytics } from '../hooks/useAnalytics'
 
-export const WhatsCookingPage: React.FunctionComponent = () => <>todo - whats cooking</>
+export const WhatsCookingPage: React.FunctionComponent = () => {
+  const { pageView } = useAnalytics()
+
+  useEffect(() => {
+    pageView()
+  }, [])
+
+  return <>todo - whats cooking</>
+}

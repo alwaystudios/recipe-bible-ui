@@ -1,5 +1,5 @@
 import { Button } from '@alwaystudios/as-ui-components'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../auth/AuthContext'
 import { CopyAccessToken } from '../auth/CopyAccessToken'
@@ -16,13 +16,20 @@ import {
 import { useAnalytics } from '../hooks/useAnalytics'
 
 export const MyAccountPage: React.FunctionComponent = () => {
-  const { pageView } = useAnalytics()
+  const { pageView, pageEvent } = useAnalytics()
   const { user } = useContext(AuthContext)
   const history = useHistory()
   const [showEnvVars, setShowEnvVars] = useState(false)
   const roles = user['https://recipebible.net/roles']
 
-  pageView()
+  useEffect(() => {
+    pageView()
+    // todo: remove after test
+    pageEvent({
+      category: 'test',
+      action: 'visit the account page',
+    })
+  }, [])
 
   return (
     <>

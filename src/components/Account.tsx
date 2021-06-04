@@ -1,3 +1,4 @@
+import { AccountIcon } from '@alwaystudios/as-ui-components'
 import styled from '@emotion/styled'
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -30,6 +31,10 @@ const Photo = styled.img`
   border-radius: 50%;
 `
 
+const IconWrapper = styled.div`
+  cursor: pointer;
+`
+
 export const Account: React.FunctionComponent = () => {
   const { user } = useContext(AuthContext)
   const history = useHistory()
@@ -42,7 +47,9 @@ export const Account: React.FunctionComponent = () => {
           <Photo src={user.picture} />
         </div>
       ) : (
-        <div onClick={() => history.push('/account')}>My Account</div>
+        <IconWrapper onClick={() => history.push('/account')}>
+          <AccountIcon size="30px" />
+        </IconWrapper>
       )}
     </Container>
   )

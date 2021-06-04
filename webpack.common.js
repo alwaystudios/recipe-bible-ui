@@ -18,7 +18,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jpe?g|svg)$/,
+        test: /\.(png|jpe?g|svg|pdf)$/,
         loader: 'file-loader',
         options: {
           name: 'assets/[name].[ext]',
@@ -55,7 +55,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'global.[contenthash].css',
     }),
-    new FaviconsWebpackPlugin('./src/images/favicon.png'),
+    new FaviconsWebpackPlugin('./src/public/favicon.png'),
     new HtmlWebpackPlugin({
       title: 'Recipe Bible',
       template: htmlWebpackTemplate,

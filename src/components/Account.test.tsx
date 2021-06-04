@@ -27,20 +27,25 @@ describe('Account', () => {
     expect(container.querySelector('img').src).toBe(user.picture)
   })
 
+  it('handles on click user name', () => {
+    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
+    const { getByText } = render(<Account />)
+    fireEvent.click(getByText(user.name))
+    expect(push).toHaveBeenCalledTimes(1)
+    expect(push).toHaveBeenCalledWith('/account')
+  })
+
   it('renders login CTA when no user is logged in', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ user: undefined })
-    const { getByText, container } = render(<Account />)
-    expect(getByText('My Account')).toBeInTheDocument()
+    const { container } = render(<Account />)
+    expect(container.querySelector('svg')).toBeInTheDocument()
     expect(container.querySelectorAll('img').length).toBe(0)
   })
 
-  test.each([
-    [user, user.name],
-    [undefined, 'My Account'],
-  ])('handles on click', (user, text) => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
-    const { getByText } = render(<Account />)
-    fireEvent.click(getByText(text))
+  it('handles on click login CTA', () => {
+    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user: undefined })
+    const { container } = render(<Account />)
+    fireEvent.click(container.querySelector('svg'))
     expect(push).toHaveBeenCalledTimes(1)
     expect(push).toHaveBeenCalledWith('/account')
   })
