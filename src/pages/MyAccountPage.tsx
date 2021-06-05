@@ -16,7 +16,7 @@ import {
 import { useAnalytics } from '../hooks/useAnalytics'
 
 export const MyAccountPage: React.FunctionComponent = () => {
-  const { pageView, pageEvent } = useAnalytics()
+  const { pageView } = useAnalytics()
   const { user } = useContext(AuthContext)
   const history = useHistory()
   const [showEnvVars, setShowEnvVars] = useState(false)
@@ -24,15 +24,11 @@ export const MyAccountPage: React.FunctionComponent = () => {
 
   useEffect(() => {
     pageView()
-    // todo: remove after test
-    pageEvent({
-      category: 'test',
-      action: 'visit the account page',
-    })
   }, [])
 
   return (
     <>
+      <Button className="btn__logout" onClick={() => history.push('/logout')} text="Logout" />
       <label>
         Name: {user.given_name} {user.family_name}
       </label>
@@ -51,7 +47,6 @@ export const MyAccountPage: React.FunctionComponent = () => {
           <p>IS_OFFLINE: {JSON.stringify(IS_OFFLINE)}</p>
         </>
       )}
-      <Button onClick={() => history.push('/logout')} text="Logout" />
     </>
   )
 }

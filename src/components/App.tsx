@@ -6,12 +6,12 @@ import { Callback } from '../auth/Callback'
 import { Header } from './Header'
 import { Logout } from '../auth/Logout'
 import styled from '@emotion/styled'
-import { MyAccountPage } from '../pages/MyAccount'
-import { AboutPage } from '../pages/About'
-import { WhatsCookingPage } from '../pages/WhatsCooking'
+import { MyAccountPage } from '../pages/MyAccountPage'
+import { AboutPage } from '../pages/AboutPage'
+import { WhatsCookingPage } from '../pages/WhatsCookingPage'
 import { Footer } from './Footer'
-import { TermsPage } from '../pages/Terms'
-import { PrivacyPage } from '../pages/Privacy'
+import { TermsPage } from '../pages/TermsPage'
+import { PrivacyPage } from '../pages/PrivacyPage'
 
 const Page = styled.div`
   display: flex;

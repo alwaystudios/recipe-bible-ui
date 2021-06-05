@@ -4,8 +4,8 @@ import { render } from '@testing-library/react'
 import * as AuthContext from '../auth/AuthContext'
 import { MemoryRouter as Router, Route } from 'react-router-dom'
 import * as authenticatedRouteModule from '../auth/AuthenticatedRoute'
-import * as aboutPageModule from '../pages/About'
-import * as whatsCookingModule from '../pages/WhatsCooking'
+import * as aboutPageModule from '../pages/AboutPage'
+import * as whatsCookingModule from '../pages/WhatsCookingPage'
 import * as callbackModule from '../auth/Callback'
 import * as logoutModule from '../auth/Logout'
 
@@ -46,27 +46,16 @@ describe('App', () => {
     expect(getByText('my account mock')).toBeInTheDocument()
   })
 
-  it('renders /about route', () => {
-    jest.spyOn(aboutPageModule, 'AboutPage').mockReturnValueOnce(<>about mock</>)
-    const { getByText } = renderApp('/about')
-    expect(getByText('about mock')).toBeInTheDocument()
-  })
-
-  it('renders /logout route', () => {
-    jest.spyOn(logoutModule, 'Logout').mockReturnValueOnce(<>logout mock</>)
-    const { getByText } = renderApp('/logout')
-    expect(getByText('logout mock')).toBeInTheDocument()
-  })
-
-  it('renders /recipes route', () => {
-    jest.spyOn(whatsCookingModule, 'WhatsCookingPage').mockReturnValueOnce(<>whats cooking mock</>)
-    const { getByText } = renderApp('/recipes')
-    expect(getByText('whats cooking mock')).toBeInTheDocument()
-  })
-
-  it('renders / route', () => {
-    jest.spyOn(callbackModule, 'Callback').mockReturnValueOnce(<>callback mock</>)
-    const { getByText } = renderApp('/auth')
-    expect(getByText('callback mock')).toBeInTheDocument()
+  test.each([
+    ['/about', 'about mock', aboutPageModule, 'AboutPage'],
+    ['/logout', 'logout mock', logoutModule, 'Logout'],
+    ['/recipes', 'recipe mock', whatsCookingModule, 'WhatsCookingPage'],
+    ['/', 'callback mock', callbackModule, 'Callback'],
+  ])('renders %s route', (route, mockText, module, page) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    jest.spyOn(module, page).mockReturnValueOnce(<>{mockText}</>)
+    const { getByText } = renderApp(route)
+    expect(getByText(mockText)).toBeInTheDocument()
   })
 })
