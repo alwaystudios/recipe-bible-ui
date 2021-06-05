@@ -9,5 +9,5 @@ module.exports = {
     '\\.(pdf)$': '<rootDir>/__mocks__/mock.ts',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  coveragePathIgnorePatterns: ['useAnalytics*'],
+  coveragePathIgnorePatterns: ['useAnalytics.ts', 'auth0.ts'],
 }

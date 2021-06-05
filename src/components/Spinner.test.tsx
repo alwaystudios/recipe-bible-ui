@@ -13,6 +13,16 @@ describe('Spinner', () => {
     expect(container.firstChild).toHaveClass('spinner')
   })
 
+  it('is loading by default', () => {
+    const { container, queryByText } = render(
+      <Spinner>
+        <div className="content">content</div>
+      </Spinner>
+    )
+    expect(queryByText('content')).not.toBeInTheDocument()
+    expect(container.firstChild).toHaveClass('spinner')
+  })
+
   it('renders children when not loading', () => {
     const { container, getByText } = render(
       <Spinner isLoading={false}>

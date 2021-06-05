@@ -1,8 +1,11 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import auth0 from 'auth0-js'
 import { mocked } from 'ts-jest/utils'
+import * as auth0Module from '../auth/auth0'
 import { AUTH0_DOMAIN, AUTH0_CLIENTID, AUTH0_CALLBACK, BASE_URL } from '../contstants'
 import { useAuth } from './useAuth'
+
+const setAuth0Session = jest.spyOn(auth0Module, 'setAuth0Session').mockReturnValue(undefined)
 
 const mockAuth = mocked(auth0)
 
@@ -55,6 +58,7 @@ describe('useAuth', () => {
     expect(logout).toHaveBeenCalledWith({
       returnTo: BASE_URL,
     })
+    expect(result.current.sessionId).toBe(undefined)
     expect(result.current.user).toBe(undefined)
     expect(result.current.tokens).toBe(undefined)
   })
@@ -66,5 +70,6 @@ describe('useAuth', () => {
     act(() => result.current.handleAuthentication())
 
     expect(parseHash).toHaveBeenCalledTimes(1)
+    expect(setAuth0Session).toHaveBeenCalledTimes(1)
   })
 })

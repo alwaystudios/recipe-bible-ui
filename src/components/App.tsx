@@ -12,12 +12,14 @@ import { WhatsCookingPage } from '../pages/WhatsCookingPage'
 import { Footer } from './Footer'
 import { TermsPage } from '../pages/TermsPage'
 import { PrivacyPage } from '../pages/PrivacyPage'
+import { RB_TEXT } from './colors'
 
 const Page = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2rem;
   overflow: hidden;
+  color: ${RB_TEXT};
 `
 
 export const App: React.FC = () => (
