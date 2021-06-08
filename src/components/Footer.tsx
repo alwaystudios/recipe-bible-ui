@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../auth/AuthContext'
-import { RB_GREEN } from './colors'
+import { RB_GREEN } from '../colors'
 
 const Container = styled.div`
   display: flex;

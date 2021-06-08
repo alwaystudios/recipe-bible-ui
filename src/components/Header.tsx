@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { RB_GREEN } from './colors'
+import { RB_GREEN } from '../colors'
 import Logo from '../public/logo.png'
 import { Account } from './Account'
 import { useHistory } from 'react-router-dom'

@@ -7,7 +7,7 @@ describe('Categories', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders a series of categories', () => {
-    const categories = [lorem.word(), lorem.word(), lorem.word()]
+    const categories = [lorem.words(2), lorem.words(2), lorem.words(2)]
     const { getByText } = render(<Categories categories={categories} />)
     categories.map((c) => expect(getByText(c)).toBeInTheDocument())
   })
