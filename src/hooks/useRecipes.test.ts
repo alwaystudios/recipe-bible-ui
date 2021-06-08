@@ -1,4 +1,4 @@
-import { testRecipe } from '@alwaystudios/recipe-bible-sdk'
+import { kebabify, testRecipe } from '@alwaystudios/recipe-bible-sdk'
 import { act, cleanup, renderHook } from '@testing-library/react-hooks'
 import { datatype, lorem } from 'faker'
 import nock, { cleanAll, isDone } from 'nock'
@@ -116,6 +116,54 @@ describe('use recipes', () => {
       expect(result.current.loading).toBe(false)
 
       await act(() => result.current.createRecipe(token, title))
+
+      expect(result.current.error).toBe(true)
+      expect(result.current.loading).toBe(false)
+      expect(isDone()).toBe(true)
+    })
+  })
+
+  describe('save recipe', () => {
+    it('saves an existing recipe', async () => {
+      const title = kebabify(lorem.words(3))
+      const recipe = testRecipe({ title })
+      const token = datatype.uuid()
+      nock(LOCALHOST)
+        .put(`/recipes/${title}`, recipe)
+        .matchHeader('authorization', `Bearer ${token}`)
+        .reply(200, () => {
+          return {
+            status: 'ok',
+          }
+        })
+
+      const { result } = renderHook(() => useRecipes())
+
+      expect(result.current.error).toBe(false)
+      expect(result.current.loading).toBe(false)
+
+      await act(() => result.current.saveRecipe(token, recipe))
+
+      expect(result.current.error).toBe(false)
+      expect(result.current.loading).toBe(false)
+      expect(isDone()).toBe(true)
+    })
+
+    it('handles errors', async () => {
+      const title = kebabify(lorem.words(3))
+      const recipe = testRecipe({ title })
+      const token = datatype.uuid()
+      nock(LOCALHOST)
+        .put(`/recipes/${title}`, recipe)
+        .matchHeader('authorization', `Bearer ${token}`)
+        .reply(500)
+
+      const { result } = renderHook(() => useRecipes())
+
+      expect(result.current.error).toBe(false)
+      expect(result.current.loading).toBe(false)
+
+      await act(() => result.current.saveRecipe(token, recipe))
 
       expect(result.current.error).toBe(true)
       expect(result.current.loading).toBe(false)

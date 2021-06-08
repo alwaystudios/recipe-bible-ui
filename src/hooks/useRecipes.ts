@@ -13,6 +13,7 @@ type GetRecipes = {
 type UseRecipes = {
   getRecipes: (params?: GetRecipes) => Promise<void> // eslint-disable-line no-unused-vars
   createRecipe: (token: string, title: string) => Promise<void> // eslint-disable-line no-unused-vars
+  saveRecipe: (token: string, recipe: Recipe) => Promise<void> // eslint-disable-line no-unused-vars
   recipes: Recipe[]
   loading: boolean
   error: boolean
@@ -53,5 +54,18 @@ export const useRecipes = (): UseRecipes => {
       .finally(() => setLoading(false))
   }
 
-  return { getRecipes, createRecipe, recipes, loading, error }
+  const saveRecipe = async (token: string, recipe: Recipe): Promise<void> => {
+    setLoading(true)
+
+    await request
+      .put(`${API_BASE_URL}/recipes/${recipe.title}`)
+      .send(recipe)
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .catch(() => setError(true))
+      .finally(() => setLoading(false))
+  }
+
+  return { getRecipes, createRecipe, saveRecipe, recipes, loading, error }
 }
