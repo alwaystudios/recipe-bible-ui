@@ -1,4 +1,4 @@
-const LOCALHOST = 'http://localhost'
+export const LOCALHOST = 'http://localhost'
 export const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN
 export const AUTH0_CLIENTID = process.env.AUTH0_CLIENTID
 export const AUTH0_CALLBACK = process.env.AUTH0_CALLBACK

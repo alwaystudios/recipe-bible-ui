@@ -1,0 +1,57 @@
+import { Recipe } from '@alwaystudios/recipe-bible-sdk'
+import { pathOr } from 'ramda'
+import { useState } from 'react'
+import request from 'superagent'
+import { API_BASE_URL } from '../contstants'
+
+type GetRecipes = {
+  published?: boolean
+  focused?: boolean | 'all'
+  field?: string[]
+}
+
+type UseRecipes = {
+  getRecipes: (params?: GetRecipes) => Promise<void> // eslint-disable-line no-unused-vars
+  createRecipe: (token: string, title: string) => Promise<void> // eslint-disable-line no-unused-vars
+  recipes: Recipe[]
+  loading: boolean
+  error: boolean
+}
+
+export const useRecipes = (): UseRecipes => {
+  const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
+
+  const getRecipes = ({ published, focused, field }: GetRecipes = {}): Promise<void> => {
+    setLoading(true)
+    setError(false)
+
+    return request
+      .get(`${API_BASE_URL}/recipes`)
+      .query({ field, published, focused })
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .then((res) => setRecipes(pathOr<Recipe[]>([], ['body', 'data'], res)))
+      .catch(() => {
+        setRecipes([])
+        setError(true)
+      })
+      .finally(() => setLoading(false))
+  }
+
+  const createRecipe = async (token: string, title: string): Promise<void> => {
+    setLoading(true)
+
+    await request
+      .post(`${API_BASE_URL}/recipes`)
+      .send({ title })
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .catch(() => setError(true))
+      .finally(() => setLoading(false))
+  }
+
+  return { getRecipes, createRecipe, recipes, loading, error }
+}
