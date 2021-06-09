@@ -5,3 +5,9 @@ declare type Tokens = {
   idToken: string
   expiresAt: number
 }
+
+declare type RecipeList = Array<{
+  title: string
+  imgSrc: string
+  onClick: () => void
+}>

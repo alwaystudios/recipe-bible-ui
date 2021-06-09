@@ -13,13 +13,20 @@ import { Footer } from './Footer'
 import { TermsPage } from '../pages/TermsPage'
 import { PrivacyPage } from '../pages/PrivacyPage'
 import { RB_TEXT } from '../colors'
+import { SMALL_SCREEN } from '../breakpoints'
 
 const Page = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 2rem;
   overflow: hidden;
   color: ${RB_TEXT};
+
+  @media (max-width: ${SMALL_SCREEN}px) {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
 `
 
 export const App: React.FC = () => (

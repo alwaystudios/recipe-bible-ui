@@ -25,7 +25,7 @@ export const Container = styled.div`
     width: 30px;
   }
 
-  @media only screen and (min-width: ${MEDIUM_SCREEN}px) {
+  @media only screen and (max-width: ${MEDIUM_SCREEN}px) {
     img {
       width: 20px;
     }
