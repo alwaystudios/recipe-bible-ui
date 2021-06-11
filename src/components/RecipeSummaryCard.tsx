@@ -1,17 +1,16 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { MEDIUM_SCREEN, SMALL_SCREEN } from '../breakpoints'
-import { RB_PINK } from '../colors'
+import { RB_LIGHT_GREEN, RB_PINK } from '../colors'
 
 const Container = styled.div`
-  flex: 1 1 30%;
-  max-width: 30%;
+  flex-basis: 30%;
   display: flex;
   flex-direction: column;
-  background-color: #bddebd;
+  background-color: ${RB_LIGHT_GREEN};
   border: solid white 1px;
   border-radius: 1%;
-  width: 9rem;
+  min-width: 9rem;
   height: 13rem;
   margin: 0.5rem;
   cursor: pointer;

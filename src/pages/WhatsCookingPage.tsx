@@ -19,7 +19,7 @@ export const WhatsCookingPage: React.FunctionComponent = () => {
 
   useEffect(() => {
     pageView()
-    getRecipes()
+    getRecipes({ field: ['title', 'imgSrc', 'categories', 'metadata'] })
   }, [])
 
   return (

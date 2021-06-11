@@ -27,5 +27,9 @@ describe('Whats cooking page', () => {
 
     expect(useAnalytics).toHaveBeenCalled()
     expect(pageView).toHaveBeenCalledTimes(1)
+    expect(getRecipes).toHaveBeenCalledTimes(1)
+    expect(getRecipes).toHaveBeenCalledWith({
+      field: ['title', 'imgSrc', 'categories', 'metadata'],
+    })
   })
 })
