@@ -1,13 +1,13 @@
 import { ContentSwitcher } from '@alwaystudios/as-ui-components'
-import { kebabify, Recipe, recipeTitleTransformer } from '@alwaystudios/recipe-bible-sdk'
+import { Recipe } from '@alwaystudios/recipe-bible-sdk'
 import React, { FunctionComponent, useState } from 'react'
 import { useHistory } from 'react-router'
-import { AWS_S3_BUCKET } from '../contstants'
+import { fromRecipesApi } from '../domain/recipeTransformer'
 import { RecipeSummaryCards } from './RecipeSummaryCards'
 
 type Props = {
   recipes: Partial<Recipe[]>
-  options: Record<string, (recipes: Partial<Recipe[]>) => Partial<Recipe[]>>
+  options: Record<string, (recipes: Partial<Recipe[]>) => Partial<Recipe[]>> // eslint-disable-line no-unused-vars
   defaultOption?: string
 }
 
@@ -17,14 +17,7 @@ export const RecipeGallery: FunctionComponent<Props> = ({ recipes, defaultOption
   const applyOption = (option?: string): RecipeList => {
     const _recipes = option && options ? options[option](recipes) : recipes
 
-    return _recipes.map(({ title, imgSrc }) => {
-      const _title = kebabify(title)
-      return {
-        title: recipeTitleTransformer(title),
-        imgSrc: `${AWS_S3_BUCKET}/recipes/${_title}/${imgSrc}`,
-        onClick: () => history.push(`/recipes/${_title}`),
-      }
-    })
+    return fromRecipesApi(_recipes, history.push)
   }
 
   const [currentOption, setCurrentOption] = useState<string>(defaultOption)

@@ -1,6 +1,6 @@
+import { Ingredient as IngredientType } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
 import React from 'react'
-import { AWS_S3_BUCKET } from '../contstants'
 import { Ingredient } from './Ingredient'
 
 const Container = styled.div`
@@ -9,10 +9,8 @@ const Container = styled.div`
   flex-wrap: wrap;
 `
 
-const getImgSrc = (ingredient: string): string => `${AWS_S3_BUCKET}/ingredients/${ingredient}.jpg`
-
 type Props = {
-  ingredients: string[]
+  ingredients: IngredientType[]
   // eslint-disable-next-line no-unused-vars
   onDelete?: (ingredient: string) => void
 }
@@ -20,8 +18,8 @@ type Props = {
 export const Ingredients: React.FC<Props> = ({ ingredients, children, onDelete }) => (
   <Container>
     {children}
-    {ingredients.map((name) => (
-      <Ingredient label={name} imgSrc={getImgSrc(name)} key={name} onDelete={onDelete} />
+    {ingredients.map(({ name, imgSrc }) => (
+      <Ingredient label={name} imgSrc={imgSrc} key={name} onDelete={onDelete} />
     ))}
   </Container>
 )

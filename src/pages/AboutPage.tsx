@@ -8,5 +8,5 @@ export const AboutPage: React.FunctionComponent = () => {
     pageView()
   }, [])
 
-  return <>todo - about page</>
+  return <>about page</>
 }

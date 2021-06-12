@@ -17,7 +17,7 @@ describe('RecipeSummaryCard', () => {
   })
 
   it('handles on click events', () => {
-    const { getByText, container } = render(
+    const { getByText } = render(
       <RecipeSummaryCard title={title} imgSrc={imgSrc} onClick={onClick} />
     )
     fireEvent.click(getByText(title))

@@ -12,10 +12,10 @@
     react "^17.0.2"
     universal-cookie "^4.0.4"
 
-"@alwaystudios/as-ui-components@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@alwaystudios/as-ui-components/-/as-ui-components-2.0.4.tgz#dd65c281ffc9dffdb96263707b523b6ea6783eb0"
-  integrity sha512-WNEI2G9h8V9ajs9gaZLJ2ysD1z8UH7SRk6r0NEDDDuhQKwG4a+qeoQm99ih9aoRL85Ma+TxDSFasnMy7WM/VIg==
+"@alwaystudios/as-ui-components@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@alwaystudios/as-ui-components/-/as-ui-components-2.0.5.tgz#c8fbe9ff90d9b389abc6acb0dfaf5bc158ddf18d"
+  integrity sha512-AL5f8MGk3v++zCrFqJbBYBAas4JLfRvcE4OOJv8+2ZvDyP6niOej27pcARw6gXiCblO0aRYLgdAgtY/VJdFNDA==
   dependencies:
     "@alwaystudios/as-utils" "^1.0.16"
     array-move "^3.0.1"
@@ -37,13 +37,12 @@
     promised-csv "^1.0.1"
     ramda "^0.27.1"
 
-"@alwaystudios/recipe-bible-sdk@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@alwaystudios/recipe-bible-sdk/-/recipe-bible-sdk-2.0.4.tgz#33de703a2fbb4246315aa626382819f3f40f8613"
-  integrity sha512-S8svIxny+cJk7ipAlX/2/sLFDnUEXxqUdnvP6BzT+PTamZJcOE+hubcxPVkMSxU+lzQk1iz8jHsHEMmlzEpWSA==
+"@alwaystudios/recipe-bible-sdk@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@alwaystudios/recipe-bible-sdk/-/recipe-bible-sdk-2.0.5.tgz#2e062acf42ded6da29a3c5fb461afe362a7e1e51"
+  integrity sha512-q5kOXRGMa8EJtd5Kp6yDSQLkoQIDu6nNZU990U7FVIxQeixtVYkwm717kTylTbuTEoqIgtrTGVhQ1K/GZonepA==
   dependencies:
     faker "^5.1.0"
-    jsonschema "^1.4.0"
     ramda "^0.27.1"
 
 "@babel/code-frame@7.12.11":
@@ -5626,11 +5625,6 @@ json5@^1.0.1:
   integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
   dependencies:
     minimist "^1.2.0"
-
-jsonschema@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/jsonschema/-/jsonschema-1.4.0.tgz#1afa34c4bc22190d8e42271ec17ac8b3404f87b2"
-  integrity sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==
 
 jsontoxml@^1.0.1:
   version "1.0.1"

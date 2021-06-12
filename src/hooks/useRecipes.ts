@@ -12,15 +12,18 @@ type GetRecipes = {
 
 type UseRecipes = {
   getRecipes: (params?: GetRecipes) => Promise<void> // eslint-disable-line no-unused-vars
+  getRecipe: (title: string) => Promise<void> // eslint-disable-line no-unused-vars
   createRecipe: (token: string, title: string) => Promise<void> // eslint-disable-line no-unused-vars
   saveRecipe: (token: string, recipe: Recipe) => Promise<void> // eslint-disable-line no-unused-vars
   recipes: Recipe[]
+  recipe: Recipe
   loading: boolean
   error: boolean
 }
 
 export const useRecipes = (): UseRecipes => {
   const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [recipe, setRecipe] = useState<Recipe | undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
 
@@ -36,6 +39,22 @@ export const useRecipes = (): UseRecipes => {
       .then((res) => setRecipes(pathOr<Recipe[]>([], ['body', 'data'], res)))
       .catch(() => {
         setRecipes([])
+        setError(true)
+      })
+      .finally(() => setLoading(false))
+  }
+
+  const getRecipe = (title: string): Promise<void> => {
+    setLoading(true)
+    setError(false)
+
+    return request
+      .get(`${API_BASE_URL}/recipes/${title}`)
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .then((res) => setRecipe(pathOr<Recipe>(undefined, ['body', 'data'], res)))
+      .catch(() => {
+        setRecipe(undefined)
         setError(true)
       })
       .finally(() => setLoading(false))
@@ -67,5 +86,5 @@ export const useRecipes = (): UseRecipes => {
       .finally(() => setLoading(false))
   }
 
-  return { getRecipes, createRecipe, saveRecipe, recipes, loading, error }
+  return { getRecipes, getRecipe, createRecipe, saveRecipe, recipes, recipe, loading, error }
 }

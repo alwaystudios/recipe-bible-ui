@@ -13,7 +13,7 @@ describe('About page', () => {
 
   it('renders the about page', () => {
     const { getByText } = render(<AboutPage />)
-    expect(getByText('todo - about page')).toBeInTheDocument()
+    expect(getByText('about page')).toBeInTheDocument()
     expect(useAnalytics).toHaveBeenCalledTimes(1)
     expect(pageView).toHaveBeenCalledTimes(1)
   })
