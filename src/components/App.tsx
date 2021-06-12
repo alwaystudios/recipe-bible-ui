@@ -13,6 +13,7 @@ import { Footer } from './Footer'
 import { TermsPage } from '../pages/TermsPage'
 import { PrivacyPage } from '../pages/PrivacyPage'
 import { SMALL_SCREEN } from '../breakpoints'
+import { RecipePage } from '../pages/RecipePage'
 
 const Page = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const Page = styled.div`
   padding: 2rem;
   overflow: hidden;
 
-  @media (max-width: ${SMALL_SCREEN}px) {
+  @media only screen and (max-width: ${SMALL_SCREEN}px) {
     padding-left: 0.25rem;
     padding-right: 0.25rem;
   }
@@ -34,6 +35,7 @@ export const App: React.FC = () => (
       <Switch>
         <AuthenticatedRoute path="/account" component={MyAccountPage} />
         <Route path="/about" component={AboutPage} />
+        <Route path="/recipes/:name" component={RecipePage} />
         <Route path="/recipes" component={WhatsCookingPage} />
         <Route path="/logout" component={Logout} />
         <Route path="/terms" component={TermsPage} />

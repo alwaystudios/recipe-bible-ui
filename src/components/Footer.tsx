@@ -10,7 +10,7 @@ const Container = styled.div`
   justify-content: center;
   line-height: 1.6;
   border-top: 4px solid ${RB_GREEN};
-  margin: 0 5rem;
+  margin: 0 5rem 2rem 5rem;
   padding: 1rem 0 0 0;
 
   a {

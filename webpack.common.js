@@ -59,6 +59,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Recipe Bible',
       template: htmlWebpackTemplate,
+      meta: {
+        viewport: 'width=device-width, initial-scale=1',
+      },
       bodyHtmlSnippet: '<div id="root"></div>',
     }),
   ],
