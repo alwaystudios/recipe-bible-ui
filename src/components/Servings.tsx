@@ -15,12 +15,6 @@ export const Container = styled.div`
     margin-left: 1rem;
   }
 
-  > span {
-    background-color: ${RB_GREEN};
-    border-radius: 50%;
-    padding: 0.5rem;
-  }
-
   img {
     width: 30px;
   }
@@ -32,11 +26,15 @@ export const Container = styled.div`
   }
 `
 
+const Img = styled.img`
+  border-radius: 2px;
+  background-color: ${RB_GREEN};
+  padding: 0.2rem;
+`
+
 export const Servings: React.FunctionComponent<{ servings: number }> = ({ servings }) => (
   <Container>
-    <span>
-      <img src={DinnerPlate} />
-    </span>
+    <Img src={DinnerPlate} />
     <p>Serves {servings}</p>
   </Container>
 )

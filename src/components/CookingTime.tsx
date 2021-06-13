@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { RB_GREEN } from '../colors'
 import { MEDIUM_SCREEN } from '../breakpoints'
-import DinnerPlate from '../public/dinner-plate.svg'
+import DinnerPlate from '../public/clock.svg'
 
 export const Container = styled.div`
   padding: 0.75rem;
@@ -13,12 +13,6 @@ export const Container = styled.div`
 
   > p {
     margin-left: 1rem;
-  }
-
-  > span {
-    background-color: ${RB_GREEN};
-    border-radius: 50%;
-    padding: 0.5rem;
   }
 
   img {
@@ -32,11 +26,15 @@ export const Container = styled.div`
   }
 `
 
+const Img = styled.img`
+  border-radius: 50%;
+  background-color: ${RB_GREEN};
+  padding: 0.2rem;
+`
+
 export const CookingTime: React.FC<{ cookingTime: string }> = ({ cookingTime }) => (
   <Container>
-    <span>
-      <img src={DinnerPlate} />
-    </span>
+    <Img src={DinnerPlate} />
     <p>{cookingTime}</p>
   </Container>
 )

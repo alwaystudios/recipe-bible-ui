@@ -30,7 +30,7 @@
   "homepage": "https://github.com/alwaystudios/recipe-bible-ui#readme",
   "dependencies": {
     "@alwaystudios/as-react-hooks": "^1.0.2",
-    "@alwaystudios/as-ui-components": "^2.0.5",
+    "@alwaystudios/as-ui-components": "^2.0.6",
     "@alwaystudios/recipe-bible-sdk": "^2.0.5",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.1.5",

@@ -1,7 +1,7 @@
 import { ContentSwitcher } from '@alwaystudios/as-ui-components'
 import { Recipe } from '@alwaystudios/recipe-bible-sdk'
 import React, { FunctionComponent, useState } from 'react'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { fromRecipesApi } from '../domain/recipeTransformer'
 import { RecipeSummaryCards } from './RecipeSummaryCards'
 

@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../auth/AuthContext'
+import { SMALL_SCREEN } from '../breakpoints'
 
 const Container = styled.div`
   display: flex;
@@ -21,6 +22,12 @@ const Container = styled.div`
     white-space: nowrap;
     font-weight: bold;
     color: black;
+  }
+
+  @media only screen and (max-width: ${SMALL_SCREEN}px) {
+    & p {
+      display: none;
+    }
   }
 `
 

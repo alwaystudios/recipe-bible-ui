@@ -11,8 +11,8 @@ import { AWS_S3_BUCKET } from '../contstants'
 const getIngredientImgSrc = (ingredient: string): string =>
   `${AWS_S3_BUCKET}/ingredients/${ingredient}.jpg`
 
-export const getRecipeImgSrc = (title: string, imgSrc: string): string =>
-  `${AWS_S3_BUCKET}/recipes/${title}/${imgSrc}`
+export const getRecipeImgSrc = (title: string, imgSrc: string): string | undefined =>
+  imgSrc ? `${AWS_S3_BUCKET}/recipes/${title}/${imgSrc}` : undefined
 
 export const fromRecipeApi = (recipe: Recipe): Recipe => {
   const title = recipeTitleTransformer(recipe.title)

@@ -11,6 +11,46 @@ describe('use recipes', () => {
     cleanAll()
   })
 
+  describe('get recipe', () => {
+    it('get recipe', async () => {
+      const recipe = testRecipe()
+      const payload = { data: recipe }
+      nock(LOCALHOST)
+        .get(`/recipes/${recipe.title}`)
+        .reply(200, () => {
+          return payload
+        })
+
+      const { result } = renderHook(() => useRecipes())
+
+      expect(result.current.error).toBe(false)
+      expect(result.current.loading).toBe(false)
+
+      await act(() => result.current.getRecipe(recipe.title))
+
+      expect(result.current.recipe).toMatchObject(recipe)
+      expect(result.current.error).toBe(false)
+      expect(result.current.loading).toBe(false)
+      expect(isDone()).toBe(true)
+    })
+
+    it('handles errors', async () => {
+      nock(LOCALHOST).get(`/recipes/my-recipe`).reply(500)
+
+      const { result } = renderHook(() => useRecipes())
+
+      expect(result.current.error).toBe(false)
+      expect(result.current.loading).toBe(false)
+
+      await act(() => result.current.getRecipe('my-recipe'))
+
+      expect(result.current.recipe).toBeUndefined()
+      expect(result.current.error).toBe(true)
+      expect(result.current.loading).toBe(false)
+      expect(isDone()).toBe(true)
+    })
+  })
+
   describe('get recipes', () => {
     it('get recipes', async () => {
       const data = [testRecipe(), testRecipe()]
