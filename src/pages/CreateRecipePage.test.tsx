@@ -3,9 +3,6 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { CreateRecipePage } from './CreateRecipePage'
 import * as useRecipesModule from '../hooks/useRecipes'
 
-const tokens = { idToken: '4567' }
-jest.spyOn(React, 'useContext').mockReturnValue({ tokens })
-
 const createRecipe = jest.fn()
 jest.spyOn(useRecipesModule, 'useRecipes').mockImplementation(() => ({ createRecipe } as any))
 
@@ -17,8 +14,7 @@ jest.mock('react-router-dom', () => ({
   }),
 }))
 
-// todo: fixme
-describe.skip('create a new recipe', () => {
+describe('create a new recipe', () => {
   it('creates a new recipe', async () => {
     createRecipe.mockResolvedValueOnce(undefined)
     render(<CreateRecipePage />)
@@ -32,5 +28,7 @@ describe.skip('create a new recipe', () => {
       expect(push).toHaveBeenCalledTimes(1)
       expect(push).toHaveBeenCalledWith(`recipes/my-new-recipe`)
     })
+
+    expect(createRecipe).toHaveBeenCalledTimes(1)
   })
 })

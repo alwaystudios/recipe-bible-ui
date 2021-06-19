@@ -12,11 +12,10 @@ export const CreateRecipePage: React.FC = () => {
   const { createRecipe } = useRecipes()
   const { tokens } = useContext(AuthContext)
 
-  const handleOnClick = () => {
-    createRecipe(tokens.idToken, title)
+  const handleOnClick = () =>
+    createRecipe(tokens?.idToken || '', title)
       .then(() => history.push(kebabify(`recipes/${title.toLocaleLowerCase()}`)))
       .catch(() => setError(true))
-  }
 
   return (
     <form
