@@ -1,6 +1,6 @@
 import { MyAccountPage } from './MyAccountPage'
 import React from 'react'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
 import * as useAnalyticsModule from '../hooks/useAnalytics'
 
@@ -28,20 +28,30 @@ describe('MyAccount page', () => {
 
   it('renders the my account page', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
-    const { getByText } = render(<MyAccountPage />)
-    expect(getByText(`Name: ${user.given_name} ${user.family_name}`)).toBeInTheDocument()
-    expect(getByText(`Roles: ${user['https://recipebible.net/roles']}`)).toBeInTheDocument()
+    render(<MyAccountPage />)
+    expect(screen.getByText(`Name: ${user.given_name} ${user.family_name}`)).toBeInTheDocument()
+    expect(screen.getByText(`Roles: ${user['https://recipebible.net/roles']}`)).toBeInTheDocument()
     expect(useAnalytics).toHaveBeenCalledTimes(1)
     expect(pageView).toHaveBeenCalledTimes(1)
   })
 
   it('handles logout CTA', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
-    const { container } = render(<MyAccountPage />)
-    const logoutButton = container.querySelector('button.btn__logout')
+    render(<MyAccountPage />)
+    const logoutButton = screen.queryAllByText('Logout')[0]
     expect(logoutButton).toBeInTheDocument()
     fireEvent.click(logoutButton)
     expect(push).toHaveBeenCalledTimes(1)
     expect(push).toHaveBeenCalledWith('/logout')
+  })
+
+  it('handles create CTA', () => {
+    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
+    render(<MyAccountPage />)
+    const createButton = screen.getByText('New recipe')
+    expect(createButton).toBeInTheDocument()
+    fireEvent.click(createButton)
+    expect(push).toHaveBeenCalledTimes(1)
+    expect(push).toHaveBeenCalledWith('/create')
   })
 })

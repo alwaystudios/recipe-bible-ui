@@ -1,6 +1,6 @@
 import { App } from './App'
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import * as AuthContext from '../auth/AuthContext'
 import { MemoryRouter as Router, Route } from 'react-router-dom'
 import * as authenticatedRouteModule from '../auth/AuthenticatedRoute'
@@ -40,10 +40,10 @@ describe('App', () => {
     expect(getByText('redirect from root mock')).toBeInTheDocument()
   })
 
-  it('renders /account route', () => {
-    MockComponent.mockReturnValueOnce(<>my account mock</>)
-    const { getByText } = renderApp('/account')
-    expect(getByText('my account mock')).toBeInTheDocument()
+  test.each([['account'], ['create']])('renders authenticates route /%s', (route) => {
+    MockComponent.mockReturnValueOnce(<>{route} mock</>)
+    renderApp(`/${route}`)
+    expect(screen.getByText(`${route} mock`)).toBeInTheDocument()
   })
 
   test.each([
@@ -55,7 +55,7 @@ describe('App', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     jest.spyOn(module, page).mockReturnValueOnce(<>{mockText}</>)
-    const { getByText } = renderApp(route)
-    expect(getByText(mockText)).toBeInTheDocument()
+    renderApp(route)
+    expect(screen.getByText(mockText)).toBeInTheDocument()
   })
 })

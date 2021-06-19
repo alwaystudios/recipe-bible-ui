@@ -1,6 +1,6 @@
 import { Account } from './Account'
 import React from 'react'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
 
 const push = jest.fn()
@@ -22,15 +22,15 @@ describe('Account', () => {
 
   it('renders the current logged in user with photo', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
-    const { getByText, container } = render(<Account />)
-    expect(getByText(user.name)).toBeInTheDocument()
+    const { container } = render(<Account />)
+    expect(screen.getByText(user.name)).toBeInTheDocument()
     expect(container.querySelector('img').src).toBe(user.picture)
   })
 
   it('handles on click user name', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
-    const { getByText } = render(<Account />)
-    fireEvent.click(getByText(user.name))
+    render(<Account />)
+    fireEvent.click(screen.getByText(user.name))
     expect(push).toHaveBeenCalledTimes(1)
     expect(push).toHaveBeenCalledWith('/account')
   })

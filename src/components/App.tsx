@@ -14,6 +14,7 @@ import { TermsPage } from '../pages/TermsPage'
 import { PrivacyPage } from '../pages/PrivacyPage'
 import { SMALL_SCREEN } from '../breakpoints'
 import { RecipePage } from '../pages/RecipePage'
+import { CreateRecipePage } from '../pages/CreateRecipePage'
 
 const Page = styled.div`
   display: flex;
@@ -34,6 +35,7 @@ export const App: React.FC = () => (
     <Page>
       <Switch>
         <AuthenticatedRoute path="/account" component={MyAccountPage} />
+        <AuthenticatedRoute path="/create" component={CreateRecipePage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/recipes/:name" component={RecipePage} />
         <Route path="/recipes" component={WhatsCookingPage} />

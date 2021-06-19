@@ -1,6 +1,6 @@
 import { AuthenticatedRoute } from './AuthenticatedRoute'
 import React from 'react'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
 
@@ -22,9 +22,9 @@ describe('AuthenticatedRoute', () => {
 
   it('renders a route for an authenticated user', async () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ login, user, tokenExpired: false })
-    const { getByText, findByText } = renderRoute()
-    fireEvent.click(getByText('click link'))
-    await findByText('component')
+    renderRoute()
+    fireEvent.click(screen.getByText('click link'))
+    await screen.findByText('component')
     expect(login).not.toHaveBeenCalled()
   })
 
@@ -39,8 +39,8 @@ describe('AuthenticatedRoute', () => {
 
   it('requires authentication for an expired token', async () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ login, user, tokenExpired: true })
-    const { getByText } = renderRoute()
-    fireEvent.click(getByText('click link'))
+    renderRoute()
+    fireEvent.click(screen.getByText('click link'))
     await expect(login).toHaveBeenCalledTimes(1)
   })
 })

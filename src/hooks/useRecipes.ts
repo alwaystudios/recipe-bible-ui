@@ -1,4 +1,4 @@
-import { Recipe } from '@alwaystudios/recipe-bible-sdk'
+import { kebabify, Recipe } from '@alwaystudios/recipe-bible-sdk'
 import { pathOr } from 'ramda'
 import { useState } from 'react'
 import request from 'superagent'
@@ -18,18 +18,15 @@ type UseRecipes = {
   recipes: Recipe[]
   recipe: Recipe
   loading: boolean
-  error: boolean
 }
 
 export const useRecipes = (): UseRecipes => {
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<boolean>(false)
 
   const getRecipes = ({ published, focused, field }: GetRecipes = {}): Promise<void> => {
     setLoading(true)
-    setError(false)
 
     return request
       .get(`${API_BASE_URL}/recipes`)
@@ -37,54 +34,47 @@ export const useRecipes = (): UseRecipes => {
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .then((res) => setRecipes(pathOr<Recipe[]>([], ['body', 'data'], res)))
-      .catch(() => {
-        setRecipes([])
-        setError(true)
-      })
+      .catch(() => setRecipes([]))
       .finally(() => setLoading(false))
   }
 
   const getRecipe = (title: string): Promise<void> => {
     setLoading(true)
-    setError(false)
 
     return request
       .get(`${API_BASE_URL}/recipes/${title}`)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .then((res) => setRecipe(pathOr<Recipe>(undefined, ['body', 'data'], res)))
-      .catch(() => {
-        setRecipe(undefined)
-        setError(true)
-      })
+      .catch(() => setRecipe(undefined))
       .finally(() => setLoading(false))
   }
 
   const createRecipe = async (token: string, title: string): Promise<void> => {
-    setLoading(true)
-
     await request
       .post(`${API_BASE_URL}/recipes`)
-      .send({ title })
+      .send({ title: kebabify(title.toLocaleLowerCase()) })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
   }
 
   const saveRecipe = async (token: string, recipe: Recipe): Promise<void> => {
-    setLoading(true)
-
     await request
       .put(`${API_BASE_URL}/recipes/${recipe.title}`)
       .send(recipe)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
   }
 
-  return { getRecipes, getRecipe, createRecipe, saveRecipe, recipes, recipe, loading, error }
+  return {
+    getRecipes,
+    getRecipe,
+    createRecipe,
+    saveRecipe,
+    recipes,
+    recipe,
+    loading,
+  }
 }

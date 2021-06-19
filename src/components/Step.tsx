@@ -70,7 +70,7 @@ const DeleteSpan = styled.span`
 type Props = {
   index: number
   step: StepType
-  onDelete?: (step: string) => void
+  onDelete?: (step: string) => void // eslint-disable-line no-unused-vars
 }
 
 export const Step: React.FC<Props> = ({ index, step, onDelete }) => {

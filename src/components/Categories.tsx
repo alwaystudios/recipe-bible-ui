@@ -6,9 +6,10 @@ import { RB_GREEN, RB_WHITE } from '../colors'
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 
   & > div {
-    margin: 0 0.25rem 0 0;
+    margin: 0 0.25rem 0.25rem 0;
   }
 `
 

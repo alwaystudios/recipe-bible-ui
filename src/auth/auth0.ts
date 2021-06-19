@@ -22,8 +22,6 @@ export const setAuth0Session =
       const expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
       const { accessToken, idToken } = authResult
 
-      console.log(authResult)
-      console.log(expiresAt)
       setSessionId(uuidv4())
       setUser(authResult.idTokenPayload)
       setTokens({

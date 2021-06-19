@@ -20,7 +20,10 @@ const RecipeContainer = styled.div`
 `
 
 const TabsContainer = styled.div`
-  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 90%;
+  padding-left: 2rem;
 `
 
 type Props = {
@@ -42,7 +45,7 @@ export const Recipe: React.FC<Props> = ({
   },
 }) => (
   <Container>
-    <p>{title}</p>
+    <h1>{title}</h1>
     <p>{story}</p>
     {youWillNeed.length > 0 && <p>You will need: {youWillNeed}</p>}
     <RecipeContainer>
