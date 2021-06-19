@@ -11,3 +11,5 @@ declare type RecipeList = Array<{
   imgSrc: string
   onClick: () => void
 }>
+
+declare type AssetType = 'recipe' | 'ingredient' | 'step'
