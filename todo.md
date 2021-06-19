@@ -2,6 +2,7 @@
 
 - use `screen` in unit tests [and other recommendations here](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
 - edit recipes
+- manage unpublished recipes
 - manage ingredients
 - manage ads
 - social media

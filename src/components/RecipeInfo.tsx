@@ -31,8 +31,8 @@ export const RecipeInfo: React.FunctionComponent<ComponentProps> = ({
 }) => (
   <Container>
     <Row>
-      <Servings servings={servings} />
-      <CookingTime cookingTime={cookingTime} />
+      {servings > 0 && <Servings servings={servings} />}
+      {cookingTime && <CookingTime cookingTime={cookingTime} />}
     </Row>
     <Row>
       <Categories categories={categories} />

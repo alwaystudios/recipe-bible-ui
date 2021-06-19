@@ -2,7 +2,7 @@ import { Ingredients } from './Ingredients'
 import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 import { testIngredient } from '@alwaystudios/recipe-bible-sdk'
-import { lorem, internet } from 'faker'
+import { internet } from 'faker'
 
 const ingredients = [
   testIngredient({ imgSrc: internet.url() }),

@@ -15,20 +15,44 @@ describe('recipe transformers', () => {
     })
   })
 
-  it('fromRecipeApi', () => {
-    expect(fromRecipeApi(recipe)).toEqual({
-      ...recipe,
-      title: recipeTitleTransformer(recipe.title),
-      imgSrc: `http://localhost:4566/recipe-bible-content/recipes/${recipe.title}/${recipe.imgSrc}`,
-      ingredients: recipe.ingredients.map((i) => ({
-        ...i,
-        imgSrc: `http://localhost:4566/recipe-bible-content/ingredients/${i.name}.jpg`,
-        name: dekebabify(i.name),
-      })),
-      steps: recipe.steps.map((s) => ({
-        ...s,
-        imgSrc: `http://localhost:4566/recipe-bible-content/recipes/${recipe.title}/${s.imgSrc}`,
-      })),
+  describe('fromRecipeApi', () => {
+    it('transforms a complete recipe', () => {
+      expect(fromRecipeApi(recipe)).toEqual({
+        ...recipe,
+        title: recipeTitleTransformer(recipe.title),
+        imgSrc: `http://localhost:4566/recipe-bible-content/recipes/${recipe.title}/${recipe.imgSrc}`,
+        ingredients: recipe.ingredients.map((i) => ({
+          ...i,
+          imgSrc: `http://localhost:4566/recipe-bible-content/ingredients/${i.name}.jpg`,
+          name: dekebabify(i.name),
+        })),
+        steps: recipe.steps.map((s) => ({
+          ...s,
+          imgSrc: `http://localhost:4566/recipe-bible-content/recipes/${recipe.title}/${s.imgSrc}`,
+        })),
+      })
+    })
+
+    it('transforms a partial recipe', () => {
+      const title = 'My new recipe'
+      expect(fromRecipeApi({ title })).toEqual({
+        categories: [],
+        cookingTime: '',
+        imgSrc: undefined,
+        ingredients: [],
+        metadata: {
+          focused: false,
+          published: false,
+        },
+        nutrition: {},
+        prepTime: '',
+        ratings: [],
+        servings: 0,
+        steps: [],
+        story: '',
+        title: 'My new recipe',
+        youWillNeed: [],
+      })
     })
   })
 
