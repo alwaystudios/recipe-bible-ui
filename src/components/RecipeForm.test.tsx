@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { RecipeForm } from './RecipeForm'
-import { testRecipe } from '@alwaystudios/recipe-bible-sdk'
+import { testRecipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import * as AuthContext from '../auth/AuthContext'
 import * as assetUploadModule from '../domain/assetUpload'
 
@@ -43,7 +43,7 @@ describe('recipe form', () => {
         content: 'content',
         path: undefined,
       },
-      folder: `recipes/${recipe.title}`,
+      folder: `recipes/${toSlug(recipe.title)}`,
       token: '1234',
     })
     expect(updateRecipe).toHaveBeenCalledTimes(1)
