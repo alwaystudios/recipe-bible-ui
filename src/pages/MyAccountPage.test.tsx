@@ -3,6 +3,9 @@ import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
 import * as useAnalyticsModule from '../hooks/useAnalytics'
+import * as AuthContext from '../auth/AuthContext'
+
+const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
 
 const push = jest.fn()
 
@@ -27,7 +30,7 @@ describe('MyAccount page', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders the my account page', () => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
+    useAuthContext.mockReturnValueOnce({ user } as any)
     render(<MyAccountPage />)
     expect(screen.getByText(`Name: ${user.given_name} ${user.family_name}`)).toBeInTheDocument()
     expect(screen.getByText(`Roles: ${user['https://recipebible.net/roles']}`)).toBeInTheDocument()
@@ -36,7 +39,7 @@ describe('MyAccount page', () => {
   })
 
   it('handles logout CTA', () => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
+    useAuthContext.mockReturnValueOnce({ user } as any)
     render(<MyAccountPage />)
     const logoutButton = screen.queryAllByText('Logout')[0]
     expect(logoutButton).toBeInTheDocument()
@@ -46,7 +49,7 @@ describe('MyAccount page', () => {
   })
 
   it('handles create CTA', () => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
+    useAuthContext.mockReturnValueOnce({ user } as any)
     render(<MyAccountPage />)
     const createButton = screen.getByText('New recipe')
     expect(createButton).toBeInTheDocument()

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../auth/AuthContext'
+import { useAuthContext } from '../auth/AuthContext'
 import { RB_GREEN } from '../colors'
 
 const Container = styled.div`
@@ -19,7 +19,7 @@ const Container = styled.div`
 `
 
 export const Footer: React.FunctionComponent = () => {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuthContext()
 
   return (
     <Container>

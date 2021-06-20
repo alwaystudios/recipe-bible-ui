@@ -12,3 +12,7 @@
 - link GA
 - link Auth0
 - use `screen` in unit tests [and other recommendations here](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
+- auth context test factory
+- clean up `as any`
+- bundle analyser
+- remove tests from bundle ?

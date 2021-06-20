@@ -1,13 +1,13 @@
 import { Button } from '@alwaystudios/as-ui-components'
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { AuthContext } from '../auth/AuthContext'
+import { useAuthContext } from '../auth/AuthContext'
 import { CopyAccessToken } from '../auth/CopyAccessToken'
 import { useAnalytics } from '../hooks/useAnalytics'
 
 export const MyAccountPage: React.FunctionComponent = () => {
   const { pageView } = useAnalytics()
-  const { user } = useContext(AuthContext)
+  const { user } = useAuthContext()
   const history = useHistory()
   const roles = user['https://recipebible.net/roles']
 

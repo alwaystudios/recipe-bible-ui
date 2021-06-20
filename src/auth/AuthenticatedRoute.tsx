@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { InferProps } from 'prop-types'
 import { Route, useHistory } from 'react-router-dom'
-import { AuthContext } from './AuthContext'
+import { useAuthContext } from './AuthContext'
 
 type AuthenticatedRouteProps = {
   component: React.ElementType
@@ -16,7 +16,7 @@ export const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
   role,
   rest,
 }: InferProps<typeof AuthenticatedRoute.propTypes>) => {
-  const { login, user, tokenExpired } = useContext(AuthContext)
+  const { login, user, tokenExpired } = useAuthContext()
   const history = useHistory()
 
   if (!user || tokenExpired) {

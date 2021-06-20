@@ -2,6 +2,9 @@ import { Account } from './Account'
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
+import * as AuthContext from '../auth/AuthContext'
+
+const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
 
 const push = jest.fn()
 
@@ -21,14 +24,14 @@ describe('Account', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders the current logged in user with photo', () => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
+    useAuthContext.mockReturnValueOnce({ user } as any)
     const { container } = render(<Account />)
     expect(screen.getByText(user.name)).toBeInTheDocument()
     expect(container.querySelector('img').src).toBe(user.picture)
   })
 
   it('handles on click user name', () => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
+    useAuthContext.mockReturnValueOnce({ user } as any)
     render(<Account />)
     fireEvent.click(screen.getByText(user.name))
     expect(push).toHaveBeenCalledTimes(1)
@@ -36,14 +39,14 @@ describe('Account', () => {
   })
 
   it('renders login CTA when no user is logged in', () => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user: undefined })
+    useAuthContext.mockReturnValueOnce({ user: undefined } as any)
     const { container } = render(<Account />)
     expect(container.querySelector('svg')).toBeInTheDocument()
     expect(container.querySelectorAll('img').length).toBe(0)
   })
 
   it('handles on click login CTA', () => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user: undefined })
+    useAuthContext.mockReturnValueOnce({ user: undefined } as any)
     const { container } = render(<Account />)
     fireEvent.click(container.querySelector('svg'))
     expect(push).toHaveBeenCalledTimes(1)

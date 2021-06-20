@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import { AuthContext } from './AuthContext'
+import React from 'react'
+import { useAuthContext } from './AuthContext'
 import { useHistory } from 'react-router-dom'
 
 export const Callback: React.FC = () => {
-  const { handleAuthentication, user } = useContext(AuthContext)
+  const { handleAuthentication, user } = useAuthContext()
   const history = useHistory()
 
   if (!user) {

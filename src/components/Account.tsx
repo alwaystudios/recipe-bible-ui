@@ -1,8 +1,8 @@
 import { AccountIcon } from '@alwaystudios/as-ui-components'
 import styled from '@emotion/styled'
-import React, { useContext } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { AuthContext } from '../auth/AuthContext'
+import { useAuthContext } from '../auth/AuthContext'
 import { SMALL_SCREEN } from '../breakpoints'
 
 const Container = styled.div`
@@ -43,7 +43,7 @@ const IconWrapper = styled.div`
 `
 
 export const Account: React.FunctionComponent = () => {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuthContext()
   const history = useHistory()
 
   return (

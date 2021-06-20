@@ -3,6 +3,9 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
+import * as AuthContext from '../auth/AuthContext'
+
+const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
 
 const user = testUser()
 
@@ -17,7 +20,7 @@ describe('Footer', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders the footer when user not logged in', () => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user: undefined })
+    useAuthContext.mockReturnValueOnce({ user: undefined } as any)
     renderFooter()
 
     const about = screen.getByText('About')
@@ -36,7 +39,7 @@ describe('Footer', () => {
   })
 
   it('renders the footer when user logged in', () => {
-    jest.spyOn(React, 'useContext').mockReturnValueOnce({ user })
+    useAuthContext.mockReturnValueOnce({ user } as any)
     renderFooter()
 
     const about = screen.getByText('About')

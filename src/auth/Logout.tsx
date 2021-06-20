@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
-import { AuthContext } from './AuthContext'
+import React from 'react'
+import { useAuthContext } from './AuthContext'
 
 export const Logout: React.FC = () => {
-  const { logout } = useContext(AuthContext)
+  const { logout } = useAuthContext()
   logout()
   return null
 }

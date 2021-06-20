@@ -1,6 +1,6 @@
 import { User } from '@alwaystudios/recipe-bible-sdk'
 import { pathOr } from 'ramda'
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import { useAuth } from '../hooks/useAuth'
 
 type AuthProviderProps = {
@@ -44,3 +44,5 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     </AuthContext.Provider>
   )
 }
+
+export const useAuthContext = () => useContext(AuthContext)
