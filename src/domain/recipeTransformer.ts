@@ -1,10 +1,10 @@
 import {
   dekebabify,
   Ingredient,
-  kebabify,
   Recipe,
   recipeTitleTransformer,
   Step,
+  toSlug,
 } from '@alwaystudios/recipe-bible-sdk'
 import { AWS_S3_BUCKET } from '../contstants'
 
@@ -60,7 +60,7 @@ export const fromRecipesApi = (
   historyPush: (url: string) => void // eslint-disable-line no-unused-vars
 ): RecipeSummaryCardProps[] =>
   recipes.map(({ title, imgSrc }) => {
-    const _title = kebabify(title)
+    const _title = toSlug(title)
     return {
       title: recipeTitleTransformer(title),
       imgSrc: getRecipeImgSrc(title, imgSrc),

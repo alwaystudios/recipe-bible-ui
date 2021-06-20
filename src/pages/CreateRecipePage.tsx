@@ -1,5 +1,5 @@
 import { Button, TextInput } from '@alwaystudios/as-ui-components'
-import { kebabify } from '@alwaystudios/recipe-bible-sdk'
+import { kebabify, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAuthContext } from '../auth/AuthContext'
@@ -14,7 +14,7 @@ export const CreateRecipePage: React.FC = () => {
 
   const handleOnClick = () =>
     createRecipe(tokens.idToken, title)
-      .then(() => history.push(kebabify(`manage/recipes/${title.toLocaleLowerCase()}`)))
+      .then(() => history.push(kebabify(`manage/recipes/${toSlug(title)}`)))
       .catch(() => setError(true))
 
   return (

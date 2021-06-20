@@ -1,4 +1,4 @@
-import { kebabify, Recipe } from '@alwaystudios/recipe-bible-sdk'
+import { Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import { pathOr } from 'ramda'
 import { useState } from 'react'
 import request from 'superagent'
@@ -11,6 +11,7 @@ type GetRecipes = {
 }
 
 type UseRecipes = {
+  updateRecipe: (updates: Partial<Recipe>) => void // eslint-disable-line no-unused-vars
   getRecipes: (params?: GetRecipes) => Promise<void> // eslint-disable-line no-unused-vars
   getRecipe: (title: string) => Promise<void> // eslint-disable-line no-unused-vars
   createRecipe: (token: string, title: string) => Promise<void> // eslint-disable-line no-unused-vars
@@ -42,7 +43,7 @@ export const useRecipes = (): UseRecipes => {
     setLoading(true)
 
     return request
-      .get(`${API_BASE_URL}/recipes/${title}`)
+      .get(`${API_BASE_URL}/recipes/${toSlug(title)}`)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .then((res) => setRecipe(pathOr<Recipe>(undefined, ['body', 'data'], res)))
@@ -53,7 +54,7 @@ export const useRecipes = (): UseRecipes => {
   const createRecipe = async (token: string, title: string): Promise<void> => {
     await request
       .post(`${API_BASE_URL}/recipes`)
-      .send({ title: kebabify(title.toLocaleLowerCase()) })
+      .send({ title: toSlug(title) })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
@@ -61,14 +62,18 @@ export const useRecipes = (): UseRecipes => {
 
   const saveRecipe = async (token: string, recipe: Recipe): Promise<void> => {
     await request
-      .put(`${API_BASE_URL}/recipes/${recipe.title}`)
+      .put(`${API_BASE_URL}/recipes/${toSlug(recipe.title)}`)
       .send(recipe)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
   }
 
+  const updateRecipe = (updates: Partial<Recipe>): void =>
+    recipe ? setRecipe({ ...recipe, ...updates }) : null
+
   return {
+    updateRecipe,
     getRecipes,
     getRecipe,
     createRecipe,

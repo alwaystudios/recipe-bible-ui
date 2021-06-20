@@ -27,10 +27,5 @@ export const assetUpload = async ({
     .post(`${API_BASE_URL}/asset-upload?assetType=${assetType}`)
     .set('Authorization', `Bearer ${token}`)
     .send(data)
-    .then(({ text }) => {
-      return text
-    })
-    .catch(() => {
-      return 'error'
-    })
+    .then(() => filename)
 }

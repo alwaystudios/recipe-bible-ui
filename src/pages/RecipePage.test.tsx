@@ -5,9 +5,10 @@ import * as useAnalyticsModule from '../hooks/useAnalytics'
 import { testRecipe } from '@alwaystudios/recipe-bible-sdk'
 import * as useRecipesModule from '../hooks/useRecipes'
 import * as recipeModule from '../components/Recipe'
-import { fromRecipeApi } from '../domain/recipeTransformer'
+import * as editRecipeModule from '../components/RecipeForm'
 
-const Recipe = jest.spyOn(recipeModule, 'Recipe').mockReturnValue(<>mock</>)
+const Recipe = jest.spyOn(recipeModule, 'Recipe').mockReturnValue(<>view mock</>)
+const EditRecipe = jest.spyOn(editRecipeModule, 'RecipeForm').mockReturnValue(<>edit mock</>)
 
 const recipe = testRecipe()
 const getRecipe = jest.fn().mockResolvedValue(recipe)
@@ -27,18 +28,30 @@ jest.mock('react-router', () => ({
   }),
 }))
 
-describe('view recipe page', () => {
+describe('recipe page', () => {
   beforeEach(jest.clearAllMocks)
 
-  it('renders a recipe', () => {
+  it('renders in view mode by default', () => {
     render(<RecipePage />)
 
-    expect(screen.getByText('mock')).toBeInTheDocument()
+    expect(screen.getByText('view mock')).toBeInTheDocument()
     expect(useAnalytics).toHaveBeenCalled()
     expect(pageView).toHaveBeenCalledTimes(1)
     expect(getRecipe).toHaveBeenCalledTimes(1)
     expect(getRecipe).toHaveBeenCalledWith(recipe.title)
 
-    expect(Recipe).toHaveBeenCalledWith({ recipe: fromRecipeApi(recipe) }, {})
+    expect(Recipe).toHaveBeenCalledWith({ recipe }, {})
+  })
+
+  it('renders in edit mode', () => {
+    render(<RecipePage edit={true} />)
+
+    expect(screen.getByText('edit mock')).toBeInTheDocument()
+    expect(useAnalytics).toHaveBeenCalled()
+    expect(pageView).not.toHaveBeenCalled()
+    expect(getRecipe).toHaveBeenCalledTimes(1)
+    expect(getRecipe).toHaveBeenCalledWith(recipe.title)
+
+    expect(EditRecipe).toHaveBeenCalledWith({ recipe }, {})
   })
 })

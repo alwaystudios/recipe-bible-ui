@@ -13,7 +13,7 @@ describe('asset upload', () => {
     nock(LOCALHOST)
       .post('/asset-upload?assetType=step', {})
       .matchHeader('Authorization', `Bearer ${token}`)
-      .reply(200, filenameOverride)
+      .reply(200)
 
     const result = await assetUpload({ token, file, folder, assetType, filenameOverride })
 
@@ -25,7 +25,7 @@ describe('asset upload', () => {
     nock(LOCALHOST)
       .post('/asset-upload?assetType=step', {})
       .matchHeader('Authorization', `Bearer ${token}`)
-      .reply(200, 'file.htm')
+      .reply(200)
 
     const result = await assetUpload({ token, file, folder, assetType })
 

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { Recipe } from './Recipe'
 import { testRecipe } from '@alwaystudios/recipe-bible-sdk'
 
-const recipe = testRecipe({ title: 'my new recipe' })
+const recipe = testRecipe({ title: 'My new recipe' })
 
 describe('recipe', () => {
   it('renders a recipe', () => {

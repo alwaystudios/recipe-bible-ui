@@ -45,4 +45,4 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   )
 }
 
-export const useAuthContext = () => useContext(AuthContext)
+export const useAuthContext = () => useContext(AuthContext) // eslint-disable-line @typescript-eslint/explicit-module-boundary-types

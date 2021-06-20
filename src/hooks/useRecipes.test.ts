@@ -1,4 +1,9 @@
-import { kebabify, recipeTitleTransformer, testRecipe } from '@alwaystudios/recipe-bible-sdk'
+import {
+  kebabify,
+  recipeTitleTransformer,
+  testRecipe,
+  toSlug,
+} from '@alwaystudios/recipe-bible-sdk'
 import { act, renderHook } from '@testing-library/react-hooks'
 import { datatype, lorem } from 'faker'
 import nock, { cleanAll, isDone } from 'nock'
@@ -9,6 +14,25 @@ describe('use recipes', () => {
   beforeEach(cleanAll)
 
   describe('get recipe', () => {
+    it('udpate recipe', async () => {
+      const recipe = testRecipe()
+      const payload = { data: recipe }
+      nock(LOCALHOST)
+        .get(`/recipes/${recipe.title}`)
+        .reply(200, () => {
+          return payload
+        })
+
+      const { result } = renderHook(() => useRecipes())
+
+      await act(() => result.current.getRecipe(recipe.title))
+
+      expect(result.current.recipe).toMatchObject(recipe)
+      expect(isDone()).toBe(true)
+
+      act(() => result.current.updateRecipe({ title: 'updated' }))
+      expect(result.current.recipe).toMatchObject({ ...recipe, title: 'updated' })
+    })
     it('get recipe', async () => {
       const recipe = testRecipe()
       const payload = { data: recipe }
@@ -109,7 +133,7 @@ describe('use recipes', () => {
       const title = recipeTitleTransformer(lorem.words(3))
       const token = datatype.uuid()
       nock(LOCALHOST)
-        .post(`/recipes`, { title: kebabify(title.toLocaleLowerCase()) })
+        .post(`/recipes`, { title: toSlug(title) })
         .matchHeader('authorization', `Bearer ${token}`)
         .reply(200, () => {
           return {
