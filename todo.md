@@ -1,6 +1,5 @@
 # todo
 
-- use `screen` in unit tests [and other recommendations here](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
 - edit recipes
 - manage unpublished recipes
 - manage ingredients
@@ -12,3 +11,4 @@
 - modals and user feedback toasts
 - link GA
 - link Auth0
+- use `screen` in unit tests [and other recommendations here](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)

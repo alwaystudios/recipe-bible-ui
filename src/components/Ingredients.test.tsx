@@ -1,5 +1,5 @@
 import { Ingredients } from './Ingredients'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import { testIngredient } from '@alwaystudios/recipe-bible-sdk'
 import { internet } from 'faker'
@@ -12,9 +12,9 @@ const ingredients = [
 
 describe('Ingredients', () => {
   it('renders a list of ingredients', () => {
-    const { getByText, container } = render(<Ingredients ingredients={ingredients} />)
+    const { container } = render(<Ingredients ingredients={ingredients} />)
     ingredients.map(({ name, imgSrc }, index) => {
-      expect(getByText(name)).toBeInTheDocument()
+      expect(screen.getByText(name)).toBeInTheDocument()
       expect(container.querySelectorAll('img')[index].getAttribute('src')).toBe(imgSrc)
     })
   })

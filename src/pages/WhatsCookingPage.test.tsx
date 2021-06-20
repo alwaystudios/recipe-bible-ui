@@ -1,6 +1,6 @@
 import { WhatsCookingPage } from './WhatsCookingPage'
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import * as useAnalyticsModule from '../hooks/useAnalytics'
 import { testRecipe } from '@alwaystudios/recipe-bible-sdk'
 import * as useRecipesModule from '../hooks/useRecipes'
@@ -23,9 +23,9 @@ describe('Whats cooking page', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders the whats cooking page', () => {
-    const { getByText } = render(<WhatsCookingPage />)
+    render(<WhatsCookingPage />)
 
-    expect(getByText('mock')).toBeInTheDocument()
+    expect(screen.getByText('mock')).toBeInTheDocument()
     expect(useAnalytics).toHaveBeenCalled()
     expect(pageView).toHaveBeenCalledTimes(1)
     expect(getRecipes).toHaveBeenCalledTimes(1)

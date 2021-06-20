@@ -14,7 +14,7 @@ export const CreateRecipePage: React.FC = () => {
 
   const handleOnClick = () =>
     createRecipe(tokens?.idToken || '', title)
-      .then(() => history.push(kebabify(`recipes/${title.toLocaleLowerCase()}`)))
+      .then(() => history.push(kebabify(`manage/recipes/${title.toLocaleLowerCase()}`)))
       .catch(() => setError(true))
 
   return (

@@ -4,43 +4,74 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
 
+const push = jest.fn()
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push,
+  }),
+}))
+
 const Component = () => <div>component</div>
 
 const user = testUser()
 const login = jest.fn()
 
-const renderRoute = () =>
+const renderRoute = (role?: string) =>
   render(
     <Router>
       <Link to="/route">click link</Link>
-      <AuthenticatedRoute path="/route" component={Component} />
+      <AuthenticatedRoute path="/route" role={role} component={Component} />
     </Router>
   )
 
 describe('AuthenticatedRoute', () => {
   beforeEach(jest.clearAllMocks)
 
-  it('renders a route for an authenticated user', async () => {
+  it('renders a route for an authenticated user', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ login, user, tokenExpired: false })
     renderRoute()
     fireEvent.click(screen.getByText('click link'))
-    await screen.findByText('component')
     expect(login).not.toHaveBeenCalled()
+    expect(push).not.toHaveBeenCalled()
+    expect(screen.getByText('component')).toBeInTheDocument()
   })
 
-  it('requires authentication for an unauthenticated user', async () => {
+  it('renders a route for an authenticated user with required role', () => {
+    jest.spyOn(React, 'useContext').mockReturnValueOnce({ login, user, tokenExpired: false })
+    renderRoute('admin')
+    fireEvent.click(screen.getByText('click link'))
+    expect(login).not.toHaveBeenCalled()
+    expect(push).not.toHaveBeenCalled()
+    expect(screen.getByText('component')).toBeInTheDocument()
+  })
+
+  it('redirects to 403 if user does not have the required role', () => {
+    jest.spyOn(React, 'useContext').mockReturnValueOnce({ login, user, tokenExpired: false })
+    renderRoute('user-does-not-have-this-role')
+    fireEvent.click(screen.getByText('click link'))
+    expect(login).not.toHaveBeenCalled()
+    expect(push).toHaveBeenCalledTimes(1)
+    expect(push).toHaveBeenCalledWith('/403')
+  })
+
+  it('requires authentication for an authenticated user', () => {
     jest
       .spyOn(React, 'useContext')
       .mockReturnValueOnce({ login, user: undefined, tokenExpired: false })
-    const { getByText } = renderRoute()
-    fireEvent.click(getByText('click link'))
-    await expect(login).toHaveBeenCalledTimes(1)
+    renderRoute()
+    fireEvent.click(screen.getByText('click link'))
+    expect(login).toHaveBeenCalledTimes(1)
+    expect(push).not.toHaveBeenCalled()
+    expect(screen.queryByText('component')).not.toBeInTheDocument()
   })
 
-  it('requires authentication for an expired token', async () => {
+  it('requires authentication for an expired token', () => {
     jest.spyOn(React, 'useContext').mockReturnValueOnce({ login, user, tokenExpired: true })
     renderRoute()
     fireEvent.click(screen.getByText('click link'))
-    await expect(login).toHaveBeenCalledTimes(1)
+    expect(login).toHaveBeenCalledTimes(1)
+    expect(push).not.toHaveBeenCalled()
+    expect(screen.queryByText('component')).not.toBeInTheDocument()
   })
 })

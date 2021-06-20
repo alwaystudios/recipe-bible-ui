@@ -1,6 +1,6 @@
 import { Header } from './Header'
 import React from 'react'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 
 const push = jest.fn()
 
@@ -18,17 +18,17 @@ describe('Header', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders with main header', () => {
-    const { getByText } = render(<Header mainText="Heading" />)
-    expect(getByText('Heading')).toBeInTheDocument()
+    render(<Header mainText="Heading" />)
+    expect(screen.getByText('Heading')).toBeInTheDocument()
   })
 
   it('renders children', () => {
-    const { getByText } = render(
+    render(
       <Header mainText="Heading">
         <div>children</div>
       </Header>
     )
-    expect(getByText('children')).toBeInTheDocument()
+    expect(screen.getByText('children')).toBeInTheDocument()
   })
 
   it('renders account component', () => {
@@ -41,15 +41,15 @@ describe('Header', () => {
   })
 
   it('links to main page', () => {
-    const { getByText } = render(<Header mainText="Heading" />)
-    fireEvent.click(getByText('Heading'))
+    render(<Header mainText="Heading" />)
+    fireEvent.click(screen.getByText('Heading'))
     expect(push).toHaveBeenCalledTimes(1)
     expect(push).toHaveBeenCalledWith('/recipes')
   })
 
   it('links to /about page', () => {
-    const { getByAltText } = render(<Header mainText="Heading" />)
-    fireEvent.click(getByAltText('logo'))
+    render(<Header mainText="Heading" />)
+    fireEvent.click(screen.getByAltText('logo'))
     expect(push).toHaveBeenCalledTimes(1)
     expect(push).toHaveBeenCalledWith('/about')
   })

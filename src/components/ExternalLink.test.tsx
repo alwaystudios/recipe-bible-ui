@@ -1,6 +1,6 @@
 import { ExternalLink } from './ExternalLink'
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 describe('External link', () => {
   beforeEach(jest.clearAllMocks)
@@ -14,11 +14,11 @@ describe('External link', () => {
   })
 
   it('renders children', () => {
-    const { getByText } = render(
+    render(
       <ExternalLink href="test link">
         <div>child component</div>
       </ExternalLink>
     )
-    expect(getByText('child component')).toBeInTheDocument()
+    expect(screen.getByText('child component')).toBeInTheDocument()
   })
 })

@@ -1,5 +1,5 @@
 import { RecipeSummaryCards } from './RecipeSummaryCards'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import { lorem } from 'faker'
 
@@ -11,17 +11,17 @@ const recipeList = [...Array(5)].map(() => ({
 
 describe('RecipeSummaryCards', () => {
   it('renders a list of recipe summary cards', () => {
-    const { getByText, container } = render(<RecipeSummaryCards recipeList={recipeList} />)
+    const { container } = render(<RecipeSummaryCards recipeList={recipeList} />)
     recipeList.map(({ title, imgSrc }, index) => {
-      expect(getByText(title)).toBeInTheDocument()
+      expect(screen.getByText(title)).toBeInTheDocument()
       expect(container.querySelectorAll('img')[index].getAttribute('src')).toBe(imgSrc)
     })
   })
 
   it('handles on click events', () => {
-    const { getByText } = render(<RecipeSummaryCards recipeList={recipeList} />)
+    render(<RecipeSummaryCards recipeList={recipeList} />)
     recipeList.map(({ title, onClick }) => {
-      fireEvent.click(getByText(title))
+      fireEvent.click(screen.getByText(title))
       expect(onClick).toHaveBeenCalledTimes(1)
     })
   })

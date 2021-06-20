@@ -1,6 +1,6 @@
 import { Categories } from './Categories'
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { lorem } from 'faker'
 
 describe('Categories', () => {
@@ -8,7 +8,7 @@ describe('Categories', () => {
 
   it('renders a series of categories', () => {
     const categories = [lorem.words(2), lorem.words(2), lorem.words(2)]
-    const { getByText } = render(<Categories categories={categories} />)
-    categories.map((c) => expect(getByText(c)).toBeInTheDocument())
+    render(<Categories categories={categories} />)
+    categories.map((c) => expect(screen.getByText(c)).toBeInTheDocument())
   })
 })

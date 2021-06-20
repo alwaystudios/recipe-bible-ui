@@ -1,5 +1,5 @@
 import { Ingredient } from './Ingredient'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 
 const imgSrc = 'ingredient.jpg'
@@ -7,8 +7,8 @@ const label = 'my ingredient'
 
 describe('Ingredient', () => {
   it('renders an ingredient', () => {
-    const { getByText, container } = render(<Ingredient imgSrc={imgSrc} label={label} />)
-    expect(getByText(label)).toBeInTheDocument()
+    const { container } = render(<Ingredient imgSrc={imgSrc} label={label} />)
+    expect(screen.getByText(label)).toBeInTheDocument()
     expect(container.querySelector('img').getAttribute('src')).toBe(imgSrc)
   })
 

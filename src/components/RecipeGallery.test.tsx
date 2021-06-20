@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { testRecipe } from '@alwaystudios/recipe-bible-sdk'
 import { RecipeGallery } from './RecipeGallery'
 
@@ -20,8 +20,8 @@ const options = { option1: () => recipes }
 
 describe('recipe gallery', () => {
   it('renders a recipe gallery', () => {
-    const { getByText } = render(<RecipeGallery recipes={recipes} options={options} />)
+    render(<RecipeGallery recipes={recipes} options={options} />)
 
-    recipes.map((r) => expect(getByText(r.title)).toBeInTheDocument())
+    recipes.map((r) => expect(screen.getByText(r.title)).toBeInTheDocument())
   })
 })

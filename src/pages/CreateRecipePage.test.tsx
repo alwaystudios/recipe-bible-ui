@@ -26,7 +26,7 @@ describe('create a new recipe', () => {
 
     await waitFor(() => {
       expect(push).toHaveBeenCalledTimes(1)
-      expect(push).toHaveBeenCalledWith(`recipes/my-new-recipe`)
+      expect(push).toHaveBeenCalledWith(`manage/recipes/my-new-recipe`)
     })
 
     expect(createRecipe).toHaveBeenCalledTimes(1)

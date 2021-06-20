@@ -8,6 +8,7 @@ import * as aboutPageModule from '../pages/AboutPage'
 import * as whatsCookingModule from '../pages/WhatsCookingPage'
 import * as callbackModule from '../auth/Callback'
 import * as logoutModule from '../auth/Logout'
+import * as http403Module from '../pages/403'
 
 const AuthProviderMock: React.FC = ({ children }) => <>{children}</>
 const AuthProvider = jest.spyOn(AuthContext, 'AuthProvider').mockImplementation(AuthProviderMock)
@@ -34,22 +35,26 @@ describe('App', () => {
 
   it('renders the app', () => {
     jest.spyOn(callbackModule, 'Callback').mockReturnValueOnce(<>redirect from root mock</>)
-    const { getByText } = renderApp()
-    expect(getByText('RecipeBible.net')).toBeInTheDocument()
+    renderApp()
+    expect(screen.getByText('RecipeBible.net')).toBeInTheDocument()
     expect(AuthProvider).toHaveBeenCalledTimes(1)
-    expect(getByText('redirect from root mock')).toBeInTheDocument()
+    expect(screen.getByText('redirect from root mock')).toBeInTheDocument()
   })
 
-  test.each([['account'], ['create']])('renders authenticates route /%s', (route) => {
-    MockComponent.mockReturnValueOnce(<>{route} mock</>)
-    renderApp(`/${route}`)
-    expect(screen.getByText(`${route} mock`)).toBeInTheDocument()
-  })
+  test.each([['account'], ['create'], ['manage/recipes/some-test-recipe']])(
+    'renders authenticates route /%s',
+    (route) => {
+      MockComponent.mockReturnValueOnce(<>{route} mock</>)
+      renderApp(`/${route}`)
+      expect(screen.getByText(`${route} mock`)).toBeInTheDocument()
+    }
+  )
 
   test.each([
     ['/about', 'about mock', aboutPageModule, 'AboutPage'],
     ['/logout', 'logout mock', logoutModule, 'Logout'],
     ['/recipes', 'recipe mock', whatsCookingModule, 'WhatsCookingPage'],
+    ['/403', 'http 403 mock', http403Module, 'Http403'],
     ['/', 'callback mock', callbackModule, 'Callback'],
   ])('renders %s route', (route, mockText, module, page) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

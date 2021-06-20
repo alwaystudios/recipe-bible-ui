@@ -15,6 +15,9 @@ import { PrivacyPage } from '../pages/PrivacyPage'
 import { SMALL_SCREEN } from '../breakpoints'
 import { RecipePage } from '../pages/RecipePage'
 import { CreateRecipePage } from '../pages/CreateRecipePage'
+import { EditRecipePage } from '../pages/EditRecipePage'
+import { ADMIN_ROLE } from '../contstants'
+import { Http403 } from '../pages/403'
 
 const Page = styled.div`
   display: flex;
@@ -35,13 +38,19 @@ export const App: React.FC = () => (
     <Page>
       <Switch>
         <AuthenticatedRoute path="/account" component={MyAccountPage} />
-        <AuthenticatedRoute path="/create" component={CreateRecipePage} />
+        <AuthenticatedRoute path="/create" role={ADMIN_ROLE} component={CreateRecipePage} />
+        <AuthenticatedRoute
+          path="/manage/recipes/:name"
+          role={ADMIN_ROLE}
+          component={EditRecipePage}
+        />
         <Route path="/about" component={AboutPage} />
         <Route path="/recipes/:name" component={RecipePage} />
         <Route path="/recipes" component={WhatsCookingPage} />
         <Route path="/logout" component={Logout} />
         <Route path="/terms" component={TermsPage} />
         <Route path="/privacy" component={PrivacyPage} />
+        <Route path="/403" component={Http403} />
         <Route path="/" component={Callback} />
       </Switch>
     </Page>

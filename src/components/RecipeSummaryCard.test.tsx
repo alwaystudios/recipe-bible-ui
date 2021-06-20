@@ -1,5 +1,5 @@
 import { RecipeSummaryCard } from './RecipeSummaryCard'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import { lorem } from 'faker'
 
@@ -9,18 +9,16 @@ const onClick = jest.fn()
 
 describe('RecipeSummaryCard', () => {
   it('renders a recipe summary card', () => {
-    const { getByText, container } = render(
+    const { container } = render(
       <RecipeSummaryCard title={title} imgSrc={imgSrc} onClick={onClick} />
     )
-    expect(getByText(title)).toBeInTheDocument()
+    expect(screen.getByText(title)).toBeInTheDocument()
     expect(container.querySelector('img').getAttribute('src')).toBe(imgSrc)
   })
 
   it('handles on click events', () => {
-    const { getByText } = render(
-      <RecipeSummaryCard title={title} imgSrc={imgSrc} onClick={onClick} />
-    )
-    fireEvent.click(getByText(title))
+    render(<RecipeSummaryCard title={title} imgSrc={imgSrc} onClick={onClick} />)
+    fireEvent.click(screen.getByText(title))
     expect(onClick).toHaveBeenCalledTimes(1)
   })
 })
