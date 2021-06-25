@@ -57,13 +57,14 @@ type RecipeSummaryCardProps = {
 
 export const fromRecipesApi = (
   recipes: Partial<Recipe[]>,
-  historyPush: (url: string) => void
+  historyPush: (url: string) => void,
+  mode: 'view' | 'edit'
 ): RecipeSummaryCardProps[] =>
   recipes.map(({ title, imgSrc }) => {
     const _title = toSlug(title)
     return {
       title: recipeTitleTransformer(title),
       imgSrc: getRecipeImgSrc(title, imgSrc),
-      onClick: () => historyPush(`/recipes/${_title}`),
+      onClick: () => historyPush(`/${mode === 'view' ? 'recipes' : 'manage/recipes'}/${_title}`),
     }
   })

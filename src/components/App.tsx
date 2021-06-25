@@ -39,12 +39,16 @@ export const App: React.FC = () => (
       <Switch>
         <AuthenticatedRoute path="/account" component={MyAccountPage} />
         <AuthenticatedRoute path="/create" role={ADMIN_ROLE} component={CreateRecipePage} />
-        <AuthenticatedRoute path="/manage/recipes/:name" component={RecipePage} role={ADMIN_ROLE} />
+        <AuthenticatedRoute
+          path="/manage/recipes/:name"
+          component={RecipePage}
+          role={ADMIN_ROLE}
+          rest={{ edit: true }}
+        />
         <AuthenticatedRoute
           path="/manage/recipes"
           component={ManageRecipesPage}
           role={ADMIN_ROLE}
-          rest={{ edit: true }}
         />
         <Route path="/about" component={AboutPage} />
         <Route path="/recipes/:name" component={RecipePage} />

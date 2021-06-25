@@ -30,7 +30,7 @@ export const ManageRecipesPage: React.FunctionComponent = () => {
 
   return (
     <Spinner isLoading={loading}>
-      <RecipeGallery options={options} recipes={recipes} defaultOption={Draft} />
+      <RecipeGallery options={options} recipes={recipes} defaultOption={Draft} mode="edit" />
     </Spinner>
   )
 }

@@ -56,19 +56,22 @@ describe('recipe transformers', () => {
     })
   })
 
-  it('fromRecipesApi', () => {
-    const historyPush = jest.fn()
-    const recipes = [testRecipe(), testRecipe()]
-    const data = fromRecipesApi(recipes, historyPush)
-    expect(data).toEqual(
-      recipes.map((r) => ({
-        title: recipeTitleTransformer(r.title),
-        imgSrc: getRecipeImgSrc(r.title, r.imgSrc),
-        onClick: expect.anything(),
-      }))
-    )
-    data[0].onClick()
-    expect(historyPush).toHaveBeenCalledTimes(1)
-    expect(historyPush).toHaveBeenCalledWith(`/recipes/${recipes[0].title}`)
+  describe('fromRecipesApi', () => {
+    test.each([['view'], ['edit']])('mode = $s', (mode: any) => {
+      const historyPush = jest.fn()
+      const recipes = [testRecipe(), testRecipe()]
+      const data = fromRecipesApi(recipes, historyPush, mode)
+      expect(data).toEqual(
+        recipes.map((r) => ({
+          title: recipeTitleTransformer(r.title),
+          imgSrc: getRecipeImgSrc(r.title, r.imgSrc),
+          onClick: expect.anything(),
+        }))
+      )
+      data[0].onClick()
+      expect(historyPush).toHaveBeenCalledTimes(1)
+      const segment = mode === 'view' ? 'recipes' : 'manage/recipes'
+      expect(historyPush).toHaveBeenCalledWith(`/${segment}/${recipes[0].title}`)
+    })
   })
 })

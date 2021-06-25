@@ -26,6 +26,7 @@ describe('manage recipes page', () => {
       field: ['title', 'imgSrc', 'metadata'],
     })
     expect(RecipeGallery.mock.calls[0][0].defaultOption).toBe('Draft')
+    expect(RecipeGallery.mock.calls[0][0].mode).toBe('edit')
     expect(RecipeGallery.mock.calls[0][0].recipes).toBe(recipes)
     expect(RecipeGallery.mock.calls[0][0].options).toEqual({
       Draft: expect.anything(),
