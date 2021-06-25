@@ -2,6 +2,7 @@ import { Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import { pathOr } from 'ramda'
 import { useState } from 'react'
 import request from 'superagent'
+import { useAuthContext } from '../auth/AuthContext'
 import { API_BASE_URL } from '../contstants'
 
 type GetRecipes = {
@@ -11,17 +12,18 @@ type GetRecipes = {
 }
 
 type UseRecipes = {
-  updateRecipe: (updates: Partial<Recipe>) => void // eslint-disable-line no-unused-vars
-  getRecipes: (params?: GetRecipes) => Promise<void> // eslint-disable-line no-unused-vars
-  getRecipe: (title: string) => Promise<void> // eslint-disable-line no-unused-vars
-  createRecipe: (token: string, title: string) => Promise<void> // eslint-disable-line no-unused-vars
-  saveRecipe: (token: string, recipe: Recipe) => Promise<void> // eslint-disable-line no-unused-vars
+  updateRecipe: (updates: Partial<Recipe>) => void
+  getRecipes: (params?: GetRecipes) => Promise<void>
+  getRecipe: (title: string) => Promise<void>
+  createRecipe: (token: string, title: string) => Promise<void>
   recipes: Recipe[]
   recipe: Recipe
   loading: boolean
 }
 
 export const useRecipes = (): UseRecipes => {
+  const { tokens } = useAuthContext()
+
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
@@ -60,24 +62,30 @@ export const useRecipes = (): UseRecipes => {
       .set('Authorization', `Bearer ${token}`)
   }
 
-  const saveRecipe = async (token: string, recipe: Recipe): Promise<void> => {
+  const saveRecipe = async (recipe: Recipe): Promise<void> => {
     await request
       .put(`${API_BASE_URL}/recipes/${toSlug(recipe.title)}`)
       .send(recipe)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${tokens.idToken}`)
   }
 
-  const updateRecipe = (updates: Partial<Recipe>): void =>
-    recipe ? setRecipe({ ...recipe, ...updates }) : null
+  const updateRecipe = (updates: Partial<Recipe>): Promise<void> => {
+    if (!recipe) {
+      return
+    }
+
+    const updatedRecipe = { ...recipe, ...updates }
+    setRecipe(updatedRecipe)
+    return saveRecipe(updatedRecipe)
+  }
 
   return {
     updateRecipe,
     getRecipes,
     getRecipe,
     createRecipe,
-    saveRecipe,
     recipes,
     recipe,
     loading,

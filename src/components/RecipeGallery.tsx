@@ -7,7 +7,7 @@ import { RecipeSummaryCards } from './RecipeSummaryCards'
 
 type Props = {
   recipes: Partial<Recipe[]>
-  options: Record<string, (recipes: Partial<Recipe[]>) => Partial<Recipe[]>> // eslint-disable-line no-unused-vars
+  options: Record<string, (recipes: Partial<Recipe[]>) => Partial<Recipe[]>>
   defaultOption?: string
 }
 

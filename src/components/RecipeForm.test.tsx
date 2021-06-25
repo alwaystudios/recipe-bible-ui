@@ -11,32 +11,27 @@ const tokens = { idToken: '1234' }
 
 const recipe = testRecipe({ imgSrc: '' })
 const updateRecipe = jest.fn()
-const saveRecipe = jest.fn()
 const file = { content: 'content' }
 
 describe('recipe form', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders', () => {
-    render(<RecipeForm recipe={recipe} updateRecipe={updateRecipe} saveRecipe={saveRecipe} />)
+    render(<RecipeForm recipe={recipe} updateRecipe={updateRecipe} />)
     expect(screen.getByText('Photo')).toBeInTheDocument()
     expect(screen.getByText('Steps')).toBeInTheDocument()
   })
 
   it('handles photo upload', async () => {
     useAuthContext.mockReturnValue({ tokens } as any)
-    saveRecipe.mockResolvedValueOnce(undefined)
     assetUpload.mockResolvedValueOnce('new-img-src')
 
-    const { container } = render(
-      <RecipeForm recipe={recipe} updateRecipe={updateRecipe} saveRecipe={saveRecipe} />
-    )
+    const { container } = render(<RecipeForm recipe={recipe} updateRecipe={updateRecipe} />)
 
     const input = container.querySelector('input')
     fireEvent.change(input, { target: { files: [file] } })
 
-    await waitFor(() => expect(saveRecipe).toHaveBeenCalledTimes(1))
-    expect(assetUpload).toHaveBeenCalledTimes(1)
+    await waitFor(() => expect(assetUpload).toHaveBeenCalledTimes(1))
     expect(assetUpload).toHaveBeenCalledWith({
       assetType: 'recipe',
       file: {

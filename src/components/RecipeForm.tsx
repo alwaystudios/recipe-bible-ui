@@ -2,7 +2,6 @@ import { Tab, Tabs } from '@alwaystudios/as-ui-components'
 import { Recipe } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
 import React from 'react'
-import { useAuthContext } from '../auth/AuthContext'
 import { fromRecipeApi } from '../domain/recipeTransformer'
 import { RecipeImageForm } from './RecipeImageForm'
 
@@ -14,18 +13,13 @@ const Container = styled.div`
 
 type Props = {
   recipe: Recipe
-  updateRecipe: (updates: Partial<Recipe>) => void // eslint-disable-line no-unused-vars
-  saveRecipe: (token: string, recipe: Recipe) => Promise<void> // eslint-disable-line no-unused-vars
+  updateRecipe: (updates: Partial<Recipe>) => void
 }
 
-export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, saveRecipe }) => {
-  const { tokens } = useAuthContext()
+export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe }) => {
   const { title, imgSrc } = fromRecipeApi(recipe)
 
-  const handleUpdateRecipe = (updates: Partial<Recipe>) => {
-    updateRecipe(updates)
-    saveRecipe(tokens.idToken, { ...recipe, ...updates })
-  }
+  const handleUpdateRecipe = (updates: Partial<Recipe>) => updateRecipe(updates)
 
   return (
     <Container>

@@ -23,7 +23,7 @@ const PaddedText = styled.p`
 type Props = {
   title: string
   imgSrc: string
-  setImgSrc: (src: string) => void // eslint-disable-line no-unused-vars
+  setImgSrc: (src: string) => void
 }
 
 export const RecipeImageForm: React.FunctionComponent<Props> = ({ title, setImgSrc, imgSrc }) => {

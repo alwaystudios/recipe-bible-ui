@@ -57,7 +57,7 @@ type RecipeSummaryCardProps = {
 
 export const fromRecipesApi = (
   recipes: Partial<Recipe[]>,
-  historyPush: (url: string) => void // eslint-disable-line no-unused-vars
+  historyPush: (url: string) => void
 ): RecipeSummaryCardProps[] =>
   recipes.map(({ title, imgSrc }) => {
     const _title = toSlug(title)

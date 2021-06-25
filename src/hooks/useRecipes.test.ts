@@ -1,20 +1,21 @@
-import {
-  kebabify,
-  recipeTitleTransformer,
-  testRecipe,
-  toSlug,
-} from '@alwaystudios/recipe-bible-sdk'
+import { recipeTitleTransformer, testRecipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import { act, renderHook } from '@testing-library/react-hooks'
 import { datatype, lorem } from 'faker'
 import nock, { cleanAll, isDone } from 'nock'
 import { LOCALHOST } from '../contstants'
 import { useRecipes } from './useRecipes'
+import * as AuthContext from '../auth/AuthContext'
+
+const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
+const tokens = { idToken: datatype.uuid() }
 
 describe('use recipes', () => {
   beforeEach(cleanAll)
 
   describe('get recipe', () => {
     it('udpate recipe', async () => {
+      useAuthContext.mockReturnValue({ tokens } as any)
+
       const recipe = testRecipe()
       const payload = { data: recipe }
       nock(LOCALHOST)
@@ -30,9 +31,23 @@ describe('use recipes', () => {
       expect(result.current.recipe).toMatchObject(recipe)
       expect(isDone()).toBe(true)
 
-      act(() => result.current.updateRecipe({ title: 'updated' }))
-      expect(result.current.recipe).toMatchObject({ ...recipe, title: 'updated' })
+      const story = 'updated'
+
+      nock(LOCALHOST)
+        .put(`/recipes/${recipe.title}`, { ...recipe, story })
+        .matchHeader('authorization', `Bearer ${tokens.idToken}`)
+        .reply(200, () => {
+          return {
+            status: 'ok',
+          }
+        })
+
+      await act(() => result.current.updateRecipe({ story }))
+      expect(result.current.recipe).toMatchObject({ ...recipe, story })
+
+      expect(isDone()).toBe(true)
     })
+
     it('get recipe', async () => {
       const recipe = testRecipe()
       const payload = { data: recipe }
@@ -144,28 +159,6 @@ describe('use recipes', () => {
       const { result } = renderHook(() => useRecipes())
 
       await act(() => result.current.createRecipe(token, title))
-
-      expect(isDone()).toBe(true)
-    })
-  })
-
-  describe('save recipe', () => {
-    it('saves an existing recipe', async () => {
-      const title = kebabify(lorem.words(3))
-      const recipe = testRecipe({ title })
-      const token = datatype.uuid()
-      nock(LOCALHOST)
-        .put(`/recipes/${title}`, recipe)
-        .matchHeader('authorization', `Bearer ${token}`)
-        .reply(200, () => {
-          return {
-            status: 'ok',
-          }
-        })
-
-      const { result } = renderHook(() => useRecipes())
-
-      await act(() => result.current.saveRecipe(token, recipe))
 
       expect(isDone()).toBe(true)
     })

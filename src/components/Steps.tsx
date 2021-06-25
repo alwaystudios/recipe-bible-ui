@@ -12,8 +12,8 @@ const Container = styled(SortableList)`
 
 type Props = {
   steps: StepType[]
-  setSteps?: (steps: StepType[]) => void // eslint-disable-line no-unused-vars
-  onDelete?: (step: string) => void // eslint-disable-line no-unused-vars
+  setSteps?: (steps: StepType[]) => void
+  onDelete?: (step: string) => void
   className?: string
 }
 
