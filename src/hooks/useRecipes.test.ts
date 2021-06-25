@@ -34,7 +34,7 @@ describe('use recipes', () => {
       const story = 'updated'
 
       nock(LOCALHOST)
-        .put(`/recipes/${recipe.title}`, { ...recipe, story })
+        .put(`/recipes/${recipe.title}`, recipe)
         .matchHeader('authorization', `Bearer ${tokens.idToken}`)
         .reply(200, () => {
           return {

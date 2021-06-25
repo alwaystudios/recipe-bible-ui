@@ -25,12 +25,12 @@ describe('manage recipes page', () => {
       published: 'all',
       field: ['title', 'imgSrc', 'metadata'],
     })
-    expect(RecipeGallery.mock.calls[0][0].defaultOption).toBe('All')
+    expect(RecipeGallery.mock.calls[0][0].defaultOption).toBe('Draft')
     expect(RecipeGallery.mock.calls[0][0].recipes).toBe(recipes)
     expect(RecipeGallery.mock.calls[0][0].options).toEqual({
-      All: expect.anything(),
-      Published: expect.anything(),
+      Draft: expect.anything(),
       Focused: expect.anything(),
+      Published: expect.anything(),
     })
   })
 })

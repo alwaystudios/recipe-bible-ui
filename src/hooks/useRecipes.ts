@@ -62,23 +62,21 @@ export const useRecipes = (): UseRecipes => {
       .set('Authorization', `Bearer ${token}`)
   }
 
-  const saveRecipe = async (recipe: Recipe): Promise<void> => {
+  const updateRecipe = async (updates: Partial<Recipe>): Promise<void> => {
+    if (!recipe) {
+      return
+    }
+
+    const updatedRecipe = { ...recipe, ...updates }
+
     await request
       .put(`${API_BASE_URL}/recipes/${toSlug(recipe.title)}`)
       .send(recipe)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${tokens.idToken}`)
-  }
 
-  const updateRecipe = (updates: Partial<Recipe>): Promise<void> => {
-    if (!recipe) {
-      return
-    }
-
-    const updatedRecipe = { ...recipe, ...updates }
     setRecipe(updatedRecipe)
-    return saveRecipe(updatedRecipe)
   }
 
   return {

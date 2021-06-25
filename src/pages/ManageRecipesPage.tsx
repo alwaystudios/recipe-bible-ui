@@ -4,18 +4,18 @@ import { RecipeGallery } from '../components/RecipeGallery'
 import { Spinner } from '../components/Spinner'
 import { useRecipes } from '../hooks/useRecipes'
 
-const STATUS = ['Published', 'Focused']
+const STATUS = ['Focused', 'Published']
 
 export const ManageRecipesPage: React.FunctionComponent = () => {
   const [didMount, setDidMount] = useState(false)
   const { getRecipes, recipes, loading } = useRecipes()
-  const ALL = 'All'
+  const Draft = 'Draft'
   const options = STATUS.reduce(
     (acc, status) => ({
       ...acc,
       [status]: () => recipes.filter((r) => path([status.toLocaleLowerCase()], r)),
     }),
-    { [ALL]: () => recipes }
+    { [Draft]: () => recipes.filter((r) => !r.metadata.published) }
   )
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const ManageRecipesPage: React.FunctionComponent = () => {
 
   return (
     <Spinner isLoading={loading}>
-      <RecipeGallery options={options} recipes={recipes} defaultOption={ALL} />
+      <RecipeGallery options={options} recipes={recipes} defaultOption={Draft} />
     </Spinner>
   )
 }
