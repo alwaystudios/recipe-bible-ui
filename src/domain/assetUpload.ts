@@ -25,6 +25,7 @@ export const assetUpload = async ({
   data.append('filename', filename)
   return request
     .post(`${API_BASE_URL}/asset-upload?assetType=${assetType}`)
+    .set('Accept', 'application/json')
     .set('Authorization', `Bearer ${token}`)
     .send(data)
     .then(() => filename)

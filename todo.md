@@ -1,7 +1,6 @@
 # todo
 
-- edit recipes
-- manage unpublished recipes
+- delete recipe
 - manage ingredients
 - manage ads
 - social media
