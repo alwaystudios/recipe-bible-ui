@@ -32,7 +32,6 @@ export const RecipeImageForm: React.FunctionComponent<Props> = ({ title, setImgS
   const { tokens } = useAuthContext()
 
   const handleFileUpload = async (file: File) => {
-    setImgSrc('')
     setUploading(true)
     const filename = await assetUpload({
       file,
@@ -43,8 +42,8 @@ export const RecipeImageForm: React.FunctionComponent<Props> = ({ title, setImgS
     if (filename === 'error') {
       setUploading(false)
     } else {
+      setImgSrc(filename)
       setTimeout(() => {
-        setImgSrc(filename)
         setUploading(false)
       }, 1000)
     }

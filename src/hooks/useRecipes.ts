@@ -71,7 +71,7 @@ export const useRecipes = (): UseRecipes => {
 
     await request
       .put(`${API_BASE_URL}/recipes/${toSlug(recipe.title)}`)
-      .send(recipe)
+      .send(updatedRecipe)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${tokens.idToken}`)

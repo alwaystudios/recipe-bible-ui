@@ -2,12 +2,12 @@ import { Ingredients } from './Ingredients'
 import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import { testIngredient } from '@alwaystudios/recipe-bible-sdk'
-import { internet } from 'faker'
+import { internet, lorem } from 'faker'
 
 const ingredients = [
-  testIngredient({ imgSrc: internet.url() }),
-  testIngredient({ imgSrc: internet.url() }),
-  testIngredient({ imgSrc: internet.url() }),
+  testIngredient({ name: lorem.words(2), imgSrc: internet.url() }),
+  testIngredient({ name: lorem.words(2), imgSrc: internet.url() }),
+  testIngredient({ name: lorem.words(2), imgSrc: internet.url() }),
 ]
 
 describe('Ingredients', () => {
