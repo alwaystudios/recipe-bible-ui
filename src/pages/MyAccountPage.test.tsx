@@ -38,23 +38,16 @@ describe('MyAccount page', () => {
     expect(pageView).toHaveBeenCalledTimes(1)
   })
 
-  it('handles logout CTA', () => {
+  test.each([
+    ['create', 'New recipe'],
+    ['manage/recipes', 'Manage recipes'],
+  ])('handles /%s link', (link: string, cta: string) => {
     useAuthContext.mockReturnValueOnce({ user } as any)
     render(<MyAccountPage />)
-    const logoutButton = screen.queryAllByText('Logout')[0]
-    expect(logoutButton).toBeInTheDocument()
-    fireEvent.click(logoutButton)
-    expect(push).toHaveBeenCalledTimes(1)
-    expect(push).toHaveBeenCalledWith('/logout')
-  })
-
-  it('handles create CTA', () => {
-    useAuthContext.mockReturnValueOnce({ user } as any)
-    render(<MyAccountPage />)
-    const createButton = screen.getByText('New recipe')
+    const createButton = screen.getByText(cta)
     expect(createButton).toBeInTheDocument()
     fireEvent.click(createButton)
     expect(push).toHaveBeenCalledTimes(1)
-    expect(push).toHaveBeenCalledWith('/create')
+    expect(push).toHaveBeenCalledWith(`/${link}`)
   })
 })

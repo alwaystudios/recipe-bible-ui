@@ -20,3 +20,4 @@
 - app version from package.json
 - handle 404s recipe not found etc..
 - update all RB project readmes
+- if user image is not found then use profile icon

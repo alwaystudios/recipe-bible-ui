@@ -17,8 +17,8 @@ export const MyAccountPage: React.FunctionComponent = () => {
 
   return (
     <>
-      <Button className="btn__logout" onClick={() => history.push('/logout')} text="Logout" />
       <Button onClick={() => history.push('/create')} text="New recipe" />
+      <Button onClick={() => history.push('/manage/recipes')} text="Manage recipes" />
       <label>
         Name: {user.given_name} {user.family_name}
       </label>

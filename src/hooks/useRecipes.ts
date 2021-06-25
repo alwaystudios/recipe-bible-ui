@@ -6,8 +6,8 @@ import { useAuthContext } from '../auth/AuthContext'
 import { API_BASE_URL } from '../contstants'
 
 type GetRecipes = {
-  published?: boolean
-  focused?: boolean | 'all'
+  published?: boolean | 'all'
+  focused?: boolean
   field?: string[]
 }
 

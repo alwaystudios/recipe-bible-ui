@@ -17,6 +17,7 @@ import { RecipePage } from '../pages/RecipePage'
 import { CreateRecipePage } from '../pages/CreateRecipePage'
 import { ADMIN_ROLE } from '../contstants'
 import { Http403 } from '../pages/403'
+import { ManageRecipesPage } from '../pages/ManageRecipesPage'
 
 const Page = styled.div`
   display: flex;
@@ -38,9 +39,10 @@ export const App: React.FC = () => (
       <Switch>
         <AuthenticatedRoute path="/account" component={MyAccountPage} />
         <AuthenticatedRoute path="/create" role={ADMIN_ROLE} component={CreateRecipePage} />
+        <AuthenticatedRoute path="/manage/recipes/:name" component={RecipePage} role={ADMIN_ROLE} />
         <AuthenticatedRoute
-          path="/manage/recipes/:name"
-          component={RecipePage}
+          path="/manage/recipes"
+          component={ManageRecipesPage}
           role={ADMIN_ROLE}
           rest={{ edit: true }}
         />

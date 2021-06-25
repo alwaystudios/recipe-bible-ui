@@ -41,7 +41,7 @@ describe('App', () => {
     expect(screen.getByText('redirect from root mock')).toBeInTheDocument()
   })
 
-  test.each([['account'], ['create'], ['manage/recipes/some-test-recipe']])(
+  test.each([['account'], ['create'], ['manage/recipes'], ['manage/recipes/some-test-recipe']])(
     'renders authenticates route /%s',
     (route) => {
       MockComponent.mockReturnValueOnce(<>{route} mock</>)

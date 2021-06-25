@@ -105,8 +105,8 @@ describe('use recipes', () => {
     })
 
     it('get recipes with query string params', async () => {
-      const published = false
-      const focused = 'all'
+      const published = 'all'
+      const focused = false
       const field = ['title', 'imgSrc']
       const data = [testRecipe(), testRecipe()]
       const payload = { data }
