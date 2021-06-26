@@ -17,7 +17,6 @@
 - bundle analyser
 - remove tests from bundle ?
 - feature flags
-- app version from package.json
 - handle 404s recipe not found etc..
 - update all RB project readmes
 - move aws to a lib

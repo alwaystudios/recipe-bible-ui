@@ -2,6 +2,7 @@ import { AboutPage } from './AboutPage'
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import * as useAnalyticsModule from '../hooks/useAnalytics'
+import { version } from '../../package.json'
 
 const pageView = jest.fn()
 const useAnalytics = jest
@@ -13,7 +14,7 @@ describe('About page', () => {
 
   it('renders the about page', () => {
     render(<AboutPage />)
-    expect(screen.getByText('about page')).toBeInTheDocument()
+    expect(screen.getByText(`version: ${version}`)).toBeInTheDocument()
     expect(useAnalytics).toHaveBeenCalledTimes(1)
     expect(pageView).toHaveBeenCalledTimes(1)
   })

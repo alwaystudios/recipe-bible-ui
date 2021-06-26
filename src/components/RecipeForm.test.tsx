@@ -42,6 +42,9 @@ describe('recipe form', () => {
     const viewLink = screen.getByText('view')
     expect(viewLink).toBeInTheDocument()
     expect(viewLink.getAttribute('href')).toBe(`/recipes/${toSlug(recipe.title)}`)
+
+    expect(screen.getByText('recipes')).toBeInTheDocument()
+    expect(screen.getByText('manage recipes')).toBeInTheDocument()
   })
 
   it('handles delete CTA', async () => {

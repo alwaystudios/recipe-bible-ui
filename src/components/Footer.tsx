@@ -23,6 +23,7 @@ export const Footer: React.FunctionComponent = () => {
 
   return (
     <Container>
+      <Link to="/recipes">Recipes</Link>
       <Link to="/about">About</Link>
       <Link to="/terms">Terms and conditions</Link>
       <Link to="/privacy">Privacy policy</Link>
