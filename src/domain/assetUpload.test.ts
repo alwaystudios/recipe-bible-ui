@@ -11,7 +11,10 @@ const filenameOverride = 'override'
 describe('asset upload', () => {
   it('uploads asset with filename override', async () => {
     nock(LOCALHOST)
-      .post('/asset-upload?assetType=step', {})
+      .post(
+        '/asset-upload?assetType=step',
+        '{"file":"data:text/html;base64,","type":"text/html","folder":"folder","filename":"override"}'
+      )
       .matchHeader('Authorization', `Bearer ${token}`)
       .reply(200)
 
@@ -23,7 +26,10 @@ describe('asset upload', () => {
 
   it('uploads files without filename override', async () => {
     nock(LOCALHOST)
-      .post('/asset-upload?assetType=step', {})
+      .post(
+        '/asset-upload?assetType=step',
+        '{"file":"data:text/html;base64,","type":"text/html","folder":"folder","filename":"file.htm"}'
+      )
       .matchHeader('Authorization', `Bearer ${token}`)
       .reply(200)
 

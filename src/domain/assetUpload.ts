@@ -9,6 +9,17 @@ type FileUpload = {
   filenameOverride?: string
 }
 
+const fileToBase64 = (file: File): Promise<string | ArrayBuffer> => {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onload = function (event) {
+      resolve(event.target.result)
+    }
+
+    reader.readAsDataURL(file)
+  })
+}
+
 export const assetUpload = async ({
   token,
   file,
@@ -18,15 +29,12 @@ export const assetUpload = async ({
 }: FileUpload): Promise<string> => {
   const filename = filenameOverride || file.name
 
-  const data = new FormData()
-  data.append('file', file)
-  data.append('type', file.type)
-  data.append('folder', folder)
-  data.append('filename', filename)
+  const _file = await fileToBase64(file)
+
   return request
     .post(`${API_BASE_URL}/asset-upload?assetType=${assetType}`)
     .set('Accept', 'application/json')
     .set('Authorization', `Bearer ${token}`)
-    .send(data)
+    .send({ file: _file, type: file.type, folder, filename })
     .then(() => filename)
 }
