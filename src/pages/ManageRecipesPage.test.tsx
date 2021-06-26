@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react'
 import { testRecipe } from '@alwaystudios/recipe-bible-sdk'
 import * as useRecipesModule from '../hooks/useRecipes'
 import * as recipeGalleryModule from '../components/RecipeGallery'
+import { MemoryRouter as Router } from 'react-router-dom'
 
 const RecipeGallery = jest.spyOn(recipeGalleryModule, 'RecipeGallery').mockReturnValue(<>mock</>)
 
@@ -13,11 +14,18 @@ jest
   .spyOn(useRecipesModule, 'useRecipes')
   .mockImplementation(() => ({ getRecipes, recipes, loading: false } as any))
 
+const renderManageRecipesPage = () =>
+  render(
+    <Router>
+      <ManageRecipesPage />
+    </Router>
+  )
+
 describe('manage recipes page', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders the manage recipes page', () => {
-    render(<ManageRecipesPage />)
+    renderManageRecipesPage()
 
     expect(screen.getByText('mock')).toBeInTheDocument()
     expect(getRecipes).toHaveBeenCalledTimes(1)
@@ -33,5 +41,9 @@ describe('manage recipes page', () => {
       Focused: expect.anything(),
       Published: expect.anything(),
     })
+
+    const createLink = screen.getByText('create new recipe')
+    expect(createLink).toBeInTheDocument()
+    expect(createLink.getAttribute('href')).toBe('/manage/recipes/create')
   })
 })

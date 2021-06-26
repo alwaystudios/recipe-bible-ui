@@ -41,14 +41,16 @@ describe('App', () => {
     expect(screen.getByText('redirect from root mock')).toBeInTheDocument()
   })
 
-  test.each([['account'], ['create'], ['manage/recipes'], ['manage/recipes/some-test-recipe']])(
-    'renders authenticates route /%s',
-    (route) => {
-      MockComponent.mockReturnValueOnce(<>{route} mock</>)
-      renderApp(`/${route}`)
-      expect(screen.getByText(`${route} mock`)).toBeInTheDocument()
-    }
-  )
+  test.each([
+    ['account'],
+    ['manage/recipes/create'],
+    ['manage/recipes'],
+    ['manage/recipes/some-test-recipe'],
+  ])('renders authenticates route /%s', (route) => {
+    MockComponent.mockReturnValueOnce(<>{route} mock</>)
+    renderApp(`/${route}`)
+    expect(screen.getByText(`${route} mock`)).toBeInTheDocument()
+  })
 
   test.each([
     ['/about', 'about mock', aboutPageModule, 'AboutPage'],

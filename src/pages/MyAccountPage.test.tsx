@@ -39,8 +39,8 @@ describe('MyAccount page', () => {
   })
 
   test.each([
-    ['create', 'New recipe'],
-    ['manage/recipes', 'Manage recipes'],
+    ['manage/recipes/create', 'new recipe'],
+    ['manage/recipes', 'manage recipes'],
   ])('handles /%s link', (link: string, cta: string) => {
     useAuthContext.mockReturnValueOnce({ user } as any)
     render(<MyAccountPage />)

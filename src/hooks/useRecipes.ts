@@ -12,10 +12,11 @@ type GetRecipes = {
 }
 
 type UseRecipes = {
-  updateRecipe: (updates: Partial<Recipe>) => void
+  updateRecipe: (updates: Partial<Recipe>) => Promise<void>
   getRecipes: (params?: GetRecipes) => Promise<void>
   getRecipe: (title: string) => Promise<void>
-  createRecipe: (token: string, title: string) => Promise<void>
+  createRecipe: (title: string) => Promise<void>
+  deleteRecipe: (title: string) => Promise<void>
   recipes: Recipe[]
   recipe: Recipe
   loading: boolean
@@ -23,6 +24,7 @@ type UseRecipes = {
 
 export const useRecipes = (): UseRecipes => {
   const { tokens } = useAuthContext()
+  const idToken = pathOr(undefined, ['idToken'], tokens)
 
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined)
@@ -53,13 +55,26 @@ export const useRecipes = (): UseRecipes => {
       .finally(() => setLoading(false))
   }
 
-  const createRecipe = async (token: string, title: string): Promise<void> => {
+  const createRecipe = async (title: string): Promise<void> => {
+    const slug = toSlug(title)
+    if (slug === 'create') {
+      throw new Error('invalid recipe name')
+    }
     await request
       .post(`${API_BASE_URL}/recipes`)
+      .send({ title: slug })
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${idToken}`)
+  }
+
+  const deleteRecipe = async (title: string): Promise<void> => {
+    await request
+      .delete(`${API_BASE_URL}/recipes/${toSlug(title)}`)
       .send({ title: toSlug(title) })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${idToken}`)
   }
 
   const updateRecipe = async (updates: Partial<Recipe>): Promise<void> => {
@@ -74,7 +89,7 @@ export const useRecipes = (): UseRecipes => {
       .send(updatedRecipe)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${tokens.idToken}`)
+      .set('Authorization', `Bearer ${idToken}`)
 
     setRecipe(updatedRecipe)
   }
@@ -84,6 +99,7 @@ export const useRecipes = (): UseRecipes => {
     getRecipes,
     getRecipe,
     createRecipe,
+    deleteRecipe,
     recipes,
     recipe,
     loading,

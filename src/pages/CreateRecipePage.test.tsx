@@ -2,10 +2,7 @@ import React from 'react'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { CreateRecipePage } from './CreateRecipePage'
 import * as useRecipesModule from '../hooks/useRecipes'
-import * as AuthContext from '../auth/AuthContext'
-
-const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
-const tokens = { idToken: '1234' }
+import { MemoryRouter as Router } from 'react-router-dom'
 
 const createRecipe = jest.fn()
 jest.spyOn(useRecipesModule, 'useRecipes').mockImplementation(() => ({ createRecipe } as any))
@@ -20,9 +17,12 @@ jest.mock('react-router-dom', () => ({
 
 describe('create a new recipe', () => {
   it('creates a new recipe', async () => {
-    useAuthContext.mockReturnValue({ tokens } as any)
     createRecipe.mockResolvedValueOnce(undefined)
-    render(<CreateRecipePage />)
+    render(
+      <Router>
+        <CreateRecipePage />
+      </Router>
+    )
     expect(screen.getByText('Create a new recipe')).toBeInTheDocument()
     fireEvent.change(screen.getByPlaceholderText('Fast and furious fish and chips'), {
       target: { value: 'My new recipe' },
@@ -31,10 +31,10 @@ describe('create a new recipe', () => {
 
     await waitFor(() => {
       expect(push).toHaveBeenCalledTimes(1)
-      expect(push).toHaveBeenCalledWith(`manage/recipes/my-new-recipe`)
+      expect(push).toHaveBeenCalledWith(`/manage/recipes/my-new-recipe`)
     })
 
     expect(createRecipe).toHaveBeenCalledTimes(1)
-    expect(createRecipe).toHaveBeenCalledWith('1234', 'My new recipe')
+    expect(createRecipe).toHaveBeenCalledWith('My new recipe')
   })
 })

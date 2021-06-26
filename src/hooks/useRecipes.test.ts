@@ -145,11 +145,10 @@ describe('use recipes', () => {
 
   describe('create recipe', () => {
     it('creates a new recipe', async () => {
-      const title = recipeTitleTransformer(lorem.words(3))
-      const token = datatype.uuid()
+      const title = toSlug(lorem.words(3))
       nock(LOCALHOST)
         .post(`/recipes`, { title: toSlug(title) })
-        .matchHeader('authorization', `Bearer ${token}`)
+        .matchHeader('authorization', `Bearer ${tokens.idToken}`)
         .reply(200, () => {
           return {
             status: 'ok',
@@ -158,7 +157,36 @@ describe('use recipes', () => {
 
       const { result } = renderHook(() => useRecipes())
 
-      await act(() => result.current.createRecipe(token, title))
+      await act(() => result.current.createRecipe(title))
+
+      expect(isDone()).toBe(true)
+    })
+
+    test.each([['Create'], ['creatE'], ['  create   ']])(
+      'throws an error for invalid recipe names',
+      async (title: string) => {
+        const error = new Error('invalid recipe name')
+        const { result } = renderHook(() => useRecipes())
+        await expect(act(() => result.current.createRecipe(title))).rejects.toEqual(error)
+      }
+    )
+  })
+
+  describe('delete recipe', () => {
+    it('deletes a recipe', async () => {
+      const title = recipeTitleTransformer(lorem.words(3))
+      nock(LOCALHOST)
+        .delete(`/recipes/${toSlug(title)}`)
+        .matchHeader('authorization', `Bearer ${tokens.idToken}`)
+        .reply(200, () => {
+          return {
+            status: 'ok',
+          }
+        })
+
+      const { result } = renderHook(() => useRecipes())
+
+      await act(() => result.current.deleteRecipe(title))
 
       expect(isDone()).toBe(true)
     })

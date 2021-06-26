@@ -13,7 +13,7 @@ type Props = {
 export const RecipePage: React.FC<Props> = ({ edit = false }) => {
   const { name } = useParams<{ name: string }>()
   const { pageView } = useAnalytics()
-  const { getRecipe, recipe, loading, updateRecipe } = useRecipes()
+  const { getRecipe, recipe, loading, updateRecipe, deleteRecipe } = useRecipes()
 
   useEffect(() => {
     if (!edit) {
@@ -23,7 +23,7 @@ export const RecipePage: React.FC<Props> = ({ edit = false }) => {
   }, [])
 
   const Component = edit ? RecipeForm : Recipe
-  const Props = edit ? { updateRecipe } : {}
+  const Props = edit ? { updateRecipe, deleteRecipe } : {}
 
   return <Spinner isLoading={loading}>{recipe && <Component recipe={recipe} {...Props} />}</Spinner>
 }

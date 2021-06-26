@@ -1,5 +1,6 @@
 # todo
 
+- links vs buttons ??
 - delete recipe
 - manage ingredients
 - manage ads
@@ -19,4 +20,7 @@
 - app version from package.json
 - handle 404s recipe not found etc..
 - update all RB project readmes
+- move aws to a lib
 - if user image is not found then use profile icon
+- address lint warnings
+- memory router helper

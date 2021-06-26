@@ -1,8 +1,10 @@
-import { Tab, Tabs } from '@alwaystudios/as-ui-components'
-import { Recipe } from '@alwaystudios/recipe-bible-sdk'
+import { Button, Tab, Tabs } from '@alwaystudios/as-ui-components'
+import { Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
 import React from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import { fromRecipeApi } from '../domain/recipeTransformer'
+import { BackToLink } from './BackToLink'
 import { RecipeImageForm } from './RecipeImageForm'
 
 const Container = styled.div`
@@ -13,17 +15,25 @@ const Container = styled.div`
 
 type Props = {
   recipe: Recipe
-  updateRecipe: (updates: Partial<Recipe>) => void
+  updateRecipe: (updates: Partial<Recipe>) => Promise<void>
+  deleteRecipe: (title: string) => Promise<void>
 }
 
-export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe }) => {
+export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe }) => {
   const { title, imgSrc } = fromRecipeApi(recipe)
+  const history = useHistory()
 
   const handleUpdateRecipe = (updates: Partial<Recipe>) => updateRecipe(updates)
 
   return (
     <Container>
+      <BackToLink to="/manage/recipes" text="manage recipes" />
       <h1>{title}</h1>
+      <Link to={`/recipes/${toSlug(title)}`}>view</Link>
+      <Button
+        text="delete"
+        onClick={() => deleteRecipe(toSlug(title)).then(() => history.push('/manage/recipes'))}
+      />
       <Tabs>
         <Tab title="Photo">
           <RecipeImageForm
