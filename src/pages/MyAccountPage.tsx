@@ -9,13 +9,14 @@ const Heading = styled.h1`
 `
 
 export const MyAccountPage: React.FunctionComponent = () => {
-  const { user } = useAuthContext()
-  const roles = user['https://recipebible.net/roles']
+  const {
+    user: { name, isAdmin },
+  } = useAuthContext()
 
   return (
     <>
-      <Heading>Welcome to Recipe Bible, {user.name}</Heading>
-      {user.isAdmin ? <CopyAccessToken /> : <WhatsCookingPage />}
+      <Heading>Welcome to Recipe Bible, {name}</Heading>
+      {isAdmin ? <CopyAccessToken /> : <WhatsCookingPage />}
     </>
   )
 }

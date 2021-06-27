@@ -14,15 +14,19 @@ const Container = styled.div`
 
 type Props = {
   recipe: Recipe
-  updateRecipe: (updates: Partial<Recipe>) => Promise<void>
+  updateRecipe: (updates: DeepPartial<Recipe>) => Promise<void>
   deleteRecipe: (title: string) => Promise<void>
 }
 
 export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe }) => {
-  const { title, imgSrc } = fromRecipeApi(recipe)
+  const {
+    title,
+    imgSrc,
+    metadata: { published, focused },
+  } = fromRecipeApi(recipe)
   const history = useHistory()
 
-  const handleUpdateRecipe = (updates: Partial<Recipe>) => updateRecipe(updates)
+  const handleUpdateRecipe = (updates: DeepPartial<Recipe>) => updateRecipe(updates)
 
   return (
     <Container>
@@ -31,6 +35,14 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
       <Button
         text="delete"
         onClick={() => deleteRecipe(toSlug(title)).then(() => history.push('/manage/recipes'))}
+      />
+      <Button
+        text={published ? 'unpublish' : 'publish'}
+        onClick={() => handleUpdateRecipe({ metadata: { published: !published } })}
+      />
+      <Button
+        text={focused ? 'unfocus' : 'focus'}
+        onClick={() => handleUpdateRecipe({ metadata: { focused: !focused } })}
       />
       <Tabs>
         <Tab title="Photo">

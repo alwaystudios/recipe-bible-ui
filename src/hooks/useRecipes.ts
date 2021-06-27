@@ -1,5 +1,5 @@
 import { Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
-import { pathOr } from 'ramda'
+import { mergeDeepRight, pathOr } from 'ramda'
 import { useState } from 'react'
 import request from 'superagent'
 import { useAuthContext } from '../auth/AuthContext'
@@ -12,7 +12,7 @@ type GetRecipes = {
 }
 
 type UseRecipes = {
-  updateRecipe: (updates: Partial<Recipe>) => Promise<void>
+  updateRecipe: (updates: DeepPartial<Recipe>) => Promise<void>
   getRecipes: (params?: GetRecipes) => Promise<void>
   getRecipe: (title: string) => Promise<void>
   createRecipe: (title: string) => Promise<void>
@@ -77,12 +77,12 @@ export const useRecipes = (): UseRecipes => {
       .set('Authorization', `Bearer ${idToken}`)
   }
 
-  const updateRecipe = async (updates: Partial<Recipe>): Promise<void> => {
+  const updateRecipe = async (updates: DeepPartial<Recipe>): Promise<void> => {
     if (!recipe) {
       return
     }
 
-    const updatedRecipe = { ...recipe, ...updates }
+    const updatedRecipe = mergeDeepRight(recipe, updates) as Recipe
 
     await request
       .put(`${API_BASE_URL}/recipes/${toSlug(recipe.title)}`)

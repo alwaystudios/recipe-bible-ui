@@ -1,22 +1,21 @@
-import { path } from 'ramda'
 import React, { useEffect, useState } from 'react'
 import { RecipeGallery } from '../components/RecipeGallery'
 import { Spinner } from '../components/Spinner'
 import { useRecipes } from '../hooks/useRecipes'
 
-const STATUS = ['Focused', 'Published']
+const DRAFT = 'Draft'
+const FOCUSED = 'Focused'
+const PUBLISHED = 'Published'
 
 export const ManageRecipesPage: React.FunctionComponent = () => {
   const [didMount, setDidMount] = useState(false)
   const { getRecipes, recipes, loading } = useRecipes()
-  const Draft = 'Draft'
-  const options = STATUS.reduce(
-    (acc, status) => ({
-      ...acc,
-      [status]: () => recipes.filter((r) => path([status.toLocaleLowerCase()], r)),
-    }),
-    { [Draft]: () => recipes.filter((r) => !r.metadata.published) }
-  )
+
+  const options = {
+    [DRAFT]: () => recipes.filter((r) => !r.metadata.published),
+    [FOCUSED]: () => recipes.filter((r) => r.metadata.focused),
+    [PUBLISHED]: () => recipes.filter((r) => r.metadata.published),
+  }
 
   useEffect(() => {
     getRecipes({ published: 'all', field: ['title', 'imgSrc', 'metadata'] })
@@ -31,7 +30,7 @@ export const ManageRecipesPage: React.FunctionComponent = () => {
   return (
     <>
       <Spinner isLoading={loading}>
-        <RecipeGallery options={options} recipes={recipes} defaultOption={Draft} mode="edit" />
+        <RecipeGallery options={options} recipes={recipes} defaultOption={DRAFT} mode="edit" />
       </Spinner>
     </>
   )
