@@ -46,6 +46,8 @@ describe('recipe form', () => {
     const viewLink = screen.getByText('view')
     expect(viewLink).toBeInTheDocument()
     expect(viewLink.getAttribute('href')).toBe(`/recipes/${toSlug(recipe.title)}`)
+
+    expect(screen.queryByText('focus')).not.toBeInTheDocument()
   })
 
   it('handles delete CTA', async () => {
@@ -68,15 +70,22 @@ describe('recipe form', () => {
 
   it('handles unpublish CTA', () => {
     updateRecipe.mockResolvedValueOnce(undefined)
-    renderForm(testRecipe({ metadata: { published: true, focused: true } }))
+    renderForm(testRecipe({ metadata: { published: true, focused: false } }))
     fireEvent.click(screen.getByText('unpublish'))
     expect(updateRecipe).toHaveBeenCalledTimes(1)
     expect(updateRecipe).toHaveBeenCalledWith({ metadata: { published: false } })
   })
 
+  it('prevents unpublish CTA when already focused', () => {
+    updateRecipe.mockResolvedValueOnce(undefined)
+    renderForm(testRecipe({ metadata: { published: true, focused: true } }))
+    fireEvent.click(screen.getByText('unpublish'))
+    expect(updateRecipe).not.toHaveBeenCalled()
+  })
+
   it('handles focus CTA', () => {
     updateRecipe.mockResolvedValueOnce(undefined)
-    renderForm()
+    renderForm(testRecipe({ metadata: { published: true, focused: false } }))
     fireEvent.click(screen.getByText('focus'))
     expect(updateRecipe).toHaveBeenCalledTimes(1)
     expect(updateRecipe).toHaveBeenCalledWith({ metadata: { focused: true } })

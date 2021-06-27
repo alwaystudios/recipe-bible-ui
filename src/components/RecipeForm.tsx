@@ -39,11 +39,14 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
       <Button
         text={published ? 'unpublish' : 'publish'}
         onClick={() => handleUpdateRecipe({ metadata: { published: !published } })}
+        disabled={focused}
       />
-      <Button
-        text={focused ? 'unfocus' : 'focus'}
-        onClick={() => handleUpdateRecipe({ metadata: { focused: !focused } })}
-      />
+      {published && (
+        <Button
+          text={focused ? 'unfocus' : 'focus'}
+          onClick={() => handleUpdateRecipe({ metadata: { focused: !focused } })}
+        />
+      )}
       <Tabs>
         <Tab title="Photo">
           <RecipeImageForm
