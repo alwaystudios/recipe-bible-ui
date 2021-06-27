@@ -1,6 +1,5 @@
 import { path } from 'ramda'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { RecipeGallery } from '../components/RecipeGallery'
 import { Spinner } from '../components/Spinner'
 import { useRecipes } from '../hooks/useRecipes'
@@ -31,7 +30,6 @@ export const ManageRecipesPage: React.FunctionComponent = () => {
 
   return (
     <>
-      <Link to="/manage/recipes/create">create new recipe</Link>
       <Spinner isLoading={loading}>
         <RecipeGallery options={options} recipes={recipes} defaultOption={Draft} mode="edit" />
       </Spinner>

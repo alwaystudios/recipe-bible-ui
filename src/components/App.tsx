@@ -18,6 +18,8 @@ import { CreateRecipePage } from '../pages/CreateRecipePage'
 import { ADMIN_ROLE } from '../contstants'
 import { Http403 } from '../pages/403'
 import { ManageRecipesPage } from '../pages/ManageRecipesPage'
+import { AdminMenu } from './AdminMenu'
+import { Http404 } from '../pages/404'
 
 const Page = styled.div`
   display: flex;
@@ -36,6 +38,7 @@ export const App: React.FC = () => (
   <AuthProvider>
     <Header mainText="RecipeBible.net" />
     <Page>
+      <AdminMenu />
       <Switch>
         <AuthenticatedRoute path="/account" component={MyAccountPage} />
         <AuthenticatedRoute
@@ -61,7 +64,8 @@ export const App: React.FC = () => (
         <Route path="/terms" component={TermsPage} />
         <Route path="/privacy" component={PrivacyPage} />
         <Route path="/403" component={Http403} />
-        <Route path="/" component={Callback} />
+        <Route exact path="/" component={Callback} />
+        <Route component={Http404} />
       </Switch>
     </Page>
     <Footer />

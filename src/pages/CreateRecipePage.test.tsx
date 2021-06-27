@@ -2,7 +2,6 @@ import React from 'react'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { CreateRecipePage } from './CreateRecipePage'
 import * as useRecipesModule from '../hooks/useRecipes'
-import { MemoryRouter as Router } from 'react-router-dom'
 
 const createRecipe = jest.fn()
 jest.spyOn(useRecipesModule, 'useRecipes').mockImplementation(() => ({ createRecipe } as any))
@@ -18,11 +17,7 @@ jest.mock('react-router-dom', () => ({
 describe('create a new recipe', () => {
   it('creates a new recipe', async () => {
     createRecipe.mockResolvedValueOnce(undefined)
-    render(
-      <Router>
-        <CreateRecipePage />
-      </Router>
-    )
+    render(<CreateRecipePage />)
     expect(screen.getByText('Create a new recipe')).toBeInTheDocument()
     fireEvent.change(screen.getByPlaceholderText('Fast and furious fish and chips'), {
       target: { value: 'My new recipe' },

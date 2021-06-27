@@ -4,7 +4,6 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { fromRecipeApi } from '../domain/recipeTransformer'
-import { BackToLinks } from './BackToLinks'
 import { RecipeImageForm } from './RecipeImageForm'
 
 const Container = styled.div`
@@ -25,14 +24,8 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
 
   const handleUpdateRecipe = (updates: Partial<Recipe>) => updateRecipe(updates)
 
-  const links = [
-    { to: '/manage/recipes', text: 'manage recipes' },
-    { to: '/recipes', text: 'recipes' },
-  ]
-
   return (
     <Container>
-      <BackToLinks links={links} />
       <h1>{title}</h1>
       <Link to={`/recipes/${toSlug(title)}`}>view</Link>
       <Button

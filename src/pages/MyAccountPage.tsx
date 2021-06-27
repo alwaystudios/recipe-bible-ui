@@ -1,6 +1,4 @@
-import { Button } from '@alwaystudios/as-ui-components'
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import { useAuthContext } from '../auth/AuthContext'
 import { CopyAccessToken } from '../auth/CopyAccessToken'
 import { useAnalytics } from '../hooks/useAnalytics'
@@ -8,7 +6,6 @@ import { useAnalytics } from '../hooks/useAnalytics'
 export const MyAccountPage: React.FunctionComponent = () => {
   const { pageView } = useAnalytics()
   const { user } = useAuthContext()
-  const history = useHistory()
   const roles = user['https://recipebible.net/roles']
 
   useEffect(() => {
@@ -17,8 +14,6 @@ export const MyAccountPage: React.FunctionComponent = () => {
 
   return (
     <>
-      <Button onClick={() => history.push('/manage/recipes/create')} text="new recipe" />
-      <Button onClick={() => history.push('/manage/recipes')} text="manage recipes" />
       <label>
         Name: {user.given_name} {user.family_name}
       </label>

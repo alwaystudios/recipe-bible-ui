@@ -2,7 +2,6 @@ import { Button, TextInput } from '@alwaystudios/as-ui-components'
 import { kebabify, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { BackToLink } from '../components/BackToLink'
 import { useRecipes } from '../hooks/useRecipes'
 
 export const CreateRecipePage: React.FC = () => {
@@ -26,7 +25,6 @@ export const CreateRecipePage: React.FC = () => {
         }
       }}
     >
-      <BackToLink to="/manage/recipes" text="manage recipes" />
       <h1>Create a new recipe</h1>
       <TextInput
         isInvalid={error}

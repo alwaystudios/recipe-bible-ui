@@ -65,4 +65,10 @@ describe('App', () => {
     renderApp(route)
     expect(screen.getByText(mockText)).toBeInTheDocument()
   })
+
+  it('renders 404 when route not found', () => {
+    renderApp('/not-a-valid-route')
+    expect(screen.getByText('404')).toBeInTheDocument()
+    expect(screen.getByText('not found')).toBeInTheDocument()
+  })
 })
