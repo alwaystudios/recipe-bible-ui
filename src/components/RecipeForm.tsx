@@ -1,4 +1,4 @@
-import { Button, Tab, Tabs } from '@alwaystudios/as-ui-components'
+import { Button, Tab, Tabs, TextAreaWithConfirmation } from '@alwaystudios/as-ui-components'
 import { Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
 import React from 'react'
@@ -21,6 +21,7 @@ type Props = {
 export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe }) => {
   const {
     title,
+    story,
     imgSrc,
     metadata: { published, focused },
   } = fromRecipeApi(recipe)
@@ -55,8 +56,13 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
             setImgSrc={(imgSrc: string) => handleUpdateRecipe({ imgSrc })}
           />
         </Tab>
-        <Tab title="Steps">
-          <>todo</>
+        <Tab title="Story">
+          <TextAreaWithConfirmation
+            className="text-area"
+            rows={8}
+            value={story}
+            onConfirm={(story: string) => handleUpdateRecipe({ story })}
+          />
         </Tab>
       </Tabs>
     </Container>

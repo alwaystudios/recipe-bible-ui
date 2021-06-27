@@ -41,7 +41,7 @@ describe('recipe form', () => {
   it('renders', () => {
     renderForm()
     expect(screen.getByText('Photo')).toBeInTheDocument()
-    expect(screen.getByText('Steps')).toBeInTheDocument()
+    expect(screen.getByText('Story')).toBeInTheDocument()
 
     const viewLink = screen.getByText('view')
     expect(viewLink).toBeInTheDocument()
@@ -119,5 +119,19 @@ describe('recipe form', () => {
       token: '1234',
     })
     expect(updateRecipe).toHaveBeenCalledTimes(1)
+  })
+
+  it('updates recipe story', () => {
+    const { container } = renderForm(testRecipe({ story: 'my story' }))
+    fireEvent.click(screen.getByText('Story'))
+
+    const input = screen.getByDisplayValue('my story')
+    fireEvent.change(input, { target: { value: 'my story update' } })
+
+    const changeBtn = container.querySelector('svg')
+    fireEvent.click(changeBtn)
+
+    expect(updateRecipe).toHaveBeenCalledTimes(1)
+    expect(updateRecipe).toHaveBeenCalledWith({ story: 'my story update' })
   })
 })
