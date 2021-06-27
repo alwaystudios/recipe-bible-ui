@@ -1,6 +1,7 @@
 # todo
 
 - link to edit recipe from recipe
+- recipe validation for publish
 - error handling / modals and user feedback toasts
 - auth context test factory and clean up `as any`
 - bundle analyser

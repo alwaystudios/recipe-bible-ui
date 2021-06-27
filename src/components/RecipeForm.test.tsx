@@ -42,6 +42,7 @@ describe('recipe form', () => {
     renderForm()
     expect(screen.getByText('Photo')).toBeInTheDocument()
     expect(screen.getByText('Story')).toBeInTheDocument()
+    expect(screen.getByText('Categories')).toBeInTheDocument()
 
     const viewLink = screen.getByText('view')
     expect(viewLink).toBeInTheDocument()
@@ -133,5 +134,25 @@ describe('recipe form', () => {
 
     expect(updateRecipe).toHaveBeenCalledTimes(1)
     expect(updateRecipe).toHaveBeenCalledWith({ story: 'my story update' })
+  })
+
+  it('adds a category', () => {
+    renderForm(testRecipe({ categories: ['Meat'] }))
+    fireEvent.click(screen.getByText('Categories'))
+
+    fireEvent.click(screen.getByText('Chicken'))
+
+    expect(updateRecipe).toHaveBeenCalledTimes(1)
+    expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Chicken', 'Meat'] })
+  })
+
+  it('removes a category', () => {
+    renderForm(testRecipe({ categories: ['Chicken', 'Meat'] }))
+    fireEvent.click(screen.getByText('Categories'))
+
+    fireEvent.click(screen.getByText('Chicken'))
+
+    expect(updateRecipe).toHaveBeenCalledTimes(1)
+    expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Meat'] })
   })
 })
