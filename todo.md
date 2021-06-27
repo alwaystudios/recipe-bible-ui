@@ -1,25 +1,11 @@
 # todo
 
-- links vs buttons ??
-- delete recipe
-- manage ingredients
-- manage ads
-- social media
-- about
-- recipe ratings
-- error handling
-- modals and user feedback toasts
-- link GA
-- link Auth0
-- use `screen` in unit tests [and other recommendations here](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
-- auth context test factory
-- clean up `as any`
+- error handling / modals and user feedback toasts
+- auth context test factory and clean up `as any`
 - bundle analyser
 - remove tests from bundle ?
-- feature flags
-- handle 404s recipe not found etc..
-- update all RB project readmes
-- move aws to a lib
-- if user image is not found then use profile icon
 - address lint warnings
-- memory router helper
+- feature flags
+- if user image is not found then use profile icon
+- update all RB project readmes
+- move aws to a lib (api project)
