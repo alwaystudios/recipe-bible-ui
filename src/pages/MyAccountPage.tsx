@@ -1,24 +1,31 @@
-import React, { useEffect } from 'react'
+import styled from '@emotion/styled'
+import React from 'react'
 import { useAuthContext } from '../auth/AuthContext'
 import { CopyAccessToken } from '../auth/CopyAccessToken'
-import { useAnalytics } from '../hooks/useAnalytics'
+import { WhatsCookingPage } from './WhatsCookingPage'
+
+const Heading = styled.h1`
+  margin-top: 0;
+`
 
 export const MyAccountPage: React.FunctionComponent = () => {
-  const { pageView } = useAnalytics()
   const { user } = useAuthContext()
   const roles = user['https://recipebible.net/roles']
 
-  useEffect(() => {
-    pageView()
-  }, [])
-
   return (
     <>
-      <label>
-        Name: {user.given_name} {user.family_name}
-      </label>
-      <label>Roles: {roles}</label>
-      <CopyAccessToken />
+      <Heading>Welcome to Recipe Bible, {user.name}</Heading>
+      {user.isAdmin ? (
+        <>
+          <label>
+            Name: {user.given_name} {user.family_name}
+          </label>
+          <label>Roles: {roles}</label>
+          <CopyAccessToken />
+        </>
+      ) : (
+        <WhatsCookingPage />
+      )}
     </>
   )
 }

@@ -42,10 +42,6 @@ describe('Footer', () => {
     useAuthContext.mockReturnValueOnce({ user } as any)
     renderFooter()
 
-    const recipes = screen.getByText('Recipes')
-    expect(recipes).toBeInTheDocument()
-    expect(recipes.getAttribute('href')).toBe('/recipes')
-
     const about = screen.getByText('About')
     expect(about).toBeInTheDocument()
     expect(about.getAttribute('href')).toBe('/about')
