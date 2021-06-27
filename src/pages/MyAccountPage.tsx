@@ -15,17 +15,7 @@ export const MyAccountPage: React.FunctionComponent = () => {
   return (
     <>
       <Heading>Welcome to Recipe Bible, {user.name}</Heading>
-      {user.isAdmin ? (
-        <>
-          <label>
-            Name: {user.given_name} {user.family_name}
-          </label>
-          <label>Roles: {roles}</label>
-          <CopyAccessToken />
-        </>
-      ) : (
-        <WhatsCookingPage />
-      )}
+      {user.isAdmin ? <CopyAccessToken /> : <WhatsCookingPage />}
     </>
   )
 }
