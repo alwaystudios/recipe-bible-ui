@@ -14,19 +14,18 @@ type Props = {
   steps: StepType[]
   setSteps?: (steps: StepType[]) => void
   onDelete?: (step: string) => void
-  className?: string
 }
 
-export const Steps: React.FC<Props> = ({ steps, setSteps, onDelete, className = '' }) => {
+export const Steps: React.FC<Props> = ({ steps, setSteps, onDelete }) => {
   const children = steps.map((i, index) => (
     <Step index={index + 1} step={i} key={index} onDelete={onDelete} />
   ))
 
   return setSteps && onDelete ? (
-    <Container className={className} data={steps} setData={setSteps}>
+    <Container data={steps} setData={setSteps}>
       {children}
     </Container>
   ) : (
-    <div className={className}>{children}</div>
+    <div>{children}</div>
   )
 }

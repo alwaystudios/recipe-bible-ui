@@ -4,6 +4,7 @@ import {
   Tab,
   Tabs,
   TextAreaWithConfirmation,
+  TextInputWithConfirmation,
 } from '@alwaystudios/as-ui-components'
 import { CATEGORIES, Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import { Category } from '@alwaystudios/recipe-bible-sdk/dist/types'
@@ -39,6 +40,7 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
     imgSrc,
     categories,
     metadata: { published, focused },
+    nutrition: { fat = '', protein = '', carbs = '' },
   } = fromRecipeApi(recipe)
   const history = useHistory()
 
@@ -81,7 +83,6 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
         </Tab>
         <Tab title="Story">
           <TextAreaWithConfirmation
-            className="text-area"
             rows={8}
             value={story}
             onConfirm={(story: string) => handleUpdateRecipe({ story })}
@@ -100,7 +101,24 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           </Categories>
         </Tab>
         <Tab title="Nutrition">
-          <>todo</>
+          <label htmlFor="fat-input">fat</label>
+          <TextInputWithConfirmation
+            id="fat-input"
+            onConfirm={(fat) => handleUpdateRecipe({ nutrition: { fat } })}
+            value={fat}
+          />
+          <label htmlFor="carbs-input">carbs</label>
+          <TextInputWithConfirmation
+            id="carbs-input"
+            onConfirm={(carbs) => handleUpdateRecipe({ nutrition: { carbs } })}
+            value={carbs}
+          />
+          <label htmlFor="protein-input">protein</label>
+          <TextInputWithConfirmation
+            id="protein-input"
+            onConfirm={(protein) => handleUpdateRecipe({ nutrition: { protein } })}
+            value={protein}
+          />
         </Tab>
         <Tab title="You will need">
           <>todo</>

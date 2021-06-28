@@ -56,53 +56,55 @@ describe('recipe form', () => {
     expect(screen.queryByText('focus')).not.toBeInTheDocument()
   })
 
-  it('handles delete CTA', async () => {
-    deleteRecipe.mockResolvedValueOnce(undefined)
-    renderForm()
-    fireEvent.click(screen.getByText('delete'))
-    expect(deleteRecipe).toHaveBeenCalledTimes(1)
-    expect(deleteRecipe).toHaveBeenCalledWith(toSlug(recipe.title))
-    await waitFor(() => expect(push).toHaveBeenCalledTimes(1))
-    expect(push).toHaveBeenCalledWith('/manage/recipes')
-  })
+  describe('CTAs', () => {
+    it('handles delete CTA', async () => {
+      deleteRecipe.mockResolvedValueOnce(undefined)
+      renderForm()
+      fireEvent.click(screen.getByText('delete'))
+      expect(deleteRecipe).toHaveBeenCalledTimes(1)
+      expect(deleteRecipe).toHaveBeenCalledWith(toSlug(recipe.title))
+      await waitFor(() => expect(push).toHaveBeenCalledTimes(1))
+      expect(push).toHaveBeenCalledWith('/manage/recipes')
+    })
 
-  it('handles publish CTA', () => {
-    updateRecipe.mockResolvedValueOnce(undefined)
-    renderForm()
-    fireEvent.click(screen.getByText('publish'))
-    expect(updateRecipe).toHaveBeenCalledTimes(1)
-    expect(updateRecipe).toHaveBeenCalledWith({ metadata: { published: true } })
-  })
+    it('handles publish CTA', () => {
+      updateRecipe.mockResolvedValueOnce(undefined)
+      renderForm()
+      fireEvent.click(screen.getByText('publish'))
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ metadata: { published: true } })
+    })
 
-  it('handles unpublish CTA', () => {
-    updateRecipe.mockResolvedValueOnce(undefined)
-    renderForm(testRecipe({ metadata: { published: true, focused: false } }))
-    fireEvent.click(screen.getByText('unpublish'))
-    expect(updateRecipe).toHaveBeenCalledTimes(1)
-    expect(updateRecipe).toHaveBeenCalledWith({ metadata: { published: false } })
-  })
+    it('handles unpublish CTA', () => {
+      updateRecipe.mockResolvedValueOnce(undefined)
+      renderForm(testRecipe({ metadata: { published: true, focused: false } }))
+      fireEvent.click(screen.getByText('unpublish'))
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ metadata: { published: false } })
+    })
 
-  it('prevents unpublish CTA when already focused', () => {
-    updateRecipe.mockResolvedValueOnce(undefined)
-    renderForm(testRecipe({ metadata: { published: true, focused: true } }))
-    fireEvent.click(screen.getByText('unpublish'))
-    expect(updateRecipe).not.toHaveBeenCalled()
-  })
+    it('prevents unpublish CTA when already focused', () => {
+      updateRecipe.mockResolvedValueOnce(undefined)
+      renderForm(testRecipe({ metadata: { published: true, focused: true } }))
+      fireEvent.click(screen.getByText('unpublish'))
+      expect(updateRecipe).not.toHaveBeenCalled()
+    })
 
-  it('handles focus CTA', () => {
-    updateRecipe.mockResolvedValueOnce(undefined)
-    renderForm(testRecipe({ metadata: { published: true, focused: false } }))
-    fireEvent.click(screen.getByText('focus'))
-    expect(updateRecipe).toHaveBeenCalledTimes(1)
-    expect(updateRecipe).toHaveBeenCalledWith({ metadata: { focused: true } })
-  })
+    it('handles focus CTA', () => {
+      updateRecipe.mockResolvedValueOnce(undefined)
+      renderForm(testRecipe({ metadata: { published: true, focused: false } }))
+      fireEvent.click(screen.getByText('focus'))
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ metadata: { focused: true } })
+    })
 
-  it('handles unfocus CTA', () => {
-    updateRecipe.mockResolvedValueOnce(undefined)
-    renderForm(testRecipe({ metadata: { published: true, focused: true } }))
-    fireEvent.click(screen.getByText('unfocus'))
-    expect(updateRecipe).toHaveBeenCalledTimes(1)
-    expect(updateRecipe).toHaveBeenCalledWith({ metadata: { focused: false } })
+    it('handles unfocus CTA', () => {
+      updateRecipe.mockResolvedValueOnce(undefined)
+      renderForm(testRecipe({ metadata: { published: true, focused: true } }))
+      fireEvent.click(screen.getByText('unfocus'))
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ metadata: { focused: false } })
+    })
   })
 
   it('handles photo upload', async () => {
@@ -141,23 +143,41 @@ describe('recipe form', () => {
     expect(updateRecipe).toHaveBeenCalledWith({ story: 'my story update' })
   })
 
-  it('adds a category', () => {
-    renderForm(testRecipe({ categories: ['Meat'] }))
-    fireEvent.click(screen.getByText('Categories'))
+  describe('categories', () => {
+    it('adds a category', () => {
+      renderForm(testRecipe({ categories: ['Meat'] }))
+      fireEvent.click(screen.getByText('Categories'))
 
-    fireEvent.click(screen.getByText('Chicken'))
+      fireEvent.click(screen.getByText('Chicken'))
 
-    expect(updateRecipe).toHaveBeenCalledTimes(1)
-    expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Chicken', 'Meat'] })
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Chicken', 'Meat'] })
+    })
+
+    it('removes a category', () => {
+      renderForm(testRecipe({ categories: ['Chicken', 'Meat'] }))
+      fireEvent.click(screen.getByText('Categories'))
+
+      fireEvent.click(screen.getByText('Chicken'))
+
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Meat'] })
+    })
   })
 
-  it('removes a category', () => {
-    renderForm(testRecipe({ categories: ['Chicken', 'Meat'] }))
-    fireEvent.click(screen.getByText('Categories'))
+  describe('nutrition', () => {
+    test.each<[string]>([['fat'], ['protein'], ['carbs']])('updates %s', (nutrition: string) => {
+      const { container } = renderForm()
+      fireEvent.click(screen.getByText('Nutrition'))
 
-    fireEvent.click(screen.getByText('Chicken'))
+      const input = screen.getByLabelText(nutrition)
+      fireEvent.change(input, { target: { value: 'update' } })
 
-    expect(updateRecipe).toHaveBeenCalledTimes(1)
-    expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Meat'] })
+      const changeBtn = container.querySelector('svg')
+      fireEvent.click(changeBtn)
+
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ nutrition: { [nutrition]: 'update' } })
+    })
   })
 })
