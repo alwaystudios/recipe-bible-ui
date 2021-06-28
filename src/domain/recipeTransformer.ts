@@ -60,11 +60,12 @@ export const fromRecipesApi = (
   historyPush: (url: string) => void,
   mode: 'view' | 'edit'
 ): RecipeSummaryCardProps[] =>
-  recipes.map(({ title, imgSrc }) => {
+  recipes.map(({ title, imgSrc, categories }) => {
     const _title = toSlug(title)
     return {
       title: recipeTitleTransformer(title),
       imgSrc: getRecipeImgSrc(title, imgSrc),
+      categories: categories || [],
       onClick: () => historyPush(`/${mode === 'view' ? 'recipes' : 'manage/recipes'}/${_title}`),
     }
   })

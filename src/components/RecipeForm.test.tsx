@@ -43,6 +43,11 @@ describe('recipe form', () => {
     expect(screen.getByText('Photo')).toBeInTheDocument()
     expect(screen.getByText('Story')).toBeInTheDocument()
     expect(screen.getByText('Categories')).toBeInTheDocument()
+    expect(screen.getByText('Nutrition')).toBeInTheDocument()
+    expect(screen.getByText('You will need')).toBeInTheDocument()
+    expect(screen.getByText('Steps')).toBeInTheDocument()
+    expect(screen.getByText('Ingredients')).toBeInTheDocument()
+    expect(screen.getByText('Info')).toBeInTheDocument()
 
     const viewLink = screen.getByText('view')
     expect(viewLink).toBeInTheDocument()

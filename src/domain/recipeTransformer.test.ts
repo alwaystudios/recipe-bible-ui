@@ -65,6 +65,7 @@ describe('recipe transformers', () => {
         recipes.map((r) => ({
           title: recipeTitleTransformer(r.title),
           imgSrc: getRecipeImgSrc(r.title, r.imgSrc),
+          categories: r.categories,
           onClick: expect.anything(),
         }))
       )

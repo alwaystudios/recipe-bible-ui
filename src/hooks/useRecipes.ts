@@ -83,6 +83,7 @@ export const useRecipes = (): UseRecipes => {
     }
 
     const updatedRecipe = mergeDeepRight(recipe, updates) as Recipe
+    setRecipe(updatedRecipe)
 
     await request
       .put(`${API_BASE_URL}/recipes/${toSlug(recipe.title)}`)
@@ -90,8 +91,6 @@ export const useRecipes = (): UseRecipes => {
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${idToken}`)
-
-    setRecipe(updatedRecipe)
   }
 
   return {

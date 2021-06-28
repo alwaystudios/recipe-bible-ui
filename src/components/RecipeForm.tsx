@@ -99,6 +99,21 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
             ))}
           </Categories>
         </Tab>
+        <Tab title="Nutrition">
+          <>todo</>
+        </Tab>
+        <Tab title="You will need">
+          <>todo</>
+        </Tab>
+        <Tab title="Steps">
+          <>todo</>
+        </Tab>
+        <Tab title="Ingredients">
+          <>todo</>
+        </Tab>
+        <Tab title="Info">
+          <>todo</>
+        </Tab>
       </Tabs>
     </Container>
   )
