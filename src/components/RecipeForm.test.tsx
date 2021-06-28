@@ -180,4 +180,34 @@ describe('recipe form', () => {
       expect(updateRecipe).toHaveBeenCalledWith({ nutrition: { [nutrition]: 'update' } })
     })
   })
+
+  describe('info', () => {
+    it('updates cooking time', () => {
+      const { container } = renderForm()
+      fireEvent.click(screen.getByText('Info'))
+
+      const input = screen.getByLabelText('cooking time')
+      fireEvent.change(input, { target: { value: '22' } })
+
+      const changeBtn = container.querySelector('svg')
+      fireEvent.click(changeBtn)
+
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ cookingTime: '22' })
+    })
+
+    it('updates servings', () => {
+      const { container } = renderForm()
+      fireEvent.click(screen.getByText('Info'))
+
+      const input = screen.getByLabelText('servings')
+      fireEvent.change(input, { target: { value: '22' } })
+
+      const changeBtn = container.querySelector('svg')
+      fireEvent.click(changeBtn)
+
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ servings: 22 })
+    })
+  })
 })

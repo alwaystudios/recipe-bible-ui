@@ -39,6 +39,8 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
     story,
     imgSrc,
     categories,
+    cookingTime,
+    servings,
     metadata: { published, focused },
     nutrition: { fat = '', protein = '', carbs = '' },
   } = fromRecipeApi(recipe)
@@ -130,7 +132,20 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           <>todo</>
         </Tab>
         <Tab title="Info">
-          <>todo</>
+          <label htmlFor="servings-input">servings</label>
+          <TextInputWithConfirmation
+            width="fit-content"
+            id="servings-input"
+            type="number"
+            value={servings}
+            onConfirm={(servings) => handleUpdateRecipe({ servings: Number(servings) })}
+          />
+          <label htmlFor="cooking-time-input">cooking time</label>
+          <TextInputWithConfirmation
+            id="cooking-time-input"
+            value={cookingTime}
+            onConfirm={(cookingTime) => handleUpdateRecipe({ cookingTime })}
+          />
         </Tab>
       </Tabs>
     </Container>
