@@ -4,15 +4,17 @@ import {
   Tab,
   Tabs,
   TextAreaWithConfirmation,
+  TextInput,
   TextInputWithConfirmation,
 } from '@alwaystudios/as-ui-components'
 import { CATEGORIES, Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import { Category } from '@alwaystudios/recipe-bible-sdk/dist/types'
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { fromRecipeApi } from '../domain/recipeTransformer'
 import { RecipeImageForm } from './RecipeImageForm'
+import { YouWillNeed } from './YouWillNeed'
 
 const Container = styled.div`
   display: flex;
@@ -41,10 +43,17 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
     categories,
     cookingTime,
     servings,
+    youWillNeed,
     metadata: { published, focused },
     nutrition: { fat = '', protein = '', carbs = '' },
   } = fromRecipeApi(recipe)
   const history = useHistory()
+  const [input, setInput] = useState('')
+
+  const handleYouWillNeedUpdate = () => {
+    handleUpdateRecipe({ youWillNeed: Array.from(new Set([...youWillNeed, input])) })
+    setInput('')
+  }
 
   const handleUpdateRecipe = (updates: DeepPartial<Recipe>) => updateRecipe(updates)
 
@@ -123,7 +132,24 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           />
         </Tab>
         <Tab title="You will need">
-          <>todo</>
+          <TextInput
+            role="you-will-need"
+            id="you-will-need-input"
+            onChange={(event) => setInput(event.currentTarget.value)}
+            onKeyDown={(event) => {
+              if (event.key.toLocaleLowerCase() === 'enter') {
+                handleYouWillNeedUpdate()
+              }
+            }}
+            value={input}
+          />
+          <Button text="add" onClick={handleYouWillNeedUpdate} disabled={input === ''} />
+          <YouWillNeed
+            values={youWillNeed}
+            onDelete={(value: string) =>
+              handleUpdateRecipe({ youWillNeed: youWillNeed.filter((v) => v !== value) })
+            }
+          />
         </Tab>
         <Tab title="Steps">
           <>todo</>

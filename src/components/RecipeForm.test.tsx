@@ -210,4 +210,42 @@ describe('recipe form', () => {
       expect(updateRecipe).toHaveBeenCalledWith({ servings: 22 })
     })
   })
+
+  describe('you will need', () => {
+    it('adds an item to the list', () => {
+      renderForm(testRecipe({ youWillNeed: ['this'] }))
+      fireEvent.click(screen.getByText('You will need'))
+
+      const input = screen.getByRole('you-will-need')
+      fireEvent.change(input, { target: { value: 'that' } })
+
+      fireEvent.click(screen.getByText('add'))
+
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ youWillNeed: ['this', 'that'] })
+    })
+
+    it('prevents duplicate adds to the list', () => {
+      renderForm(testRecipe({ youWillNeed: ['this'] }))
+      fireEvent.click(screen.getByText('You will need'))
+
+      const input = screen.getByRole('you-will-need')
+      fireEvent.change(input, { target: { value: 'this' } })
+
+      fireEvent.click(screen.getByText('add'))
+
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ youWillNeed: ['this'] })
+    })
+
+    it('removes an item from the list', () => {
+      renderForm(testRecipe({ youWillNeed: ['this'] }))
+      fireEvent.click(screen.getByText('You will need'))
+
+      fireEvent.click(screen.getByText('this'))
+
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ youWillNeed: [] })
+    })
+  })
 })
