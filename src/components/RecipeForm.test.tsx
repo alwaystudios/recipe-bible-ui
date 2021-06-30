@@ -248,4 +248,19 @@ describe('recipe form', () => {
       expect(updateRecipe).toHaveBeenCalledWith({ youWillNeed: [] })
     })
   })
+
+  describe('steps', () => {
+    it('handles adding a step', async () => {
+      renderForm(testRecipe({ steps: [] }))
+      fireEvent.click(screen.getByText('Steps'))
+
+      const input = screen.getByRole('step-input')
+      fireEvent.change(input, { target: { value: 'my new step' } })
+
+      fireEvent.click(screen.getByText('Save'))
+
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({ steps: [{ step: 'my new step' }] })
+    })
+  })
 })
