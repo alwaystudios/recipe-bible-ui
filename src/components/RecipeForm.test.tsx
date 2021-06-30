@@ -6,6 +6,14 @@ import * as AuthContext from '../auth/AuthContext'
 import * as assetUploadModule from '../domain/assetUpload'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { lorem } from 'faker'
+import * as useIngredientsModule from '../hooks/useIngredients'
+
+const saveIngredient = jest.fn().mockResolvedValue(undefined)
+const getIngredients = jest.fn().mockResolvedValue(undefined)
+const ingredients = [lorem.word(), lorem.word()]
+jest
+  .spyOn(useIngredientsModule, 'useIngredients')
+  .mockReturnValue({ getIngredients, ingredients, saveIngredient } as any)
 
 const push = jest.fn()
 jest.mock('react-router-dom', () => ({
@@ -151,7 +159,7 @@ describe('recipe form', () => {
       fireEvent.click(screen.getByText('Chicken'))
 
       expect(updateRecipe).toHaveBeenCalledTimes(1)
-      expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Chicken', 'Meat'] })
+      expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Meat', 'Chicken'] })
     })
 
     it('removes a category', () => {
@@ -261,6 +269,25 @@ describe('recipe form', () => {
 
       expect(updateRecipe).toHaveBeenCalledTimes(1)
       expect(updateRecipe).toHaveBeenCalledWith({ steps: [{ step: 'my new step' }] })
+    })
+  })
+
+  describe('ingredients', () => {
+    it('handles adding an ingredient', () => {
+      renderForm(testRecipe({ ingredients: [] }))
+      fireEvent.click(screen.getByText('Ingredients'))
+
+      fireEvent.change(screen.getByRole('ingredient-form-input'), {
+        target: { value: ingredients[0] },
+      })
+      fireEvent.change(screen.getByRole('quantity-form-input'), { target: { value: '2' } })
+      fireEvent.click(screen.getByText('save'))
+
+      expect(getIngredients).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledTimes(1)
+      expect(updateRecipe).toHaveBeenCalledWith({
+        ingredients: [{ name: ingredients[0], measure: 'qty', quantity: '2' }],
+      })
     })
   })
 })

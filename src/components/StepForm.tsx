@@ -52,7 +52,7 @@ export const StepForm: React.FC<Props> = ({ saveStep, recipeTitle, nextStepIndex
         disabled={maxSteps}
       />
       <FileUpload
-        accept={'.jpeg, .jpg, .png'}
+        accept={'.jpeg, .jpg'}
         multiple={false}
         onChange={(files) => handleFileUpload(files[0])}
       >

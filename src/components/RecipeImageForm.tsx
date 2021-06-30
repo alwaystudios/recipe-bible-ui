@@ -59,7 +59,7 @@ export const RecipeImageForm: React.FunctionComponent<Props> = ({ title, setImgS
     <Container>
       <FileUpload
         openFileDialog={openFileDialog}
-        accept={'.jpeg, .jpg, .png'}
+        accept={'.jpeg, .jpg'}
         multiple={false}
         onChange={(files) => handleFileUpload(files[0])}
       >

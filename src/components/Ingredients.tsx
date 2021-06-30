@@ -9,17 +9,21 @@ const Container = styled.div`
   flex-wrap: wrap;
 `
 
-type Props = {
+type ComponentProps = {
   ingredients: IngredientType[]
-  // eslint-disable-next-line no-unused-vars
   onDelete?: (ingredient: string) => void
+  className?: string
 }
 
-export const Ingredients: React.FC<Props> = ({ ingredients, children, onDelete }) => (
+export const Ingredients: React.FunctionComponent<ComponentProps> = ({
+  ingredients,
+  children,
+  onDelete,
+}) => (
   <Container>
     {children}
-    {ingredients.map(({ name, imgSrc }) => (
-      <Ingredient label={name} imgSrc={imgSrc} key={name} onDelete={onDelete} />
+    {ingredients.map((i, index) => (
+      <Ingredient ingredient={i} key={index} onDelete={onDelete} />
     ))}
   </Container>
 )

@@ -5,16 +5,16 @@ import { testIngredient } from '@alwaystudios/recipe-bible-sdk'
 import { internet, lorem } from 'faker'
 
 const ingredients = [
-  testIngredient({ name: lorem.words(2), imgSrc: internet.url() }),
-  testIngredient({ name: lorem.words(2), imgSrc: internet.url() }),
-  testIngredient({ name: lorem.words(2), imgSrc: internet.url() }),
+  testIngredient({ name: lorem.words(2), imgSrc: internet.url(), quantity: 1 }),
+  testIngredient({ name: lorem.words(2), imgSrc: internet.url(), quantity: 1 }),
+  testIngredient({ name: lorem.words(2), imgSrc: internet.url(), quantity: 1 }),
 ]
 
 describe('Ingredients', () => {
   it('renders a list of ingredients', () => {
     const { container } = render(<Ingredients ingredients={ingredients} />)
     ingredients.map(({ name, imgSrc }, index) => {
-      expect(screen.getByText(name)).toBeInTheDocument()
+      expect(screen.getByText(`1 ${name}`)).toBeInTheDocument()
       expect(container.querySelectorAll('img')[index].getAttribute('src')).toBe(imgSrc)
     })
   })

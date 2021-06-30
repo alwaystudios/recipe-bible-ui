@@ -7,18 +7,22 @@ import {
   TextInput,
   TextInputWithConfirmation,
 } from '@alwaystudios/as-ui-components'
-import { CATEGORIES, getSlug, Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
-import { Category, Step } from '@alwaystudios/recipe-bible-sdk/dist/types'
+import { CATEGORIES, Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
+import { Category, Ingredient, Step } from '@alwaystudios/recipe-bible-sdk/dist/types'
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { fromRecipeApi } from '../domain/recipeTransformer'
+import { removeFromArray, removeObjectFromArray, updateArrayUnq } from '../domain/recipeForm'
+import { fromRecipeApi, toIngredientsApi, toStepsApi } from '../domain/recipeTransformer'
+import { useIngredients } from '../hooks/useIngredients'
+import { IngredientForm } from './IngredientForm'
+import { Ingredients } from './Ingredients'
 import { RecipeImageForm } from './RecipeImageForm'
 import { StepForm } from './StepForm'
 import { Steps } from './Steps'
 import { YouWillNeed } from './YouWillNeed'
 
-const Container = styled.div`
+const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   min-width: 100%;
@@ -47,37 +51,47 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
     servings,
     youWillNeed,
     steps,
+    ingredients,
     metadata: { published, focused },
     nutrition: { fat = '', protein = '', carbs = '' },
   } = fromRecipeApi(recipe)
   const history = useHistory()
   const [input, setInput] = useState('')
+  const { saveIngredient, getIngredients, ingredients: allIngredients } = useIngredients()
+  const [didMount, setDidMount] = useState(false)
+
+  useEffect(() => {
+    getIngredients()
+    setDidMount(true)
+    return () => setDidMount(false)
+  }, [])
+
+  if (!didMount) {
+    return null
+  }
 
   const handleUpdateRecipe = (updates: DeepPartial<Recipe>) => updateRecipe(updates)
 
   const handleYouWillNeedUpdate = () => {
-    handleUpdateRecipe({ youWillNeed: Array.from(new Set([...youWillNeed, input])) })
+    handleUpdateRecipe({ youWillNeed: updateArrayUnq(input, youWillNeed) })
     setInput('')
   }
 
-  const handleCategories = (checked: boolean, category: string) => {
+  const handleCategories = (checked: boolean, category: Category) => {
     if (checked) {
-      handleUpdateRecipe({ categories: [category as Category, ...categories] })
+      handleUpdateRecipe({ categories: updateArrayUnq<Category>(category, categories) })
     } else {
-      handleUpdateRecipe({ categories: categories.filter((c) => c !== category) })
+      handleUpdateRecipe({ categories: removeFromArray(category, categories) })
     }
   }
 
-  const handleUpdateSteps = (steps: Step[]) =>
-    handleUpdateRecipe({
-      steps: steps.map(({ imgSrc, step }) => ({
-        imgSrc: imgSrc ? getSlug(imgSrc) : undefined,
-        step,
-      })),
-    })
+  const handleUpdateIngredients = (ingredients: Ingredient[]) =>
+    handleUpdateRecipe({ ingredients: toIngredientsApi(ingredients) })
+
+  const handleUpdateSteps = (steps: Step[]) => handleUpdateRecipe({ steps: toStepsApi(steps) })
 
   return (
-    <Container>
+    <FormContainer autoComplete="off">
       <h1>{title}</h1>
       <Link to={`/recipes/${toSlug(title)}`}>view</Link>
       <Button
@@ -158,7 +172,7 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           <YouWillNeed
             values={youWillNeed}
             onDelete={(value: string) =>
-              handleUpdateRecipe({ youWillNeed: youWillNeed.filter((v) => v !== value) })
+              handleUpdateRecipe({ youWillNeed: removeFromArray(value, youWillNeed) })
             }
           />
         </Tab>
@@ -175,19 +189,24 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           />
         </Tab>
         <Tab title="Ingredients">
-          <>todo</>
-          {/* <Ingredients ingredients={ingredients} onDelete={handleIngredientDelete}>
+          <Ingredients
+            ingredients={ingredients}
+            onDelete={(value: string) =>
+              handleUpdateRecipe({ ingredients: ingredients.filter(({ name }) => name !== value) })
+            }
+          >
             <IngredientForm
+              ingredients={allIngredients}
               totalIngredients={ingredients.length}
-              setFeedback={setFeedback}
-              saveIngredient={(ingredient: Ingredient) =>
-                setIngredients([
+              saveIngredient={(ingredient: Ingredient) => {
+                saveIngredient(ingredient.name)
+                handleUpdateIngredients([
+                  ...removeObjectFromArray<Ingredient>(ingredient, ingredients, 'name'),
                   ingredient,
-                  ...ingredients.filter((i) => i.name !== ingredient.name),
                 ])
-              }
+              }}
             />
-          </Ingredients> */}
+          </Ingredients>
         </Tab>
         <Tab title="Info">
           <label htmlFor="servings-input">servings</label>
@@ -206,6 +225,6 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           />
         </Tab>
       </Tabs>
-    </Container>
+    </FormContainer>
   )
 }

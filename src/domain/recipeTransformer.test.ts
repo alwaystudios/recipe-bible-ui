@@ -1,7 +1,21 @@
-import { dekebabify, recipeTitleTransformer, testRecipe } from '@alwaystudios/recipe-bible-sdk'
-import { fromRecipeApi, fromRecipesApi, getRecipeImgSrc } from './recipeTransformer'
+import {
+  dekebabify,
+  recipeTitleTransformer,
+  testIngredient,
+  testRecipe,
+  testStep,
+} from '@alwaystudios/recipe-bible-sdk'
+import { lorem } from 'faker'
+import {
+  fromRecipeApi,
+  fromRecipesApi,
+  getRecipeImgSrc,
+  toIngredientsApi,
+  toStepsApi,
+} from './recipeTransformer'
 
 const recipe = testRecipe()
+const imgSrc = 'http://localhost:4566/recipe-bible-content/recipes/asdf/ground-cumin.jpeg'
 
 describe('recipe transformers', () => {
   describe('getRecipeImgSrc', () => {
@@ -73,6 +87,44 @@ describe('recipe transformers', () => {
       expect(historyPush).toHaveBeenCalledTimes(1)
       const segment = mode === 'view' ? 'recipes' : 'manage/recipes'
       expect(historyPush).toHaveBeenCalledWith(`/${segment}/${recipes[0].title}`)
+    })
+  })
+
+  describe('toStepsApi', () => {
+    it('transforms steps to API steps', () => {
+      const step1 = testStep(lorem.words(6), imgSrc)
+      const step2 = testStep(lorem.words(6), imgSrc)
+
+      expect(toStepsApi([step1, step2])).toEqual([
+        {
+          imgSrc: 'ground-cumin.jpeg',
+          step: step1.step,
+        },
+        {
+          imgSrc: 'ground-cumin.jpeg',
+          step: step2.step,
+        },
+      ])
+    })
+  })
+
+  describe('toIngredientsApi', () => {
+    it('transforms ingredients to API ingredients', () => {
+      const ingredient1 = testIngredient({ name: 'hard boiled egg' })
+      const ingredient2 = testIngredient({ name: 'Eggs' })
+
+      expect(toIngredientsApi([ingredient1, ingredient2])).toEqual([
+        {
+          measure: 'qty',
+          name: 'hard-boiled-egg',
+          quantity: ingredient1.quantity,
+        },
+        {
+          measure: 'qty',
+          name: 'egg',
+          quantity: ingredient2.quantity,
+        },
+      ])
     })
   })
 })

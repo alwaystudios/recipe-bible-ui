@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { ErrorIcon } from '@alwaystudios/as-ui-components'
+import { Ingredient as IngredientType, toIngredientLabel } from '@alwaystudios/recipe-bible-sdk'
 
 const Container = styled.div`
   display: flex;
@@ -30,16 +31,17 @@ const DeleteSpan = styled.span`
 `
 
 type Props = {
-  imgSrc: string
-  label: string
-  // eslint-disable-next-line no-unused-vars
+  ingredient: IngredientType
   onDelete?: (step: string) => void
 }
 
-export const Ingredient: React.FC<Props> = ({ imgSrc, label, onDelete }) => {
+export const Ingredient: React.FC<Props> = ({
+  ingredient: { imgSrc, name, quantity, measure },
+  onDelete,
+}) => {
   const handleDelete = (event: React.MouseEvent) => {
     event.preventDefault()
-    onDelete(label)
+    onDelete(name)
   }
 
   return (
@@ -50,7 +52,7 @@ export const Ingredient: React.FC<Props> = ({ imgSrc, label, onDelete }) => {
           <ErrorIcon />
         </DeleteSpan>
       )}
-      <p>{label}</p>
+      <p>{toIngredientLabel({ name, quantity: `${quantity}`, measure })}</p>
     </Container>
   )
 }

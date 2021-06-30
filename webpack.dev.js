@@ -8,7 +8,7 @@ module.exports = merge(common, {
   devServer: {
     historyApiFallback: true,
     disableHostCheck: true,
-    port: 3000,
+    port: 3001,
   },
   output: {
     publicPath: '/',

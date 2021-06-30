@@ -9,5 +9,3 @@
 - address lint warnings
 - feature flags
 - if user image is not found then use profile icon
-- update all RB project readmes
-- move aws to a lib (api project)

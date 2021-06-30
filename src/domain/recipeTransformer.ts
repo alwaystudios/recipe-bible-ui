@@ -1,9 +1,11 @@
 import {
   dekebabify,
+  getSlug,
   Ingredient,
   Recipe,
   recipeTitleTransformer,
   Step,
+  toIngredientRecord,
   toSlug,
 } from '@alwaystudios/recipe-bible-sdk'
 import { AWS_S3_BUCKET } from '../contstants'
@@ -38,7 +40,7 @@ export const fromRecipeApi = (recipe: Partial<Recipe>): Recipe => {
   const imgSrc = getRecipeImgSrc(recipe.title, recipe.imgSrc)
   const ingredients: Ingredient[] = (recipe.ingredients || []).map((i) => ({
     ...i,
-    name: dekebabify(i.name),
+    name: i.name,
     imgSrc: getIngredientImgSrc(i.name),
   }))
   const steps: Step[] = (recipe.steps || []).map((s) => ({
@@ -69,3 +71,16 @@ export const fromRecipesApi = (
       onClick: () => historyPush(`/${mode === 'view' ? 'recipes' : 'manage/recipes'}/${_title}`),
     }
   })
+
+export const toStepsApi = (steps: Step[]): Step[] =>
+  steps.map(({ imgSrc, step }) => ({
+    imgSrc: imgSrc ? getSlug(imgSrc) : undefined,
+    step,
+  }))
+
+export const toIngredientsApi = (ingredients: Ingredient[]): Ingredient[] =>
+  ingredients.map(({ name, quantity, measure }) => ({
+    name: toIngredientRecord(name),
+    quantity,
+    measure,
+  }))
