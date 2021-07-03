@@ -1,10 +1,8 @@
 import {
-  Button,
   Checkbox,
   Tab,
   Tabs,
   TextAreaWithConfirmation,
-  TextInput,
   TextInputWithConfirmation,
 } from '@alwaystudios/as-ui-components'
 import { CATEGORIES, Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
@@ -21,7 +19,7 @@ import { RecipeFormControls } from './RecipeFormControls'
 import { RecipeImageForm } from './RecipeImageForm'
 import { StepForm } from './StepForm'
 import { Steps } from './Steps'
-import { YouWillNeed } from './YouWillNeed'
+import { YouWillNeedForm } from './YouWillNeedForm'
 
 const FormContainer = styled.form`
   display: flex;
@@ -34,6 +32,19 @@ const Categories = styled.div`
   flex-direction: column;
   margin-left: 1rem;
   width: fit-content;
+`
+
+// todo: bug fix required in as ui components for text area with confirmation
+const StoryContainer = styled.div`
+  margin: 1rem 0 0 1rem;
+
+  & > div {
+    width: 50%;
+  }
+`
+
+const LabelWithInputContainer = styled.div`
+  padding: 1rem 0 0 1rem;
 `
 
 type Props = {
@@ -92,7 +103,12 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
   const handleUpdateSteps = (steps: Step[]) => handleUpdateRecipe({ steps: toStepsApi(steps) })
 
   return (
-    <FormContainer autoComplete="off">
+    <FormContainer
+      autoComplete="off"
+      onSubmit={(event) => {
+        event.preventDefault()
+      }}
+    >
       <h1>{title}</h1>
       <RecipeFormControls
         onDelete={() => deleteRecipe(toSlug(title)).then(() => history.push('/manage/recipes'))}
@@ -111,11 +127,13 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           />
         </Tab>
         <Tab title="Story">
-          <TextAreaWithConfirmation
-            rows={8}
-            value={story}
-            onConfirm={(story: string) => handleUpdateRecipe({ story })}
-          />
+          <StoryContainer>
+            <TextAreaWithConfirmation
+              rows={8}
+              value={story}
+              onConfirm={(story: string) => handleUpdateRecipe({ story })}
+            />
+          </StoryContainer>
         </Tab>
         <Tab title="Categories">
           <Categories>
@@ -130,43 +148,40 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           </Categories>
         </Tab>
         <Tab title="Nutrition">
-          <label htmlFor="fat-input">fat</label>
-          <TextInputWithConfirmation
-            id="fat-input"
-            onConfirm={(fat) => handleUpdateRecipe({ nutrition: { fat } })}
-            value={fat}
-          />
-          <label htmlFor="carbs-input">carbs</label>
-          <TextInputWithConfirmation
-            id="carbs-input"
-            onConfirm={(carbs) => handleUpdateRecipe({ nutrition: { carbs } })}
-            value={carbs}
-          />
-          <label htmlFor="protein-input">protein</label>
-          <TextInputWithConfirmation
-            id="protein-input"
-            onConfirm={(protein) => handleUpdateRecipe({ nutrition: { protein } })}
-            value={protein}
-          />
+          <LabelWithInputContainer>
+            <label htmlFor="fat-input">fat</label>
+            <TextInputWithConfirmation
+              id="fat-input"
+              onConfirm={(fat) => handleUpdateRecipe({ nutrition: { fat } })}
+              value={fat}
+            />
+          </LabelWithInputContainer>
+          <LabelWithInputContainer>
+            <label htmlFor="carbs-input">carbs</label>
+            <TextInputWithConfirmation
+              id="carbs-input"
+              onConfirm={(carbs) => handleUpdateRecipe({ nutrition: { carbs } })}
+              value={carbs}
+            />
+          </LabelWithInputContainer>
+          <LabelWithInputContainer>
+            <label htmlFor="protein-input">protein</label>
+            <TextInputWithConfirmation
+              id="protein-input"
+              onConfirm={(protein) => handleUpdateRecipe({ nutrition: { protein } })}
+              value={protein}
+            />
+          </LabelWithInputContainer>
         </Tab>
         <Tab title="You will need">
-          <TextInput
-            role="you-will-need"
-            id="you-will-need-input"
-            onChange={(event) => setInput(event.currentTarget.value)}
-            onKeyDown={(event) => {
-              if (event.key.toLocaleLowerCase() === 'enter') {
-                handleYouWillNeedUpdate()
-              }
-            }}
-            value={input}
-          />
-          <Button text="add" onClick={handleYouWillNeedUpdate} disabled={input === ''} />
-          <YouWillNeed
-            values={youWillNeed}
+          <YouWillNeedForm
+            setInput={setInput}
+            input={input}
             onDelete={(value: string) =>
               handleUpdateRecipe({ youWillNeed: removeFromArray(value, youWillNeed) })
             }
+            onUpdate={handleYouWillNeedUpdate}
+            youWillNeed={youWillNeed}
           />
         </Tab>
         <Tab title="Steps">
@@ -202,20 +217,24 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           </Ingredients>
         </Tab>
         <Tab title="Info">
-          <label htmlFor="servings-input">servings</label>
-          <TextInputWithConfirmation
-            width="fit-content"
-            id="servings-input"
-            type="number"
-            value={servings}
-            onConfirm={(servings) => handleUpdateRecipe({ servings: Number(servings) })}
-          />
-          <label htmlFor="cooking-time-input">cooking time</label>
-          <TextInputWithConfirmation
-            id="cooking-time-input"
-            value={cookingTime}
-            onConfirm={(cookingTime) => handleUpdateRecipe({ cookingTime })}
-          />
+          <LabelWithInputContainer>
+            <label htmlFor="servings-input">servings</label>
+            <TextInputWithConfirmation
+              width="fit-content"
+              id="servings-input"
+              type="number"
+              value={servings}
+              onConfirm={(servings) => handleUpdateRecipe({ servings: Number(servings) })}
+            />
+          </LabelWithInputContainer>
+          <LabelWithInputContainer>
+            <label htmlFor="cooking-time-input">cooking time</label>
+            <TextInputWithConfirmation
+              id="cooking-time-input"
+              value={cookingTime}
+              onConfirm={(cookingTime) => handleUpdateRecipe({ cookingTime })}
+            />
+          </LabelWithInputContainer>
         </Tab>
       </Tabs>
     </FormContainer>
