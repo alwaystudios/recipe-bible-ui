@@ -69,7 +69,6 @@ export const RecipeGallery: FunctionComponent<Props> = ({
         />
         <TextInput
           role="recipe-gallery-search-input"
-          autoFocus={true}
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
         />
