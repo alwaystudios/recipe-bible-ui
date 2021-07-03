@@ -1,4 +1,5 @@
 import { TextInput } from '@alwaystudios/as-ui-components'
+import { dekebabify } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
 import React, { useState, useEffect } from 'react'
 
@@ -57,7 +58,7 @@ export const IngredientFormSearch: React.FunctionComponent<ComponentProps> = ({
 
   useEffect(() => {
     if (value) {
-      setItems(ingredients.filter((i) => i.includes(value)))
+      setItems(ingredients.filter((i) => i.includes(value)).map(dekebabify))
     }
   }, [value])
 

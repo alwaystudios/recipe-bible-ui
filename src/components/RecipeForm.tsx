@@ -11,12 +11,13 @@ import { CATEGORIES, Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import { Category, Ingredient, Step } from '@alwaystudios/recipe-bible-sdk/dist/types'
 import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { removeFromArray, removeObjectFromArray, updateArrayUnq } from '../domain/recipeForm'
 import { fromRecipeApi, toIngredientsApi, toStepsApi } from '../domain/recipeTransformer'
 import { useIngredients } from '../hooks/useIngredients'
 import { IngredientForm } from './IngredientForm'
 import { Ingredients } from './Ingredients'
+import { RecipeFormControls } from './RecipeFormControls'
 import { RecipeImageForm } from './RecipeImageForm'
 import { StepForm } from './StepForm'
 import { Steps } from './Steps'
@@ -93,22 +94,14 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
   return (
     <FormContainer autoComplete="off">
       <h1>{title}</h1>
-      <Link to={`/recipes/${toSlug(title)}`}>view</Link>
-      <Button
-        text="delete"
-        onClick={() => deleteRecipe(toSlug(title)).then(() => history.push('/manage/recipes'))}
+      <RecipeFormControls
+        onDelete={() => deleteRecipe(toSlug(title)).then(() => history.push('/manage/recipes'))}
+        onView={() => history.push(`/recipes/${toSlug(title)}`)}
+        onPublish={() => handleUpdateRecipe({ metadata: { published: !published } })}
+        onFocus={() => handleUpdateRecipe({ metadata: { focused: !focused } })}
+        published={published}
+        focused={focused}
       />
-      <Button
-        text={published ? 'unpublish' : 'publish'}
-        onClick={() => handleUpdateRecipe({ metadata: { published: !published } })}
-        disabled={focused}
-      />
-      {published && (
-        <Button
-          text={focused ? 'unfocus' : 'focus'}
-          onClick={() => handleUpdateRecipe({ metadata: { focused: !focused } })}
-        />
-      )}
       <Tabs>
         <Tab title="Photo">
           <RecipeImageForm

@@ -1,16 +1,15 @@
 import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { RecipeForm } from './RecipeForm'
-import { testRecipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
+import { testRecipe, toIngredientRecord, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import * as AuthContext from '../auth/AuthContext'
 import * as assetUploadModule from '../domain/assetUpload'
-import { MemoryRouter as Router } from 'react-router-dom'
 import { lorem } from 'faker'
 import * as useIngredientsModule from '../hooks/useIngredients'
 
 const saveIngredient = jest.fn().mockResolvedValue(undefined)
 const getIngredients = jest.fn().mockResolvedValue(undefined)
-const ingredients = [lorem.word(), lorem.word()]
+const ingredients = [lorem.words(2), lorem.words(2)].map(toIngredientRecord)
 jest
   .spyOn(useIngredientsModule, 'useIngredients')
   .mockReturnValue({ getIngredients, ingredients, saveIngredient } as any)
@@ -37,11 +36,7 @@ const deleteRecipe = jest.fn()
 const file = { content: 'content' }
 
 const renderForm = (_recipe = recipe) =>
-  render(
-    <Router>
-      <RecipeForm recipe={_recipe} updateRecipe={updateRecipe} deleteRecipe={deleteRecipe} />
-    </Router>
-  )
+  render(<RecipeForm recipe={_recipe} updateRecipe={updateRecipe} deleteRecipe={deleteRecipe} />)
 
 describe('recipe form', () => {
   beforeEach(jest.clearAllMocks)
@@ -56,16 +51,12 @@ describe('recipe form', () => {
     expect(screen.getByText('Steps')).toBeInTheDocument()
     expect(screen.getByText('Ingredients')).toBeInTheDocument()
     expect(screen.getByText('Info')).toBeInTheDocument()
-
-    const viewLink = screen.getByText('view')
-    expect(viewLink).toBeInTheDocument()
-    expect(viewLink.getAttribute('href')).toBe(`/recipes/${toSlug(recipe.title)}`)
-
-    expect(screen.queryByText('focus')).not.toBeInTheDocument()
   })
 
   describe('CTAs', () => {
-    it('handles delete CTA', async () => {
+    it('handles delete CTA with confirmation', async () => {
+      window.confirm = jest.fn(() => true)
+
       deleteRecipe.mockResolvedValueOnce(undefined)
       renderForm()
       fireEvent.click(screen.getByText('delete'))
@@ -73,6 +64,14 @@ describe('recipe form', () => {
       expect(deleteRecipe).toHaveBeenCalledWith(toSlug(recipe.title))
       await waitFor(() => expect(push).toHaveBeenCalledTimes(1))
       expect(push).toHaveBeenCalledWith('/manage/recipes')
+      expect(window.confirm).toBeCalled()
+    })
+
+    it('handles view CTA', () => {
+      renderForm()
+      fireEvent.click(screen.getByText('view'))
+      expect(push).toHaveBeenCalledTimes(1)
+      expect(push).toHaveBeenCalledWith(`/recipes/${toSlug(recipe.title)}`)
     })
 
     it('handles publish CTA', () => {
