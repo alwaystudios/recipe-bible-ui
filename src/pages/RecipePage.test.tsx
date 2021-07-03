@@ -6,9 +6,13 @@ import { testRecipe } from '@alwaystudios/recipe-bible-sdk'
 import * as useRecipesModule from '../hooks/useRecipes'
 import * as recipeModule from '../components/Recipe'
 import * as editRecipeModule from '../components/RecipeForm'
+import * as BackToLinkModule from '../components/BackToLink'
 
-const Recipe = jest.spyOn(recipeModule, 'Recipe').mockReturnValue(<>view mock</>)
-const EditRecipe = jest.spyOn(editRecipeModule, 'RecipeForm').mockReturnValue(<>edit mock</>)
+const BackToLink = jest
+  .spyOn(BackToLinkModule, 'BackToLink')
+  .mockReturnValue(<p>back to link mock</p>)
+const Recipe = jest.spyOn(recipeModule, 'Recipe').mockReturnValue(<p>view mock</p>)
+const EditRecipe = jest.spyOn(editRecipeModule, 'RecipeForm').mockReturnValue(<p>edit mock</p>)
 
 const recipe = testRecipe()
 const getRecipe = jest.fn().mockResolvedValue(recipe)
@@ -35,11 +39,16 @@ describe('recipe page', () => {
     render(<RecipePage />)
 
     expect(screen.getByText('view mock')).toBeInTheDocument()
+    expect(screen.getByText('back to link mock')).toBeInTheDocument()
     expect(useAnalytics).toHaveBeenCalled()
     expect(pageView).toHaveBeenCalledTimes(1)
     expect(getRecipe).toHaveBeenCalledTimes(1)
     expect(getRecipe).toHaveBeenCalledWith(recipe.title)
 
+    expect(BackToLink).toHaveBeenCalledTimes(1)
+    expect(BackToLink).toHaveBeenCalledWith({ text: 'recipes', to: '/recipes' }, {})
+
+    expect(Recipe).toHaveBeenCalledTimes(1)
     expect(Recipe).toHaveBeenCalledWith({ recipe }, {})
   })
 

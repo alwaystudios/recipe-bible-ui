@@ -5,6 +5,7 @@ import { Recipe } from '../components/Recipe'
 import { Spinner } from '../components/Spinner'
 import { useAnalytics } from '../hooks/useAnalytics'
 import { useRecipes } from '../hooks/useRecipes'
+import { BackToLink } from '../components/BackToLink'
 
 type Props = {
   edit?: boolean
@@ -25,5 +26,10 @@ export const RecipePage: React.FC<Props> = ({ edit = false }) => {
   const Component = edit ? RecipeForm : Recipe
   const Props = edit ? { updateRecipe, deleteRecipe } : {}
 
-  return <Spinner isLoading={loading}>{recipe && <Component recipe={recipe} {...Props} />}</Spinner>
+  return (
+    <Spinner isLoading={loading}>
+      <BackToLink to="/recipes" text="recipes" />
+      {recipe && <Component recipe={recipe} {...Props} />}
+    </Spinner>
+  )
 }
