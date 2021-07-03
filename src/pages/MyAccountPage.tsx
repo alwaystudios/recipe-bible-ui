@@ -8,6 +8,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  align-items: center;
 
   & > h1 {
     margin-bottom: 1rem;

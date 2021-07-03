@@ -1,7 +1,9 @@
-import { Tab, Tabs } from '@alwaystudios/as-ui-components'
-import { Recipe as RecipeType } from '@alwaystudios/recipe-bible-sdk'
+import { Button, Tab, Tabs } from '@alwaystudios/as-ui-components'
+import { Recipe as RecipeType, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
 import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { useAuthContext } from '../auth/AuthContext'
 import { SMALL_SCREEN } from '../breakpoints'
 import { fromRecipeApi } from '../domain/recipeTransformer'
 import { Ingredients } from './Ingredients'
@@ -11,10 +13,17 @@ import { RecipeInfo } from './RecipeInfo'
 import { Steps } from './Steps'
 import { YouWillNeed } from './YouWillNeed'
 
+// todo: bug fix button margin: 0
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 100%;
+
+  & > button {
+    margin: 0;
+    width: fit-content;
+    margin-top: 1rem;
+  }
 `
 
 const P = styled.p`
@@ -56,9 +65,15 @@ export const Recipe: React.FC<Props> = ({ recipe }) => {
     nutrition: { fat, carbs, protein },
   } = fromRecipeApi(recipe)
 
+  const { user } = useAuthContext()
+  const history = useHistory()
+
   return (
     <Container>
       <h1>{title}</h1>
+      {user?.isAdmin && (
+        <Button text="edit" onClick={() => history.push(`/manage/recipes/${toSlug(title)}`)} />
+      )}
       <P>{story}</P>
       {youWillNeed.length > 0 && <P>You will need:</P>}
       <YouWillNeed values={youWillNeed} />
