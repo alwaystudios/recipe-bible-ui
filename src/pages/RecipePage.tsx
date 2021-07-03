@@ -6,10 +6,18 @@ import { Spinner } from '../components/Spinner'
 import { useAnalytics } from '../hooks/useAnalytics'
 import { useRecipes } from '../hooks/useRecipes'
 import { BackToLink } from '../components/BackToLink'
+import styled from '@emotion/styled'
 
 type Props = {
   edit?: boolean
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  margin-bottom: 1rem;
+`
 
 export const RecipePage: React.FC<Props> = ({ edit = false }) => {
   const { name } = useParams<{ name: string }>()
@@ -28,7 +36,9 @@ export const RecipePage: React.FC<Props> = ({ edit = false }) => {
 
   return (
     <Spinner isLoading={loading}>
-      <BackToLink to="/recipes" text="recipes" />
+      <Container>
+        <BackToLink to="/recipes" text="recipes" />
+      </Container>
       {recipe && <Component recipe={recipe} {...Props} />}
     </Spinner>
   )

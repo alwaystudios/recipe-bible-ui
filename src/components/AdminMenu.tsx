@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthContext } from '../auth/AuthContext'
+import { SMALL_SCREEN } from '../breakpoints'
 import { RB_LIGHT_GREEN } from '../colors'
 
 const Container = styled.div`
@@ -10,6 +11,10 @@ const Container = styled.div`
   width: 100%;
   margin-bottom: 2rem;
   justify-content: center;
+
+  @media only screen and (max-width: ${SMALL_SCREEN}px) {
+    display: none;
+  }
 `
 
 const StyledLink = styled(Link)`

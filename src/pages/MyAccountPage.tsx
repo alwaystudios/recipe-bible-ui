@@ -1,7 +1,18 @@
+import styled from '@emotion/styled'
 import React from 'react'
 import { useAuthContext } from '../auth/AuthContext'
 import { CopyAccessToken } from '../auth/CopyAccessToken'
 import { WhatsCookingPage } from './WhatsCookingPage'
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  & > h1 {
+    margin-bottom: 1rem;
+  }
+`
 
 export const MyAccountPage: React.FunctionComponent = () => {
   const {
@@ -9,9 +20,9 @@ export const MyAccountPage: React.FunctionComponent = () => {
   } = useAuthContext()
 
   return (
-    <>
+    <Container>
       <h1>Welcome to Recipe Bible, {name}</h1>
       {isAdmin ? <CopyAccessToken /> : <WhatsCookingPage />}
-    </>
+    </Container>
   )
 }
