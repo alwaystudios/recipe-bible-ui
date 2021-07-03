@@ -1,8 +1,17 @@
 import { Button, TextInput } from '@alwaystudios/as-ui-components'
 import { kebabify, toSlug } from '@alwaystudios/recipe-bible-sdk'
+import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useRecipes } from '../hooks/useRecipes'
+
+const StyledInput = styled(TextInput)`
+  margin: 1rem 0;
+`
+
+const StyledButton = styled(Button)`
+  width: 100%;
+`
 
 export const CreateRecipePage: React.FC = () => {
   const history = useHistory()
@@ -26,7 +35,7 @@ export const CreateRecipePage: React.FC = () => {
       }}
     >
       <h1>Create a new recipe</h1>
-      <TextInput
+      <StyledInput
         isInvalid={error}
         autoFocus={true}
         id="title"
@@ -38,7 +47,7 @@ export const CreateRecipePage: React.FC = () => {
         placeholder="Fast and furious fish and chips"
       />
       {error && <p>Recipe already exists</p>}
-      <Button onClick={handleOnClick} text="create" disabled={!title} />
+      <StyledButton onClick={handleOnClick} text="create" disabled={!title} />
     </form>
   )
 }
