@@ -4,7 +4,7 @@ import { RB_GREEN } from '../colors'
 import { MEDIUM_SCREEN } from '../breakpoints'
 import DinnerPlate from '../public/dinner-plate.svg'
 
-export const Container = styled.div`
+const Container = styled.div`
   padding: 0.75rem;
   display: flex;
   justify-content: center;

@@ -35,6 +35,18 @@ describe('Footer', () => {
     expect(privacyPolicy).toBeInTheDocument()
     expect(privacyPolicy.getAttribute('href')).toBe('/privacy')
 
+    const emailLink = screen.getByRole('email-link')
+    expect(emailLink).toBeInTheDocument()
+    expect(emailLink.getAttribute('href')).toBe('mailto:recipebiblecontact@gmail.com')
+
+    const facebookLink = screen.getByRole('facebook-link')
+    expect(facebookLink).toBeInTheDocument()
+    expect(facebookLink.getAttribute('href')).toBe('https://www.facebook.com/pg/RecipeBibleUK')
+
+    const instagramLink = screen.getByRole('instagram-link')
+    expect(instagramLink).toBeInTheDocument()
+    expect(instagramLink.getAttribute('href')).toBe('https://www.instagram.com/recipebibleuk')
+
     expect(screen.queryByText('Logout')).not.toBeInTheDocument()
   })
 
@@ -57,5 +69,17 @@ describe('Footer', () => {
     const logout = screen.getByText('Logout')
     expect(logout).toBeInTheDocument()
     expect(logout.getAttribute('href')).toBe('/logout')
+
+    const emailLink = screen.getByRole('email-link')
+    expect(emailLink).toBeInTheDocument()
+    expect(emailLink.getAttribute('href')).toBe('mailto:recipebiblecontact@gmail.com')
+
+    const facebookLink = screen.getByRole('facebook-link')
+    expect(facebookLink).toBeInTheDocument()
+    expect(facebookLink.getAttribute('href')).toBe('https://www.facebook.com/pg/RecipeBibleUK')
+
+    const instagramLink = screen.getByRole('instagram-link')
+    expect(instagramLink).toBeInTheDocument()
+    expect(instagramLink.getAttribute('href')).toBe('https://www.instagram.com/recipebibleuk')
   })
 })
