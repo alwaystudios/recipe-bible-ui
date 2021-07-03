@@ -15,7 +15,7 @@ describe('step', () => {
   it('handles on delete step', () => {
     const onDelete = jest.fn()
     render(<Step index={1} step={step} onDelete={onDelete} />)
-    fireEvent.click(screen.getByText('delete'))
+    fireEvent.click(screen.getByRole('delete-icon'))
     expect(onDelete).toHaveBeenCalledTimes(1)
     expect(onDelete).toHaveBeenCalledWith(step.step)
   })

@@ -22,8 +22,9 @@ const Container = styled.div`
 
 const DeleteSpan = styled.span`
   position: relative;
-  top: -0.25rem;
-  left: -2.5rem;
+  top: -9rem;
+  left: 3rem;
+  cursor: pointer;
 
   & > button {
     border-radius: 50%;
@@ -49,7 +50,7 @@ export const Ingredient: React.FC<Props> = ({
       <img src={imgSrc} />
       {onDelete && (
         <DeleteSpan onClick={handleDelete}>
-          <ErrorIcon />
+          <ErrorIcon size="2rem" />
         </DeleteSpan>
       )}
       <p>{toIngredientLabel({ name, quantity: `${quantity}`, measure })}</p>

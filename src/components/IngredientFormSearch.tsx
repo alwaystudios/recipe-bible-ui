@@ -2,6 +2,7 @@ import { TextInput } from '@alwaystudios/as-ui-components'
 import { dekebabify } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
 import React, { useState, useEffect } from 'react'
+import { RB_TEXT, RB_WHITE } from '../colors'
 
 const Container = styled.div`
   display: flex;
@@ -22,9 +23,20 @@ const FloatingResults = styled.div`
   overflow-y: auto;
 `
 
+const Ul = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+`
+
 const Li = styled.li`
   margin: 0.5rem;
   cursor: pointer;
+
+  &:hover {
+    background-color: ${RB_TEXT};
+    color: ${RB_WHITE};
+  }
 `
 
 type ComponentProps = {
@@ -83,6 +95,7 @@ export const IngredientFormSearch: React.FunctionComponent<ComponentProps> = ({
   return (
     <Container>
       <TextInput
+        autoFocus={true}
         placeholder="add an ingredient"
         role="ingredient-form-input"
         value={value}
@@ -93,13 +106,13 @@ export const IngredientFormSearch: React.FunctionComponent<ComponentProps> = ({
       {items.length > 0 && showResults && (
         <Results>
           <FloatingResults>
-            <ul>
+            <Ul>
               {items.map((item) => (
                 <Li onClick={(e) => handleClick(e, item)} key={item}>
                   {item}
                 </Li>
               ))}
-            </ul>
+            </Ul>
           </FloatingResults>
         </Results>
       )}

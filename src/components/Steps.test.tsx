@@ -18,7 +18,7 @@ describe('steps', () => {
 
   it('handles delete', () => {
     render(<Steps steps={steps} setSteps={setSteps} onDelete={onDelete} />)
-    fireEvent.click(screen.getAllByText('delete')[0])
+    fireEvent.click(screen.getAllByRole('delete-icon')[0])
     expect(onDelete).toHaveBeenCalledTimes(1)
     expect(onDelete).toHaveBeenCalledWith('step1')
   })

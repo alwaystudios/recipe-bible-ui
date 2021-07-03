@@ -14,10 +14,11 @@ import Select from 'react-select'
 import { ingredientExists as ingredientExistsFnc } from '../domain/recipeForm'
 
 const Container = styled.div`
-  padding: 4rem 0.8rem;
+  padding: 1rem 0 0 1rem;
   display: flex;
   flex-direction: column;
   max-width: fit-content;
+  min-height: 50vh;
 `
 
 const TextInputContainer = styled.div`
@@ -87,13 +88,15 @@ export const IngredientForm: React.FC<Props> = ({
             text="save"
             isSubmit={false}
             disabled={saveButtonDisabled}
-            onClick={() =>
+            onClick={() => {
               saveIngredient({
                 name: toIngredientRecord(ingredient),
                 quantity,
                 measure: measure.label,
               })
-            }
+              setIngredient('')
+              setQuantity('')
+            }}
           />
         ) : (
           <IngredientAssetUploader
@@ -115,6 +118,7 @@ export const IngredientForm: React.FC<Props> = ({
           disabled={maxIngredients}
         />
         <Select
+          className="dropdown-input"
           role="measure-form-dropdown"
           options={_measures}
           isDisabled={maxIngredients}

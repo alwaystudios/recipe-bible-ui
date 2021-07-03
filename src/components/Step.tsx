@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 import { Step as StepType } from '@alwaystudios/recipe-bible-sdk'
-import { Button, CopyToClipboard } from '@alwaystudios/as-ui-components'
+import { CopyToClipboard, ErrorIcon } from '@alwaystudios/as-ui-components'
 
 const Container = styled.div`
   display: flex;
@@ -57,14 +57,20 @@ const DeleteSpan = styled.span`
           left: -0.25rem;
         `
       : css`
-          top: -0.25rem;
+          top: -1rem;
           left: -2.5rem;
         `}
   position: relative;
+  cursor: pointer;
+`
 
-  & > button {
-    border-radius: 50%;
-  }
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const StepLabel = styled.p`
+  margin-right: 1rem;
 `
 
 type Props = {
@@ -90,14 +96,14 @@ export const Step: React.FC<Props> = ({ index, step, onDelete }) => {
         <IndexSpan>{index}</IndexSpan>
       )}
       {onDelete && (
-        <DeleteSpan indexOnly={!step.imgSrc}>
-          <Button text="delete" onClick={handleDelete} />
+        <DeleteSpan indexOnly={!step.imgSrc} onClick={handleDelete} role="delete-icon">
+          <ErrorIcon size="2rem" />
         </DeleteSpan>
       )}
-      <div>
-        {step.step}
+      <TextContainer>
+        <StepLabel>{step.step}</StepLabel>
         {onDelete && <CopyToClipboard text={step.step} />}
-      </div>
+      </TextContainer>
     </Container>
   )
 }

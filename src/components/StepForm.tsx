@@ -1,8 +1,26 @@
 import { Button, FileUpload, TextArea } from '@alwaystudios/as-ui-components'
 import { MAX_STEPS, MAX_STEP_TEXT, Step, toSlug } from '@alwaystudios/recipe-bible-sdk'
+import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { useAuthContext } from '../auth/AuthContext'
 import { assetUpload } from '../domain/assetUpload'
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  & > button {
+    margin: 0;
+  }
+`
+
+const Container = styled.div`
+  margin: 1rem 0 0 1rem;
+
+  & > div {
+    width: 40%;
+  }
+`
 
 type Props = {
   saveStep: (step: Step) => void
@@ -41,24 +59,26 @@ export const StepForm: React.FC<Props> = ({ saveStep, recipeTitle, nextStepIndex
   }
 
   return (
-    <>
+    <Container>
       <TextArea
         role="step-input"
-        rows={3}
+        rows={5}
         maxLength={MAX_STEP_TEXT}
         id="step-form-input"
         value={value}
         onChange={(event) => setValue(event.currentTarget.value)}
         disabled={maxSteps}
       />
-      <FileUpload
-        accept={'.jpeg, .jpg'}
-        multiple={false}
-        onChange={(files) => handleFileUpload(files[0])}
-      >
-        <Button text="Upload image" onClick={onClick} disabled={disabledButtons} />
-      </FileUpload>
-      <Button text="Save" onClick={handleSave} disabled={disabledButtons} />
-    </>
+      <ButtonsContainer>
+        <FileUpload
+          accept={'.jpeg, .jpg'}
+          multiple={false}
+          onChange={(files) => handleFileUpload(files[0])}
+        >
+          <Button text="Upload image" onClick={onClick} disabled={disabledButtons} />
+        </FileUpload>
+        <Button text="Save" onClick={handleSave} disabled={disabledButtons} />
+      </ButtonsContainer>
+    </Container>
   )
 }
