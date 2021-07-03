@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import React from 'react'
+import { SMALL_SCREEN } from '../breakpoints'
 
 const Img = styled.img`
   ${({ size }: { size: 'small' | 'medium' | 'large' }) =>
@@ -20,6 +21,12 @@ const Img = styled.img`
         `}
   border-radius: 10%;
   object-fit: cover;
+
+  @media only screen and (max-width: ${SMALL_SCREEN}px) {
+    border-radius: 2%;
+    max-width: 100%;
+    width: 100%;
+  }
 `
 
 type Props = {
