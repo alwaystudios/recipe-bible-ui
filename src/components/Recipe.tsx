@@ -45,6 +45,10 @@ const TabsContainer = styled.div`
   flex-direction: column;
   flex-basis: 90%;
   padding-left: 2rem;
+
+  @media only screen and (max-width: ${SMALL_SCREEN}px) {
+    padding: 1rem 0 0 0;
+  }
 `
 
 type Props = {
