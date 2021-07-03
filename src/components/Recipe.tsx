@@ -13,17 +13,10 @@ import { RecipeInfo } from './RecipeInfo'
 import { Steps } from './Steps'
 import { YouWillNeed } from './YouWillNeed'
 
-// todo: bug fix button margin: 0
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 100%;
-
-  & > button {
-    margin: 0;
-    width: fit-content;
-    margin-top: 1rem;
-  }
 `
 
 const P = styled.p`
@@ -48,6 +41,14 @@ const TabsContainer = styled.div`
 
   @media only screen and (max-width: ${SMALL_SCREEN}px) {
     padding: 1rem 0 0 0;
+  }
+`
+
+const ButtonContainer = styled.span`
+  margin-top: 1rem;
+
+  @media only screen and (max-width: ${SMALL_SCREEN}px) {
+    display: none;
   }
 `
 
@@ -76,7 +77,9 @@ export const Recipe: React.FC<Props> = ({ recipe }) => {
     <Container>
       <h1>{title}</h1>
       {user?.isAdmin && (
-        <Button text="edit" onClick={() => history.push(`/manage/recipes/${toSlug(title)}`)} />
+        <ButtonContainer>
+          <Button text="edit" onClick={() => history.push(`/manage/recipes/${toSlug(title)}`)} />
+        </ButtonContainer>
       )}
       <P>{story}</P>
       {youWillNeed.length > 0 && <P>You will need:</P>}
