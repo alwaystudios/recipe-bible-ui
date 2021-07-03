@@ -18,7 +18,7 @@ const Container = styled.div`
   margin: 1rem 0 0 1rem;
 
   & > div {
-    width: 40%;
+    width: 90%;
   }
 `
 

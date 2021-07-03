@@ -21,6 +21,15 @@ import { StepForm } from './StepForm'
 import { Steps } from './Steps'
 import { YouWillNeedForm } from './YouWillNeedForm'
 
+const StepsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  & > div {
+    flex-basis: 50%;
+  }
+`
+
 const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
@@ -185,16 +194,18 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
           />
         </Tab>
         <Tab title="Steps">
-          <StepForm
-            nextStepIndex={steps.length + 1}
-            recipeTitle={title}
-            saveStep={(step: Step) => handleUpdateSteps([...steps, step])}
-          />
-          <Steps
-            steps={steps}
-            setSteps={(steps) => handleUpdateSteps(steps)}
-            onDelete={(step) => handleUpdateSteps(steps.filter((s) => s.step !== step))}
-          />
+          <StepsContainer>
+            <StepForm
+              nextStepIndex={steps.length + 1}
+              recipeTitle={title}
+              saveStep={(step: Step) => handleUpdateSteps([...steps, step])}
+            />
+            <Steps
+              steps={steps}
+              setSteps={(steps) => handleUpdateSteps(steps)}
+              onDelete={(step) => handleUpdateSteps(steps.filter((s) => s.step !== step))}
+            />
+          </StepsContainer>
         </Tab>
         <Tab title="Ingredients">
           <Ingredients

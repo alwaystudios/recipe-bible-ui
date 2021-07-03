@@ -1,6 +1,5 @@
 # todo
 
-- step form as 2 columns
 - bug fix as ui components button margin: 0
 - link to edit recipe from recipe
 - recipe validation for publish
