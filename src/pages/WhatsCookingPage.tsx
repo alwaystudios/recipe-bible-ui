@@ -18,6 +18,9 @@ export const WhatsCookingPage: React.FunctionComponent = () => {
     { [LATEST]: () => recipes.filter((r) => r.metadata.focused) }
   )
 
+  const onFilter = (search: string) =>
+    recipes.filter((r) => r.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+
   useEffect(() => {
     pageView()
     getRecipes({ field: ['title', 'imgSrc', 'categories', 'metadata'] })
@@ -31,7 +34,12 @@ export const WhatsCookingPage: React.FunctionComponent = () => {
 
   return (
     <Spinner isLoading={loading}>
-      <RecipeGallery options={options} recipes={recipes} defaultOption={LATEST} />
+      <RecipeGallery
+        options={options}
+        recipes={recipes}
+        defaultOption={LATEST}
+        onFilter={onFilter}
+      />
     </Spinner>
   )
 }

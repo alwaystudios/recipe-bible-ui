@@ -17,6 +17,9 @@ export const ManageRecipesPage: React.FunctionComponent = () => {
     [PUBLISHED]: () => recipes.filter((r) => r.metadata.published),
   }
 
+  const onFilter = (search: string) =>
+    recipes.filter((r) => r.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+
   useEffect(() => {
     getRecipes({ published: 'all', field: ['title', 'imgSrc', 'metadata'] })
     setDidMount(true)
@@ -30,7 +33,13 @@ export const ManageRecipesPage: React.FunctionComponent = () => {
   return (
     <>
       <Spinner isLoading={loading}>
-        <RecipeGallery options={options} recipes={recipes} defaultOption={DRAFT} mode="edit" />
+        <RecipeGallery
+          options={options}
+          recipes={recipes}
+          defaultOption={DRAFT}
+          mode="edit"
+          onFilter={onFilter}
+        />
       </Spinner>
     </>
   )
