@@ -27,7 +27,6 @@ export const links = [
   { to: '/manage/recipes', text: 'manage recipes' },
   { to: '/manage/recipes/create', text: 'new recipe' },
   { to: '/ingredients', text: 'ingredients' },
-  { to: '/manage/ingredients', text: 'manage ingredients' },
   { to: '/manage/ingredients/create', text: 'new ingredient' },
   { to: '/manage/adverts', text: 'manage adverts' },
   { to: '/manage/adverts/create', text: 'new advert' },

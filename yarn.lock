@@ -37,10 +37,10 @@
     promised-csv "^1.0.1"
     ramda "^0.27.1"
 
-"@alwaystudios/recipe-bible-sdk@^2.0.13":
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/@alwaystudios/recipe-bible-sdk/-/recipe-bible-sdk-2.0.13.tgz#0ea44a6d18699159212a9ddde42032c5dbec1f8c"
-  integrity sha512-CrIu/KR5KM2Sa5w2JvbDo8fS6H8HcifBRVzktwC9wUvuUYI8Ry1B1GbHX6Bm4nGTc8pmOnkak5hPbtZ3suF60Q==
+"@alwaystudios/recipe-bible-sdk@^2.0.14":
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/@alwaystudios/recipe-bible-sdk/-/recipe-bible-sdk-2.0.14.tgz#af4d720a1b03c76f307eff6e105c8913f0c5188f"
+  integrity sha512-7IdBxOBkKKMmEnQYTdfAaHeVnLPWt6DbcKrJL+pD6s1q0iXxD4QpeVuJNSOpckpPJhwwnLMeAbgAEJcZAoMZnQ==
   dependencies:
     faker "^5.1.0"
     ramda "^0.27.1"

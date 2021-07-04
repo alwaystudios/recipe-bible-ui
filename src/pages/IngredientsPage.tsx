@@ -14,10 +14,12 @@ export const IngredientsPage: React.FC = () => {
   const { ingredients, getIngredients, loading } = useIngredients()
 
   const asIngredients = (ingredients: string[]): Ingredient[] =>
-    ingredients.map((name) => ({
-      name: toIngredientLabel({ name }),
-      imgSrc: getIngredientImgSrc(name),
-    }))
+    ingredients
+      .map((name) => ({
+        name: toIngredientLabel({ name }),
+        imgSrc: getIngredientImgSrc(name),
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name))
 
   const [visibleIngredients, setVisibleIngredients] = useState<Ingredient[]>(
     asIngredients(ingredients)
@@ -50,14 +52,14 @@ export const IngredientsPage: React.FC = () => {
   return (
     <>
       <h1>Ingredients</h1>
-      <TextInput
-        isSearch={true}
-        placeholder="search ingredients"
-        autoFocus={true}
-        value={search}
-        onChange={(event) => setSearch(event.currentTarget.value)}
-      />
       <Spinner isLoading={loading}>
+        <TextInput
+          isSearch={true}
+          placeholder="search ingredients"
+          autoFocus={true}
+          value={search}
+          onChange={(event) => setSearch(event.currentTarget.value)}
+        />
         <Ingredients ingredients={visibleIngredients} />
       </Spinner>
     </>
