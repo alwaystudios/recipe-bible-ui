@@ -31,6 +31,8 @@ yarn dev
 
 ## Auth0 configuration
 
+https://dev-27x9tbv3.eu.auth0.com/.well-known/jwks.json
+
 ### Allowed Callback URLs
 
 ```
