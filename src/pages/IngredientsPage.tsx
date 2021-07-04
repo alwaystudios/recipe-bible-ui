@@ -1,4 +1,4 @@
-import { Ingredient } from '@alwaystudios/recipe-bible-sdk'
+import { Ingredient, toIngredientLabel } from '@alwaystudios/recipe-bible-sdk'
 import React, { useEffect, useState } from 'react'
 import { Ingredients } from '../components/Ingredients'
 import { useAnalytics } from '../hooks/useAnalytics'
@@ -14,7 +14,7 @@ export const IngredientsPage: React.FC = () => {
 
   const asIngredients = (ingredients: string[]): Ingredient[] =>
     ingredients.map((name) => ({
-      name,
+      name: toIngredientLabel({ name }),
       imgSrc: getIngredientImgSrc(name),
     }))
 
