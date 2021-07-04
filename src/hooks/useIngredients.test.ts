@@ -26,6 +26,7 @@ describe('use ingredients', () => {
 
       await act(() => result.current.getIngredients())
 
+      expect(result.current.loading).toBe(false)
       expect(result.current.ingredients).toMatchObject(data)
       expect(isDone()).toBe(true)
     })
@@ -37,6 +38,7 @@ describe('use ingredients', () => {
 
       await act(() => result.current.getIngredients())
 
+      expect(result.current.loading).toBe(false)
       expect(result.current.ingredients).toEqual([])
       expect(isDone()).toBe(true)
     })

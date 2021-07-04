@@ -5,12 +5,13 @@ import { useAnalytics } from '../hooks/useAnalytics'
 import { useIngredients } from '../hooks/useIngredients'
 import { getIngredientImgSrc } from '../domain/recipeTransformer'
 import { TextInput } from '@alwaystudios/as-ui-components'
+import { Spinner } from '../components/Spinner'
 
 export const IngredientsPage: React.FC = () => {
   const [search, setSearch] = useState('')
   const [didMount, setDidMount] = useState(false)
   const { pageView } = useAnalytics()
-  const { ingredients, getIngredients } = useIngredients()
+  const { ingredients, getIngredients, loading } = useIngredients()
 
   const asIngredients = (ingredients: string[]): Ingredient[] =>
     ingredients.map((name) => ({
@@ -56,7 +57,9 @@ export const IngredientsPage: React.FC = () => {
         value={search}
         onChange={(event) => setSearch(event.currentTarget.value)}
       />
-      <Ingredients ingredients={visibleIngredients} />
+      <Spinner isLoading={loading}>
+        <Ingredients ingredients={visibleIngredients} />
+      </Spinner>
     </>
   )
 }

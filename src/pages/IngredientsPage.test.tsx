@@ -9,7 +9,7 @@ const ingredients = [...Array(10)].map(() => lorem.words(2))
 const getIngredients = jest.fn()
 jest
   .spyOn(useIngredientsModule, 'useIngredients')
-  .mockReturnValue({ getIngredients, ingredients } as any)
+  .mockReturnValue({ getIngredients, ingredients, loading: false } as any)
 
 describe('ingredients page', () => {
   it('renders with ingredients', () => {

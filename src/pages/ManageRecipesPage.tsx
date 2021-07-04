@@ -31,16 +31,14 @@ export const ManageRecipesPage: React.FunctionComponent = () => {
   }
 
   return (
-    <>
-      <Spinner isLoading={loading}>
-        <RecipeGallery
-          options={options}
-          recipes={recipes}
-          defaultOption={DRAFT}
-          mode="edit"
-          onFilter={onFilter}
-        />
-      </Spinner>
-    </>
+    <Spinner isLoading={loading}>
+      <RecipeGallery
+        options={options}
+        recipes={recipes}
+        defaultOption={DRAFT}
+        mode="edit"
+        onFilter={onFilter}
+      />
+    </Spinner>
   )
 }
