@@ -36,11 +36,11 @@ https://dev-27x9tbv3.eu.auth0.com/.well-known/jwks.json
 ### Allowed Callback URLs
 
 ```
-http://localhost:3001, https://recipebible.net
+http://localhost:3001, https://recipebible.net, http://recipe-bible.s3-website-eu-west-1.amazonaws.com
 ```
 
 ### Allowed Logout URLs
 
 ```
-http://localhost:3001, https://recipebible.net
+http://localhost:3001, https://recipebible.net, http://recipe-bible.s3-website-eu-west-1.amazonaws.com
 ```
