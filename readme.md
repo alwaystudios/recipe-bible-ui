@@ -34,11 +34,11 @@ yarn dev
 ### Allowed Callback URLs
 
 ```
-http://localhost:3001/, https://recipebible.net/, http://recipe-bible.s3-website-eu-west-1.amazonaws.com/
+http://localhost:3001, https://recipebible.net
 ```
 
 ### Allowed Logout URLs
 
 ```
-http://localhost:3001/, https://recipebible.net/, http://recipe-bible.s3-website-eu-west-1.amazonaws.com/
+http://localhost:3001, https://recipebible.net
 ```
