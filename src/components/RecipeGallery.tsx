@@ -68,6 +68,8 @@ export const RecipeGallery: FunctionComponent<Props> = ({
           onChange={handleContentSwitch}
         />
         <TextInput
+          isSearch={true}
+          placeholder="search recipes"
           role="recipe-gallery-search-input"
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}

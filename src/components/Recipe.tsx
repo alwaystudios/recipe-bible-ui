@@ -45,8 +45,6 @@ const TabsContainer = styled.div`
 `
 
 const ButtonContainer = styled.span`
-  margin-top: 1rem;
-
   @media only screen and (max-width: ${SMALL_SCREEN}px) {
     display: none;
   }

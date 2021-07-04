@@ -7,6 +7,7 @@ import * as authenticatedRouteModule from '../auth/AuthenticatedRoute'
 import * as aboutPageModule from '../pages/AboutPage'
 import * as whatsCookingModule from '../pages/WhatsCookingPage'
 import * as callbackModule from '../auth/Callback'
+import * as ingredientsPageModule from '../pages/IngredientsPage'
 import * as logoutModule from '../auth/Logout'
 import * as http403Module from '../pages/403'
 
@@ -56,6 +57,7 @@ describe('App', () => {
     ['/about', 'about mock', aboutPageModule, 'AboutPage'],
     ['/logout', 'logout mock', logoutModule, 'Logout'],
     ['/recipes', 'recipe mock', whatsCookingModule, 'WhatsCookingPage'],
+    ['/ingredients', 'ingredients mock', ingredientsPageModule, 'IngredientsPage'],
     ['/403', 'http 403 mock', http403Module, 'Http403'],
     ['/', 'callback mock', callbackModule, 'Callback'],
   ])('renders %s route', (route, mockText, module, page) => {

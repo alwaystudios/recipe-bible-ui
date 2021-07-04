@@ -9,3 +9,4 @@
 - address lint warnings
 - feature flags
 - if user image is not found then use profile icon
+- managing user logins

@@ -29,7 +29,7 @@ const EMPTY_RECIPE: Recipe = {
   nutrition: {},
 }
 
-const getIngredientImgSrc = (ingredient: string): string =>
+export const getIngredientImgSrc = (ingredient: string): string =>
   `${AWS_S3_BUCKET}/ingredients/${ingredient}.jpg`
 
 export const getRecipeImgSrc = (title: string, imgSrc: string): string | undefined =>

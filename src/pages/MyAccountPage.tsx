@@ -9,10 +9,6 @@ const Container = styled.div`
   flex-direction: column;
   text-align: center;
   align-items: center;
-
-  & > h1 {
-    margin-bottom: 1rem;
-  }
 `
 
 export const MyAccountPage: React.FunctionComponent = () => {

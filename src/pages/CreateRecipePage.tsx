@@ -5,10 +5,6 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useRecipes } from '../hooks/useRecipes'
 
-const StyledInput = styled(TextInput)`
-  margin: 1rem 0;
-`
-
 const StyledButton = styled(Button)`
   width: 100%;
 `
@@ -35,7 +31,7 @@ export const CreateRecipePage: React.FC = () => {
       }}
     >
       <h1>Create a new recipe</h1>
-      <StyledInput
+      <TextInput
         isInvalid={error}
         autoFocus={true}
         id="title"

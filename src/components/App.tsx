@@ -20,6 +20,7 @@ import { Http403 } from '../pages/403'
 import { ManageRecipesPage } from '../pages/ManageRecipesPage'
 import { AdminMenu } from './AdminMenu'
 import { Http404 } from '../pages/404'
+import { IngredientsPage } from '../pages/IngredientsPage'
 
 const Page = styled.div`
   display: flex;
@@ -60,6 +61,7 @@ export const App: React.FC = () => (
         <Route path="/about" component={AboutPage} />
         <Route path="/recipes/:name" component={RecipePage} />
         <Route path="/recipes" component={WhatsCookingPage} />
+        <Route path="/ingredients" component={IngredientsPage} />
         <Route path="/logout" component={Logout} />
         <Route path="/terms" component={TermsPage} />
         <Route path="/privacy" component={PrivacyPage} />
