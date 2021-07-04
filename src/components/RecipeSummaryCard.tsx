@@ -22,6 +22,7 @@ const Container = styled.div`
 
   > img {
     height: 80%;
+    min-height: 80%;
     object-fit: cover;
   }
 
