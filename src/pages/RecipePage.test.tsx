@@ -16,9 +16,7 @@ const EditRecipe = jest.spyOn(editRecipeModule, 'RecipeForm').mockReturnValue(<p
 
 const recipe = testRecipe()
 const getRecipe = jest.fn().mockResolvedValue(recipe)
-jest
-  .spyOn(useRecipesModule, 'useRecipes')
-  .mockImplementation(() => ({ getRecipe, recipe, loading: false } as any))
+const useRecipes = jest.spyOn(useRecipesModule, 'useRecipes')
 
 const pageView = jest.fn()
 const useAnalytics = jest
@@ -36,6 +34,7 @@ describe('recipe page', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders in view mode by default', () => {
+    useRecipes.mockImplementation(() => ({ getRecipe, recipe, loading: false } as any))
     render(<RecipePage />)
 
     expect(screen.getByText('view mock')).toBeInTheDocument()
@@ -52,7 +51,27 @@ describe('recipe page', () => {
     expect(Recipe).toHaveBeenCalledWith({ recipe }, {})
   })
 
+  it('renders 404 when no recipe', () => {
+    useRecipes.mockImplementation(() => ({ getRecipe, recipe: undefined, loading: false } as any))
+    render(<RecipePage />)
+
+    expect(screen.queryByText('view mock')).not.toBeInTheDocument()
+    expect(screen.getByText('back to link mock')).toBeInTheDocument()
+    expect(useAnalytics).toHaveBeenCalled()
+    expect(pageView).toHaveBeenCalledTimes(1)
+    expect(getRecipe).toHaveBeenCalledTimes(1)
+    expect(getRecipe).toHaveBeenCalledWith(recipe.title)
+
+    expect(BackToLink).toHaveBeenCalledTimes(1)
+    expect(BackToLink).toHaveBeenCalledWith({ text: 'recipes', to: '/recipes' }, {})
+
+    expect(Recipe).not.toHaveBeenCalledTimes(1)
+
+    expect(screen.getByText('404')).toBeInTheDocument()
+  })
+
   it('renders in edit mode', () => {
+    useRecipes.mockImplementation(() => ({ getRecipe, recipe, loading: false } as any))
     render(<RecipePage edit={true} />)
 
     expect(screen.getByText('edit mock')).toBeInTheDocument()
