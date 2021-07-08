@@ -4,6 +4,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
 import * as AuthContext from './AuthContext'
+import { testAuthContext } from '../../test/testAuthContext'
 
 const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
 
@@ -32,7 +33,7 @@ describe('AuthenticatedRoute', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders a route for an authenticated user', () => {
-    useAuthContext.mockReturnValueOnce({ login, user, tokenExpired: false } as any)
+    useAuthContext.mockReturnValueOnce(testAuthContext({ login, user, tokenExpired: false }))
     renderRoute()
     fireEvent.click(screen.getByText('click link'))
     expect(login).not.toHaveBeenCalled()
@@ -41,7 +42,7 @@ describe('AuthenticatedRoute', () => {
   })
 
   it('renders a route for an authenticated user with required role', () => {
-    useAuthContext.mockReturnValueOnce({ login, user, tokenExpired: false } as any)
+    useAuthContext.mockReturnValueOnce(testAuthContext({ login, user, tokenExpired: false }))
     renderRoute('admin')
     fireEvent.click(screen.getByText('click link'))
     expect(login).not.toHaveBeenCalled()
@@ -50,7 +51,7 @@ describe('AuthenticatedRoute', () => {
   })
 
   it('redirects to 403 if user does not have the required role', () => {
-    useAuthContext.mockReturnValueOnce({ login, user, tokenExpired: false } as any)
+    useAuthContext.mockReturnValueOnce(testAuthContext({ login, user, tokenExpired: false }))
     renderRoute('user-does-not-have-this-role')
     fireEvent.click(screen.getByText('click link'))
     expect(login).not.toHaveBeenCalled()
@@ -59,7 +60,9 @@ describe('AuthenticatedRoute', () => {
   })
 
   it('requires authentication for an authenticated user', () => {
-    useAuthContext.mockReturnValueOnce({ login, user: undefined, tokenExpired: false } as any)
+    useAuthContext.mockReturnValueOnce(
+      testAuthContext({ login, user: undefined, tokenExpired: false })
+    )
     renderRoute()
     fireEvent.click(screen.getByText('click link'))
     expect(login).toHaveBeenCalledTimes(1)
@@ -68,7 +71,7 @@ describe('AuthenticatedRoute', () => {
   })
 
   it('requires authentication for an expired token', () => {
-    useAuthContext.mockReturnValueOnce({ login, user, tokenExpired: true } as any)
+    useAuthContext.mockReturnValueOnce(testAuthContext({ login, user, tokenExpired: true }))
     renderRoute()
     fireEvent.click(screen.getByText('click link'))
     expect(login).toHaveBeenCalledTimes(1)

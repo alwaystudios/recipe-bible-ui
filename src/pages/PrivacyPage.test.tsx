@@ -2,11 +2,12 @@ import { PrivacyPage } from './PrivacyPage'
 import React from 'react'
 import { render } from '@testing-library/react'
 import * as useAnalyticsModule from '../hooks/useAnalytics'
+import { testUseAnalytics } from '../../test/testUseAnalytics'
 
 const pageView = jest.fn()
 const useAnalytics = jest
   .spyOn(useAnalyticsModule, 'useAnalytics')
-  .mockReturnValue({ pageView } as any)
+  .mockReturnValue(testUseAnalytics({ pageView }))
 
 describe('Privacy page', () => {
   beforeEach(jest.clearAllMocks)

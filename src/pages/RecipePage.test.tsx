@@ -7,6 +7,8 @@ import * as useRecipesModule from '../hooks/useRecipes'
 import * as recipeModule from '../components/Recipe'
 import * as editRecipeModule from '../components/RecipeForm'
 import * as BackToLinkModule from '../components/BackToLink'
+import { testUseAnalytics } from '../../test/testUseAnalytics'
+import { testUseRecipes } from '../../test/testUseRecipes'
 
 const BackToLink = jest
   .spyOn(BackToLinkModule, 'BackToLink')
@@ -21,7 +23,7 @@ const useRecipes = jest.spyOn(useRecipesModule, 'useRecipes')
 const pageView = jest.fn()
 const useAnalytics = jest
   .spyOn(useAnalyticsModule, 'useAnalytics')
-  .mockReturnValue({ pageView } as any)
+  .mockReturnValue(testUseAnalytics({ pageView }))
 
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
@@ -34,7 +36,7 @@ describe('recipe page', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders in view mode by default', () => {
-    useRecipes.mockImplementation(() => ({ getRecipe, recipe, loading: false } as any))
+    useRecipes.mockReturnValue(testUseRecipes({ getRecipe, recipe, loading: false }))
     render(<RecipePage />)
 
     expect(screen.getByText('view mock')).toBeInTheDocument()
@@ -52,7 +54,7 @@ describe('recipe page', () => {
   })
 
   it('renders 404 when no recipe', () => {
-    useRecipes.mockImplementation(() => ({ getRecipe, recipe: undefined, loading: false } as any))
+    useRecipes.mockReturnValue(testUseRecipes({ getRecipe, recipe: undefined, loading: false }))
     render(<RecipePage />)
 
     expect(screen.queryByText('view mock')).not.toBeInTheDocument()
@@ -71,7 +73,11 @@ describe('recipe page', () => {
   })
 
   it('renders in edit mode', () => {
-    useRecipes.mockImplementation(() => ({ getRecipe, recipe, loading: false } as any))
+    const deleteRecipe = jest.fn()
+    const updateRecipe = jest.fn()
+    useRecipes.mockReturnValue(
+      testUseRecipes({ deleteRecipe, updateRecipe, getRecipe, recipe, loading: false })
+    )
     render(<RecipePage edit={true} />)
 
     expect(screen.getByText('edit mock')).toBeInTheDocument()
@@ -80,6 +86,7 @@ describe('recipe page', () => {
     expect(getRecipe).toHaveBeenCalledTimes(1)
     expect(getRecipe).toHaveBeenCalledWith(recipe.title)
 
-    expect(EditRecipe).toHaveBeenCalledWith({ recipe }, {})
+    expect(EditRecipe).toHaveBeenCalledTimes(1)
+    expect(EditRecipe).toHaveBeenCalledWith({ deleteRecipe, updateRecipe, recipe }, {})
   })
 })

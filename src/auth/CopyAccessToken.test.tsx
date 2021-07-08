@@ -4,6 +4,7 @@ import { fireEvent, render } from '@testing-library/react'
 import copy from 'copy-to-clipboard'
 jest.mock('copy-to-clipboard')
 import * as AuthContext from './AuthContext'
+import { testAuthContext } from '../../test/testAuthContext'
 
 const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
 
@@ -13,7 +14,7 @@ describe('ShowToken', () => {
   beforeEach(jest.clearAllMocks)
 
   it('renders the current user token', () => {
-    useAuthContext.mockReturnValueOnce({ tokens } as any)
+    useAuthContext.mockReturnValueOnce(testAuthContext({ tokens }))
     const { container } = render(<CopyAccessToken />)
     fireEvent.click(container.querySelector('svg'))
     expect(copy).toHaveBeenCalledTimes(1)

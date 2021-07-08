@@ -28,7 +28,7 @@ export const setAuth0Session =
         accessToken,
         idToken,
         expiresAt,
-      } as any)
+      } as Tokens)
       history.push('/account')
       cb()
     }

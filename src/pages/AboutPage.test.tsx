@@ -4,11 +4,12 @@ import { render, screen } from '@testing-library/react'
 import * as useAnalyticsModule from '../hooks/useAnalytics'
 import { version } from '../../package.json'
 import { MemoryRouter as Router } from 'react-router-dom'
+import { testUseAnalytics } from '../../test/testUseAnalytics'
 
 const pageView = jest.fn()
 const useAnalytics = jest
   .spyOn(useAnalyticsModule, 'useAnalytics')
-  .mockReturnValue({ pageView } as any)
+  .mockReturnValue(testUseAnalytics({ pageView }))
 
 describe('About page', () => {
   beforeEach(jest.clearAllMocks)

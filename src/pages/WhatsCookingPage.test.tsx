@@ -5,6 +5,8 @@ import * as useAnalyticsModule from '../hooks/useAnalytics'
 import { testRecipe } from '@alwaystudios/recipe-bible-sdk'
 import * as useRecipesModule from '../hooks/useRecipes'
 import * as recipeGalleryModule from '../components/RecipeGallery'
+import { testUseRecipes } from '../../test/testUseRecipes'
+import { testUseAnalytics } from '../../test/testUseAnalytics'
 
 const RecipeGallery = jest.spyOn(recipeGalleryModule, 'RecipeGallery').mockReturnValue(<>mock</>)
 
@@ -12,12 +14,12 @@ const recipes = [testRecipe(), testRecipe()]
 const getRecipes = jest.fn().mockResolvedValue(recipes)
 jest
   .spyOn(useRecipesModule, 'useRecipes')
-  .mockImplementation(() => ({ getRecipes, recipes, loading: false } as any))
+  .mockReturnValue(testUseRecipes({ getRecipes, recipes, loading: false }))
 
 const pageView = jest.fn()
 const useAnalytics = jest
   .spyOn(useAnalyticsModule, 'useAnalytics')
-  .mockReturnValue({ pageView } as any)
+  .mockReturnValue(testUseAnalytics({ pageView }))
 
 describe('Whats cooking page', () => {
   beforeEach(jest.clearAllMocks)

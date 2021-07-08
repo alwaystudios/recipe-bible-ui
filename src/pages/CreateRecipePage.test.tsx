@@ -2,9 +2,10 @@ import React from 'react'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { CreateRecipePage } from './CreateRecipePage'
 import * as useRecipesModule from '../hooks/useRecipes'
+import { testUseRecipes } from '../../test/testUseRecipes'
 
 const createRecipe = jest.fn()
-jest.spyOn(useRecipesModule, 'useRecipes').mockImplementation(() => ({ createRecipe } as any))
+jest.spyOn(useRecipesModule, 'useRecipes').mockReturnValue(testUseRecipes({ createRecipe }))
 
 const push = jest.fn()
 jest.mock('react-router-dom', () => ({

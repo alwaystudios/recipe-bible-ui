@@ -4,12 +4,13 @@ import { IngredientsPage } from './IngredientsPage'
 import * as useIngredientsModule from '../hooks/useIngredients'
 import { lorem } from 'faker'
 import { tail } from 'ramda'
+import { testUseIngredients } from '../../test/testUseIngredients'
 
 const ingredients = [...Array(10)].map(() => lorem.words(2))
 const getIngredients = jest.fn()
 jest
   .spyOn(useIngredientsModule, 'useIngredients')
-  .mockReturnValue({ getIngredients, ingredients, loading: false } as any)
+  .mockReturnValue(testUseIngredients({ getIngredients, ingredients, loading: false }))
 
 describe('ingredients page', () => {
   it('renders with ingredients', () => {

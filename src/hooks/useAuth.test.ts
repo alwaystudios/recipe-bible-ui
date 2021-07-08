@@ -14,11 +14,11 @@ const logout = jest.fn()
 const parseHash = jest.fn()
 
 // eslint-disable-next-line functional/immutable-data
-mockAuth.WebAuth = jest.fn().mockImplementation(() => ({
+mockAuth.WebAuth = jest.fn().mockReturnValue({
   authorize,
   logout,
   parseHash,
-}))
+})
 
 describe('useAuth', () => {
   beforeEach(jest.clearAllMocks)

@@ -6,13 +6,15 @@ import * as AuthContext from '../auth/AuthContext'
 import * as assetUploadModule from '../domain/assetUpload'
 import { lorem } from 'faker'
 import * as useIngredientsModule from '../hooks/useIngredients'
+import { testUseIngredients } from '../../test/testUseIngredients'
+import { testAuthContext, testTokens } from '../../test/testAuthContext'
 
 const saveIngredient = jest.fn().mockResolvedValue(undefined)
 const getIngredients = jest.fn().mockResolvedValue(undefined)
 const ingredients = [lorem.words(2), lorem.words(2)].map(toIngredientRecord)
 jest
   .spyOn(useIngredientsModule, 'useIngredients')
-  .mockReturnValue({ getIngredients, ingredients, saveIngredient } as any)
+  .mockReturnValue(testUseIngredients({ getIngredients, ingredients, saveIngredient }))
 
 const push = jest.fn()
 jest.mock('react-router-dom', () => ({
@@ -24,7 +26,7 @@ jest.mock('react-router-dom', () => ({
 
 const assetUpload = jest.spyOn(assetUploadModule, 'assetUpload')
 const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
-const tokens = { idToken: '1234' }
+const tokens = testTokens({ idToken: '1234' })
 
 const recipe = testRecipe({
   imgSrc: '',
@@ -115,7 +117,7 @@ describe('recipe form', () => {
   })
 
   it('handles photo upload', async () => {
-    useAuthContext.mockReturnValue({ tokens } as any)
+    useAuthContext.mockReturnValue(testAuthContext({ tokens }))
     assetUpload.mockResolvedValueOnce('new-img-src')
 
     const { container } = renderForm()

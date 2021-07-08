@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { Recipe } from './Recipe'
 import { testRecipe, testUser } from '@alwaystudios/recipe-bible-sdk'
 import * as AuthContext from '../auth/AuthContext'
+import { testAuthContext } from '../../test/testAuthContext'
 
 const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
 
@@ -25,7 +26,7 @@ describe('recipe', () => {
   })
 
   it('renders edit button for admin user', () => {
-    useAuthContext.mockReturnValueOnce({ user: testUser() } as any)
+    useAuthContext.mockReturnValueOnce(testAuthContext({ user: testUser() }))
     render(<Recipe recipe={recipe} />)
 
     fireEvent.click(screen.getByText('edit'))
@@ -34,7 +35,7 @@ describe('recipe', () => {
   })
 
   it('does not render an edit button for non admin user', () => {
-    useAuthContext.mockReturnValueOnce({ user: testUser({ isAdmin: false }) } as any)
+    useAuthContext.mockReturnValueOnce(testAuthContext({ user: testUser({ isAdmin: false }) }))
     render(<Recipe recipe={recipe} />)
 
     expect(screen.queryByText('edit')).not.toBeInTheDocument()

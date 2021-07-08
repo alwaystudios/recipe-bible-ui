@@ -3,6 +3,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { testUser } from '@alwaystudios/recipe-bible-sdk'
 import * as AuthContext from './AuthContext'
+import { testAuthContext } from '../../test/testAuthContext'
 
 const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
 
@@ -24,7 +25,7 @@ describe('Callback', () => {
   beforeEach(jest.clearAllMocks)
 
   it('handles authentication when there is no user', () => {
-    useAuthContext.mockReturnValueOnce({ handleAuthentication, user: undefined } as any)
+    useAuthContext.mockReturnValueOnce(testAuthContext({ handleAuthentication, user: undefined }))
     render(<Callback />)
     expect(push).toHaveBeenCalledTimes(1)
     expect(push).toHaveBeenCalledWith('/recipes')
@@ -32,7 +33,7 @@ describe('Callback', () => {
   })
 
   it('skips authentication when there is a user', () => {
-    useAuthContext.mockReturnValueOnce({ handleAuthentication, user: testUser() } as any)
+    useAuthContext.mockReturnValueOnce(testAuthContext({ handleAuthentication, user: testUser() }))
     render(<Callback />)
     expect(push).toHaveBeenCalledTimes(1)
     expect(push).toHaveBeenCalledWith('/recipes')

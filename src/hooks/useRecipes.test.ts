@@ -5,16 +5,17 @@ import nock, { cleanAll, isDone } from 'nock'
 import { LOCALHOST } from '../contstants'
 import { useRecipes } from './useRecipes'
 import * as AuthContext from '../auth/AuthContext'
+import { testAuthContext, testTokens } from '../../test/testAuthContext'
 
 const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
-const tokens = { idToken: datatype.uuid() }
+const tokens = testTokens({ idToken: datatype.uuid() })
 
 describe('use recipes', () => {
   beforeEach(cleanAll)
 
   describe('get recipe', () => {
     it('udpate recipe', async () => {
-      useAuthContext.mockReturnValue({ tokens } as any)
+      useAuthContext.mockReturnValue(testAuthContext({ tokens }))
 
       const recipe = testRecipe()
       const payload = { data: recipe }

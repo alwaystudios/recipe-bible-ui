@@ -5,7 +5,7 @@ import request from 'superagent'
 import { useAuthContext } from '../auth/AuthContext'
 import { API_BASE_URL } from '../contstants'
 
-type UseIngredients = {
+export type UseIngredients = {
   getIngredients: () => Promise<void>
   saveIngredient: (ingredient: string) => Promise<void>
   ingredients: string[]

@@ -71,7 +71,7 @@ describe('recipe transformers', () => {
   })
 
   describe('fromRecipesApi', () => {
-    test.each([['view'], ['edit']])('mode = $s', (mode: any) => {
+    test.each([['view'], ['edit']])('mode = $s', (mode: 'view' | 'edit') => {
       const historyPush = jest.fn()
       const recipes = [testRecipe(), testRecipe()]
       const data = fromRecipesApi(recipes, historyPush, mode)

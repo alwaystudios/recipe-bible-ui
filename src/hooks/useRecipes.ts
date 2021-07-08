@@ -11,7 +11,7 @@ type GetRecipes = {
   field?: string[]
 }
 
-type UseRecipes = {
+export type UseRecipes = {
   updateRecipe: (updates: DeepPartial<Recipe>) => Promise<void>
   getRecipes: (params?: GetRecipes) => Promise<void>
   getRecipe: (title: string) => Promise<void>

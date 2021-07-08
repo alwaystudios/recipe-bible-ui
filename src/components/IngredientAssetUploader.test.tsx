@@ -5,20 +5,21 @@ import { lorem } from 'faker'
 import * as AuthContext from '../auth/AuthContext'
 import * as assetUploadModule from '../domain/assetUpload'
 import { toIngredientRecord } from '@alwaystudios/recipe-bible-sdk'
+import { testAuthContext, testTokens } from '../../test/testAuthContext'
 
 const setIngredientExists = jest.fn()
 const ingredient = 'My new ingredient'
 
 const assetUpload = jest.spyOn(assetUploadModule, 'assetUpload')
 const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
-const tokens = { idToken: '1234' }
+const tokens = testTokens({ idToken: '1234' })
 const file = { content: 'content' }
 
 describe('ingredient asset uploader', () => {
   beforeEach(jest.clearAllMocks)
 
   it('uploads a new ingredient asset', async () => {
-    useAuthContext.mockReturnValue({ tokens } as any)
+    useAuthContext.mockReturnValue(testAuthContext({ tokens }))
     const imgSrc = lorem.words(2)
     assetUpload.mockResolvedValueOnce(imgSrc)
 
@@ -51,7 +52,7 @@ describe('ingredient asset uploader', () => {
   })
 
   it('prevents upload', () => {
-    useAuthContext.mockReturnValue({ tokens } as any)
+    useAuthContext.mockReturnValue(testAuthContext({ tokens }))
     const imgSrc = lorem.words(2)
     assetUpload.mockResolvedValueOnce(imgSrc)
 

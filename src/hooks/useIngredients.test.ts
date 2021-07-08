@@ -5,9 +5,10 @@ import { LOCALHOST } from '../contstants'
 import { useIngredients } from './useIngredients'
 import * as AuthContext from '../auth/AuthContext'
 import { toIngredientRecord } from '@alwaystudios/recipe-bible-sdk'
+import { testAuthContext, testTokens } from '../../test/testAuthContext'
 
 const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
-const tokens = { idToken: datatype.uuid() }
+const tokens = testTokens({ idToken: datatype.uuid() })
 
 describe('use ingredients', () => {
   beforeEach(cleanAll)
@@ -46,7 +47,7 @@ describe('use ingredients', () => {
 
   describe('save ingredient', () => {
     it('save an ingredient', async () => {
-      useAuthContext.mockReturnValue({ tokens } as any)
+      useAuthContext.mockReturnValue(testAuthContext({ tokens }))
       const ingredient = 'My new ingredients'
       nock(LOCALHOST)
         .put(`/ingredients`, { ingredient: toIngredientRecord(ingredient) })
