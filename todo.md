@@ -1,8 +1,6 @@
 # todo
 
 - bug fix as ui components button margin: 0
-- bundle analyser
-- remove tests from bundle ?
 - auth context test factory and clean up `as any`
 - address lint warnings
 - feature flags
