@@ -1,5 +1,7 @@
+import { Advert as AdvertType } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useAdverts } from '../hooks/useAdverts'
 import { Advert } from './Advert'
 
 const Container = styled.div`
@@ -10,26 +12,28 @@ const Container = styled.div`
   margin: 2rem 0;
 `
 
-// todo: use db, add unit tests
-const ads = [
-  {
-    src: 'https://ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=recipebible-21&marketplace=amazon&region=GB&placement=B01B4NJIKY&asins=B01B4NJIKY&linkId=310e10f5cd5b033260d35e6e7201e3a9&show_border=false&link_opens_in_new_window=false&price_color=333333&title_color=0066c0&bg_color=ffffff',
-    href: 'https://www.amazon.co.uk/dp/B01B4NJIKY/ref=as_sl_pc_tf_til?tag=recipebible-21&linkCode=w00&linkId=310e10f5cd5b033260d35e6e7201e3a9&creativeASIN=B01B4NJIKY',
-  },
-  {
-    src: 'https://ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=recipebible-21&marketplace=amazon&region=GB&placement=B07PQF4Z5W&asins=B07PQF4Z5W&linkId=d1ce387ac1d158ce68cff8ef224351e8&show_border=false&link_opens_in_new_window=false&price_color=333333&title_color=0066c0&bg_color=ffffff',
-    href: 'https://www.amazon.co.uk/dp/B07PQF4Z5W/ref=as_sl_pc_tf_til?tag=recipebible-21&linkCode=w00&linkId=d1ce387ac1d158ce68cff8ef224351e8&creativeASIN=B07PQF4Z5W',
-  },
-  {
-    src: 'https://ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=recipebible-21&marketplace=amazon&region=GB&placement=B001DXVL6K&asins=B001DXVL6K&linkId=9054d5cd050c313cb99aa24417cc6bbd&show_border=false&link_opens_in_new_window=false&price_color=333333&title_color=0066c0&bg_color=ffffff',
-    href: 'https://www.amazon.co.uk/dp/B001DXVL6K/ref=as_sl_pc_tf_til?tag=recipebible-21&linkCode=w00&linkId=9054d5cd050c313cb99aa24417cc6bbd&creativeASIN=B001DXVL6K',
-  },
-]
+const top3 = (adverts: AdvertType[]): AdvertType[] => adverts.slice(0, 3)
 
-export const Adverts: React.FC = () => (
-  <Container>
-    {ads.map(({ src, href }, index) => (
-      <Advert key={index} src={src} href={href} />
-    ))}
-  </Container>
-)
+const shuffle = (adverts: AdvertType[]): AdvertType[] =>
+  adverts
+    .map((a) => ({ sort: Math.random(), value: a }))
+    .sort((a, b) => a.sort - b.sort)
+    .map((a) => a.value)
+
+const getRandomTop3 = (adverts: AdvertType[]): AdvertType[] => top3(shuffle(adverts))
+
+export const Adverts: React.FC = () => {
+  const { getAdverts, adverts } = useAdverts()
+
+  useEffect(() => {
+    getAdverts()
+  }, [])
+
+  return adverts ? (
+    <Container>
+      {getRandomTop3(adverts).map(({ src, href }, index) => (
+        <Advert key={index} src={src} href={href} />
+      ))}
+    </Container>
+  ) : null
+}

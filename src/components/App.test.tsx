@@ -10,6 +10,9 @@ import * as callbackModule from '../auth/Callback'
 import * as ingredientsPageModule from '../pages/IngredientsPage'
 import * as logoutModule from '../auth/Logout'
 import * as http403Module from '../pages/403'
+import * as AdvertsModule from './Adverts'
+
+const Adverts = jest.spyOn(AdvertsModule, 'Adverts').mockImplementation(() => <>adverts mock</>)
 
 const AuthProviderMock: React.FC = ({ children }) => <>{children}</>
 const AuthProvider = jest.spyOn(AuthContext, 'AuthProvider').mockImplementation(AuthProviderMock)
@@ -40,6 +43,8 @@ describe('App', () => {
     expect(screen.getByText('RecipeBible.net')).toBeInTheDocument()
     expect(AuthProvider).toHaveBeenCalledTimes(1)
     expect(screen.getByText('redirect from root mock')).toBeInTheDocument()
+    expect(Adverts).toHaveBeenCalledTimes(1)
+    expect(screen.getByText('adverts mock')).toBeInTheDocument()
   })
 
   test.each([
