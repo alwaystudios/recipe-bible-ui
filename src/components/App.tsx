@@ -21,6 +21,7 @@ import { ManageRecipesPage } from '../pages/ManageRecipesPage'
 import { AdminMenu } from './AdminMenu'
 import { Http404 } from '../pages/404'
 import { IngredientsPage } from '../pages/IngredientsPage'
+import { Adverts } from './Adverts'
 
 const Page = styled.div`
   display: flex;
@@ -70,6 +71,7 @@ export const App: React.FC = () => (
         <Route component={Http404} />
       </Switch>
     </Page>
+    <Adverts />
     <Footer />
   </AuthProvider>
 )
