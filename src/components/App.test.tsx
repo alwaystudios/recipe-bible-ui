@@ -51,6 +51,7 @@ describe('App', () => {
     ['account'],
     ['manage/recipes/create'],
     ['manage/recipes'],
+    ['manage/adverts'],
     ['manage/recipes/some-test-recipe'],
   ])('renders authenticates route /%s', (route) => {
     MockComponent.mockReturnValueOnce(<>{route} mock</>)

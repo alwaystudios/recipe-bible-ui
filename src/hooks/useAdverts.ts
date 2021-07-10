@@ -8,6 +8,7 @@ import { API_BASE_URL } from '../contstants'
 export type UseAdverts = {
   getAdverts: () => Promise<void>
   saveAdvert: (advert: Advert) => Promise<void>
+  deleteAdvert: (advert: Advert) => Promise<void>
   adverts: Advert[]
   loading: boolean
 }
@@ -39,9 +40,20 @@ export const useAdverts = (): UseAdverts => {
       .set('Authorization', `Bearer ${idToken}`)
   }
 
+  const deleteAdvert = async (advert: Advert): Promise<void> => {
+    await request
+      .delete(`${API_BASE_URL}/adverts`)
+      .send(advert)
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${idToken}`)
+      .then(() => setAdverts(adverts.filter(({ src }) => src !== advert.src)))
+  }
+
   return {
     getAdverts,
     saveAdvert,
+    deleteAdvert,
     adverts,
     loading,
   }

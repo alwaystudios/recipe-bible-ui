@@ -66,4 +66,25 @@ describe('use adverts', () => {
       expect(isDone()).toBe(true)
     })
   })
+
+  describe('delete advert', () => {
+    it('deletes an advert', async () => {
+      useAuthContext.mockReturnValue(testAuthContext({ tokens }))
+      const advert = testAdvert()
+      nock(LOCALHOST)
+        .delete(`/adverts`, advert)
+        .matchHeader('authorization', `Bearer ${tokens.idToken}`)
+        .reply(200, () => {
+          return {
+            status: 'ok',
+          }
+        })
+
+      const { result } = renderHook(() => useAdverts())
+
+      await act(() => result.current.deleteAdvert(advert))
+
+      expect(isDone()).toBe(true)
+    })
+  })
 })

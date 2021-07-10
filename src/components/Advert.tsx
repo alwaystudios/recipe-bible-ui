@@ -30,12 +30,17 @@ const Iframe = styled.iframe`
 
 type Props = {
   src: string
-  href: string
+  href?: string
+  className?: string
 }
 
-export const Advert: React.FunctionComponent<Props> = ({ src, href }) => (
-  <Container>
-    <Mask role="iframe-mask" onClick={() => window.open(href, '_blank')} />
+export const Advert: React.FunctionComponent<Props> = ({ src, href, className }) => (
+  <Container className={className}>
+    <Mask
+      className="iframe-mask"
+      role="iframe-mask"
+      onClick={() => href && window.open(href, '_blank')}
+    />
     <Iframe frameBorder="0" scrolling="no" src={src} />
   </Container>
 )
