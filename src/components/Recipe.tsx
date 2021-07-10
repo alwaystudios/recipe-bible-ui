@@ -1,7 +1,7 @@
 import { Button, Tab, Tabs } from '@alwaystudios/as-ui-components'
 import { Recipe as RecipeType, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAuthContext } from '../auth/AuthContext'
 import { SMALL_SCREEN } from '../breakpoints'
@@ -12,6 +12,8 @@ import { RecipeImage } from './RecipeImage'
 import { RecipeInfo } from './RecipeInfo'
 import { Steps } from './Steps'
 import { YouWillNeed } from './YouWillNeed'
+import StarRatings from 'react-star-ratings'
+import { useRatings } from '../hooks/useRatings'
 
 const Container = styled.div`
   display: flex;
@@ -50,6 +52,20 @@ const ButtonContainer = styled.span`
   }
 `
 
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > h1 {
+    margin-right: 2rem;
+  }
+
+  & > div.star-ratings {
+    margin-bottom: 0.5rem;
+  }
+`
+
 type Props = {
   recipe: RecipeType
 }
@@ -68,12 +84,29 @@ export const Recipe: React.FC<Props> = ({ recipe }) => {
     nutrition: { fat, carbs, protein },
   } = fromRecipeApi(recipe)
 
+  const { getRatings, rating, setRating } = useRatings()
+
+  useEffect(() => {
+    getRatings(title)
+  }, [])
+
   const { user } = useAuthContext()
   const history = useHistory()
 
   return (
     <Container>
-      <h1>{title}</h1>
+      <TitleContainer>
+        <h1>{title}</h1>
+        <StarRatings
+          rating={rating}
+          starRatedColor="gold"
+          changeRating={(rating: number) => setRating(title, rating)}
+          numberOfStars={5}
+          name="rating"
+          starDimension="25px"
+          starSpacing="3px"
+        />
+      </TitleContainer>
       {user?.isAdmin && (
         <ButtonContainer>
           <Button text="edit" onClick={() => history.push(`/manage/recipes/${toSlug(title)}`)} />

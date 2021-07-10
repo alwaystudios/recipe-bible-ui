@@ -28,6 +28,7 @@ export const links = [
   { to: '/manage/recipes/create', text: 'new recipe' },
   { to: '/ingredients', text: 'ingredients' },
   { to: '/manage/adverts', text: 'manage adverts' },
+  { to: '/manage/recipes/ratings', text: 'recipe ratings' },
 ]
 
 export const AdminMenu: React.FC = () => {

@@ -22,7 +22,8 @@ import { AdminMenu } from './AdminMenu'
 import { Http404 } from '../pages/404'
 import { IngredientsPage } from '../pages/IngredientsPage'
 import { Adverts } from './Adverts'
-import { ManageAdvertsPage } from '../pages/manageAdvertsPage'
+import { ManageAdvertsPage } from '../pages/MManageAdvertsPage'
+import { ManageRecipeRatingsPage } from '../pages/ManageRecipeRatingsPage'
 
 const Page = styled.div`
   display: flex;
@@ -48,6 +49,11 @@ export const App: React.FC = () => (
           path="/manage/recipes/create"
           role={ADMIN_ROLE}
           component={CreateRecipePage}
+        />
+        <AuthenticatedRoute
+          path="/manage/recipes/ratings"
+          component={ManageRecipeRatingsPage}
+          role={ADMIN_ROLE}
         />
         <AuthenticatedRoute
           path="/manage/recipes/:name"

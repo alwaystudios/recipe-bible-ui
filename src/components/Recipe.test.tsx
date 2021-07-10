@@ -4,6 +4,16 @@ import { Recipe } from './Recipe'
 import { testRecipe, testUser } from '@alwaystudios/recipe-bible-sdk'
 import * as AuthContext from '../auth/AuthContext'
 import { testAuthContext } from '../../test/testAuthContext'
+import * as useRatingsModule from '../hooks/useRatings'
+import { testUseRatings } from '../../test/testUseRatings'
+
+const getRatings = jest.fn()
+const setRating = jest.fn()
+const ratings: number[] = []
+
+jest
+  .spyOn(useRatingsModule, 'useRatings')
+  .mockImplementation(() => testUseRatings({ getRatings, setRating, ratings }))
 
 const useAuthContext = jest.spyOn(AuthContext, 'useAuthContext')
 
@@ -23,6 +33,16 @@ describe('recipe', () => {
 
     expect(screen.getByText(recipe.title)).toBeInTheDocument()
     expect(screen.getByText(recipe.story)).toBeInTheDocument()
+    expect(getRatings).toHaveBeenCalledTimes(1)
+    expect(getRatings).toHaveBeenCalledWith(recipe.title)
+  })
+
+  it('handles user rating the recipe', () => {
+    const { container } = render(<Recipe recipe={recipe} />)
+
+    fireEvent.click(container.querySelectorAll('div.star-container')[0])
+    expect(setRating).toHaveBeenCalledTimes(1)
+    expect(setRating).toHaveBeenCalledWith(recipe.title, 1)
   })
 
   it('renders edit button for admin user', () => {

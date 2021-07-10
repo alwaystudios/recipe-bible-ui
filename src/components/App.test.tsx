@@ -50,6 +50,7 @@ describe('App', () => {
   test.each([
     ['account'],
     ['manage/recipes/create'],
+    ['manage/recipes/ratings'],
     ['manage/recipes'],
     ['manage/adverts'],
     ['manage/recipes/some-test-recipe'],
