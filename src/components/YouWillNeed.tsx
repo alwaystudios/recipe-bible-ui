@@ -23,14 +23,12 @@ type Props = {
   onDelete?: (value: string) => void
 }
 
-export const YouWillNeed: React.FC<Props> = ({ values, onDelete }) => {
-  return (
-    <Container>
-      {values.map((label) => (
-        <YouWillNeedValue key={label} onClick={() => onDelete && onDelete(label)}>
-          <Pill backgroundColor={RB_LIGHT_GREEN} color={RB_TEXT} label={label} />
-        </YouWillNeedValue>
-      ))}
-    </Container>
-  )
-}
+export const YouWillNeed: React.FC<Props> = ({ values, onDelete }) => (
+  <Container>
+    {values.map((label) => (
+      <YouWillNeedValue key={label} onClick={onDelete ? () => onDelete(label) : undefined}>
+        <Pill backgroundColor={RB_LIGHT_GREEN} color={RB_TEXT} label={label} />
+      </YouWillNeedValue>
+    ))}
+  </Container>
+)
