@@ -44,12 +44,13 @@ export const useRatings = (): UseRatings => {
       return
     }
 
+    setMyRating(rating)
+
     await request
       .post(`${API_BASE_URL}/recipe-ratings/${toSlug(title)}`)
       .send({ rating })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
-      .then(() => setMyRating(rating))
       .catch(() => setMyRating(undefined))
   }
 
