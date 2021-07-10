@@ -22,7 +22,7 @@ import { AdminMenu } from './AdminMenu'
 import { Http404 } from '../pages/404'
 import { IngredientsPage } from '../pages/IngredientsPage'
 import { Adverts } from './Adverts'
-import { ManageAdvertsPage } from '../pages/MManageAdvertsPage'
+import { ManageAdvertsPage } from '../pages/ManageAdvertsPage'
 import { ManageRecipeRatingsPage } from '../pages/ManageRecipeRatingsPage'
 
 const Page = styled.div`

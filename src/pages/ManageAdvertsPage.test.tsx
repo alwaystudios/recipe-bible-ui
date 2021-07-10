@@ -1,6 +1,6 @@
 import React from 'react'
 import { screen, render, fireEvent } from '@testing-library/react'
-import { ManageAdvertsPage } from './MManageAdvertsPage'
+import { ManageAdvertsPage } from './ManageAdvertsPage'
 import * as useAdvertsModule from '../hooks/useAdverts'
 import { testUseAdverts } from '../../test/testUseAdverts'
 import { testAdvert } from '@alwaystudios/recipe-bible-sdk'
