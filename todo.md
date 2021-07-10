@@ -1,6 +1,5 @@
 # todo
 
-- create advert
 - recipe ratings
 - top ratings admin page
 - create / edit ingredient
@@ -8,3 +7,4 @@
 - if user image is not found then use profile icon
 - bug fix as ui components button margin: 0
 - address lint warnings
+- create advert
