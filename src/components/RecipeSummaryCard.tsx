@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { MEDIUM_SCREEN, SMALL_SCREEN } from '../breakpoints'
-import { RB_LIGHT_GREEN, RB_PINK } from '../colors'
+import { RB_LIGHT_GREEN, RB_GREEN } from '../colors'
 
 const Container = styled.div`
   flex-basis: 30%;
@@ -16,7 +16,7 @@ const Container = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: ${RB_PINK};
+    background-color: ${RB_GREEN};
     border: solid black 1px;
   }
 
