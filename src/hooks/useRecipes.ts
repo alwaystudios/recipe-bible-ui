@@ -17,9 +17,12 @@ export type UseRecipes = {
   getRecipe: (title: string) => Promise<void>
   createRecipe: (title: string) => Promise<void>
   deleteRecipe: (title: string) => Promise<void>
+  clearErrors: () => void
   recipes: Recipe[]
-  recipe: Recipe
+  recipe: Partial<Recipe>
   loading: boolean
+  error: boolean
+  authError: boolean
 }
 
 export const useRecipes = (): UseRecipes => {
@@ -27,8 +30,10 @@ export const useRecipes = (): UseRecipes => {
   const idToken = pathOr(undefined, ['idToken'], tokens)
 
   const [recipes, setRecipes] = useState<Recipe[]>([])
-  const [recipe, setRecipe] = useState<Recipe | undefined>(undefined)
+  const [recipe, setRecipe] = useState<Partial<Recipe> | undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
+  const [authError, setAuthError] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
 
   const getRecipes = ({ published, focused, field }: GetRecipes = {}): Promise<void> => {
     setLoading(true)
@@ -56,16 +61,28 @@ export const useRecipes = (): UseRecipes => {
   }
 
   const createRecipe = async (title: string): Promise<void> => {
+    setError(false)
+    setAuthError(false)
+
     const slug = toSlug(title)
     if (slug === 'create') {
       throw new Error('invalid recipe name')
     }
-    await request
+
+    return request
       .post(`${API_BASE_URL}/recipes`)
       .send({ title: slug })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${idToken}`)
+      .then(() => {
+        setRecipe({ title: slug })
+      })
+      .catch((err) => {
+        setRecipe(undefined)
+        setError(true)
+        setAuthError(err.message === 'Unauthorized')
+      })
   }
 
   const deleteRecipe = async (title: string): Promise<void> => {
@@ -94,6 +111,10 @@ export const useRecipes = (): UseRecipes => {
   }
 
   return {
+    clearErrors: () => {
+      setError(false)
+      setAuthError(false)
+    },
     updateRecipe,
     getRecipes,
     getRecipe,
@@ -102,5 +123,7 @@ export const useRecipes = (): UseRecipes => {
     recipes,
     recipe,
     loading,
+    error,
+    authError,
   }
 }

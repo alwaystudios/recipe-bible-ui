@@ -1,7 +1,7 @@
 import { Button, TextInput } from '@alwaystudios/as-ui-components'
 import { kebabify, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useRecipes } from '../hooks/useRecipes'
 
@@ -11,14 +11,22 @@ const StyledButton = styled(Button)`
 
 export const CreateRecipePage: React.FC = () => {
   const history = useHistory()
-  const [error, setError] = useState(false)
   const [title, setTitle] = useState<string>('')
-  const { createRecipe } = useRecipes()
+  const { createRecipe, authError, recipe, error, clearErrors } = useRecipes()
 
-  const handleOnClick = () =>
-    createRecipe(title)
-      .then(() => history.push(kebabify(`/manage/recipes/${toSlug(title)}`)))
-      .catch(() => setError(true))
+  useEffect(() => {
+    if (authError) {
+      history.push('/account')
+    }
+  }, [authError])
+
+  useEffect(() => {
+    if (recipe?.title) {
+      history.push(kebabify(`/manage/recipes/${toSlug(recipe.title)}`))
+    }
+  }, [recipe])
+
+  const handleOnClick = () => createRecipe(title)
 
   return (
     <form
@@ -37,7 +45,7 @@ export const CreateRecipePage: React.FC = () => {
         id="title"
         onChange={(e) => {
           setTitle(e.currentTarget.value)
-          setError(false)
+          clearErrors()
         }}
         value={title}
         placeholder="Fast and furious fish and chips"

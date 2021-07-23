@@ -8,6 +8,7 @@ import { useRecipes } from '../hooks/useRecipes'
 import { BackToLink } from '../components/BackToLink'
 import styled from '@emotion/styled'
 import { Http404 } from './404'
+import { Recipe as RecipeType } from '@alwaystudios/recipe-bible-sdk'
 
 type Props = {
   edit?: boolean
@@ -40,7 +41,7 @@ export const RecipePage: React.FC<Props> = ({ edit = false }) => {
       <Container>
         <BackToLink to="/recipes" text="recipes" />
       </Container>
-      {recipe ? <Component recipe={recipe} {...Props} /> : <Http404 />}
+      {recipe ? <Component recipe={recipe as RecipeType} {...Props} /> : <Http404 />}
     </Spinner>
   )
 }

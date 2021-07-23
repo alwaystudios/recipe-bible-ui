@@ -7,8 +7,11 @@ export const testUseRecipes = (overrides: Partial<UseRecipes> = {}): UseRecipes 
   getRecipe: jest.fn(),
   createRecipe: jest.fn(),
   deleteRecipe: jest.fn(),
+  clearErrors: jest.fn(),
   recipes: [testRecipe()],
   recipe: testRecipe(),
   loading: false,
+  error: false,
+  authError: false,
   ...overrides,
 })

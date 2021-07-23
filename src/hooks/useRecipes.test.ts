@@ -160,6 +160,28 @@ describe('use recipes', () => {
 
       await act(() => result.current.createRecipe(title))
 
+      expect(result.current.authError).toBe(false)
+      expect(result.current.error).toBe(false)
+      expect(result.current.recipe.title).toBe(title)
+
+      expect(isDone()).toBe(true)
+    })
+
+    it('handles authentication errors', async () => {
+      const title = toSlug(lorem.words(3))
+      nock(LOCALHOST)
+        .post(`/recipes`, { title: toSlug(title) })
+        .matchHeader('authorization', `Bearer ${tokens.idToken}`)
+        .reply(401)
+
+      const { result } = renderHook(() => useRecipes())
+
+      await act(() => result.current.createRecipe(title))
+
+      expect(result.current.authError).toBe(true)
+      expect(result.current.error).toBe(true)
+      expect(result.current.recipe).toBeUndefined()
+
       expect(isDone()).toBe(true)
     })
 
