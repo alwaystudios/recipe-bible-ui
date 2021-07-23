@@ -35,6 +35,8 @@ const ImageIndexSpan = styled.span`
   height: fit-content;
   padding: 0.25rem;
   border-radius: 15%;
+  min-width: 0.75rem;
+  text-align: center;
 `
 
 const IndexSpan = styled.span`
@@ -47,6 +49,8 @@ const IndexSpan = styled.span`
   border-radius: 15%;
   margin-right: 0.5rem;
   margin-left: 0.49rem;
+  min-width: 0.75rem;
+  text-align: center;
 `
 
 const DeleteSpan = styled.span`
