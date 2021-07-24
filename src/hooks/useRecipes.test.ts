@@ -14,7 +14,43 @@ describe('use recipes', () => {
   beforeEach(cleanAll)
 
   describe('get recipe', () => {
-    it('udpate recipe', async () => {
+    it('get recipe', async () => {
+      const recipe = testRecipe()
+      const payload = { data: recipe }
+      nock(LOCALHOST)
+        .get(`/recipes/${recipe.title}`)
+        .reply(200, () => {
+          return payload
+        })
+
+      const { result } = renderHook(() => useRecipes())
+
+      expect(result.current.loading).toBe(false)
+
+      await act(() => result.current.getRecipe(recipe.title))
+
+      expect(result.current.recipe).toMatchObject(recipe)
+      expect(result.current.loading).toBe(false)
+      expect(isDone()).toBe(true)
+    })
+
+    it('handles errors', async () => {
+      nock(LOCALHOST).get(`/recipes/my-recipe`).reply(500)
+
+      const { result } = renderHook(() => useRecipes())
+
+      expect(result.current.loading).toBe(false)
+
+      await act(() => result.current.getRecipe('my-recipe'))
+
+      expect(result.current.recipe).toBeUndefined()
+      expect(result.current.loading).toBe(false)
+      expect(isDone()).toBe(true)
+    })
+  })
+
+  describe('update recipe', () => {
+    it('update a recipe', async () => {
       useAuthContext.mockReturnValue(testAuthContext({ tokens }))
 
       const recipe = testRecipe()
@@ -49,7 +85,9 @@ describe('use recipes', () => {
       expect(isDone()).toBe(true)
     })
 
-    it('get recipe', async () => {
+    it('handles authentication errors', async () => {
+      useAuthContext.mockReturnValue(testAuthContext({ tokens }))
+
       const recipe = testRecipe()
       const payload = { data: recipe }
       nock(LOCALHOST)
@@ -60,26 +98,21 @@ describe('use recipes', () => {
 
       const { result } = renderHook(() => useRecipes())
 
-      expect(result.current.loading).toBe(false)
-
       await act(() => result.current.getRecipe(recipe.title))
 
       expect(result.current.recipe).toMatchObject(recipe)
-      expect(result.current.loading).toBe(false)
       expect(isDone()).toBe(true)
-    })
 
-    it('handles errors', async () => {
-      nock(LOCALHOST).get(`/recipes/my-recipe`).reply(500)
+      const story = 'updated'
 
-      const { result } = renderHook(() => useRecipes())
+      nock(LOCALHOST)
+        .put(`/recipes/${recipe.title}`, { ...recipe, story })
+        .matchHeader('authorization', `Bearer ${tokens.idToken}`)
+        .reply(401)
 
-      expect(result.current.loading).toBe(false)
+      await act(() => result.current.updateRecipe({ story }))
 
-      await act(() => result.current.getRecipe('my-recipe'))
-
-      expect(result.current.recipe).toBeUndefined()
-      expect(result.current.loading).toBe(false)
+      expect(result.current.authError).toBe(true)
       expect(isDone()).toBe(true)
     })
   })
@@ -211,6 +244,21 @@ describe('use recipes', () => {
 
       await act(() => result.current.deleteRecipe(title))
 
+      expect(isDone()).toBe(true)
+    })
+
+    it('handles authentication errors', async () => {
+      const title = recipeTitleTransformer(lorem.words(3))
+      nock(LOCALHOST)
+        .delete(`/recipes/${toSlug(title)}`)
+        .matchHeader('authorization', `Bearer ${tokens.idToken}`)
+        .reply(401)
+
+      const { result } = renderHook(() => useRecipes())
+
+      await act(() => result.current.deleteRecipe(title))
+
+      expect(result.current.authError).toBe(true)
       expect(isDone()).toBe(true)
     })
   })

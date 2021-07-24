@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { Recipe } from '../components/Recipe'
+import { useHistory, useParams } from 'react-router-dom'
+import { RecipeForm } from '../components/RecipeForm'
 import { Spinner } from '../components/Spinner'
-import { useAnalytics } from '../hooks/useAnalytics'
 import { useRecipes } from '../hooks/useRecipes'
 import { BackToLink } from '../components/BackToLink'
 import styled from '@emotion/styled'
@@ -16,22 +15,35 @@ const Container = styled.div`
   margin-bottom: 1rem;
 `
 
-export const RecipePage: React.FC = () => {
+export const ManageRecipePage: React.FC = () => {
+  const history = useHistory()
   const { name } = useParams<{ name: string }>()
-  const { pageView } = useAnalytics()
-  const { getRecipe, recipe, loading } = useRecipes()
+  const { getRecipe, recipe, loading, updateRecipe, deleteRecipe, authError } = useRecipes()
 
   useEffect(() => {
-    pageView()
     getRecipe(name)
   }, [])
+
+  useEffect(() => {
+    if (authError) {
+      history.push('/account')
+    }
+  }, [authError])
 
   return (
     <Spinner isLoading={loading}>
       <Container>
         <BackToLink to="/recipes" text="recipes" />
       </Container>
-      {recipe ? <Recipe recipe={recipe as RecipeType} /> : <Http404 />}
+      {recipe ? (
+        <RecipeForm
+          recipe={recipe as RecipeType}
+          updateRecipe={updateRecipe}
+          deleteRecipe={deleteRecipe}
+        />
+      ) : (
+        <Http404 />
+      )}
     </Spinner>
   )
 }

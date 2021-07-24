@@ -55,7 +55,7 @@ describe('create a new recipe', () => {
     expect(push).not.toHaveBeenCalled()
   })
 
-  it('redirects to account on auth error', () => {
+  it('redirects to /account on auth error', () => {
     jest
       .spyOn(useRecipesModule, 'useRecipes')
       .mockReturnValue(testUseRecipes({ createRecipe, authError: true, recipe: undefined }))

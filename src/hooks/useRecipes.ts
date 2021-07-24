@@ -86,15 +86,22 @@ export const useRecipes = (): UseRecipes => {
   }
 
   const deleteRecipe = async (title: string): Promise<void> => {
+    setAuthError(false)
+
     await request
       .delete(`${API_BASE_URL}/recipes/${toSlug(title)}`)
       .send({ title: toSlug(title) })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${idToken}`)
+      .catch((err) => {
+        setAuthError(err.message === 'Unauthorized')
+      })
   }
 
   const updateRecipe = async (updates: DeepPartial<Recipe>): Promise<void> => {
+    setAuthError(false)
+
     if (!recipe) {
       return
     }
@@ -108,6 +115,9 @@ export const useRecipes = (): UseRecipes => {
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${idToken}`)
+      .catch((err) => {
+        setAuthError(err.message === 'Unauthorized')
+      })
   }
 
   return {

@@ -24,6 +24,7 @@ import { IngredientsPage } from '../pages/IngredientsPage'
 import { Adverts } from './Adverts'
 import { ManageAdvertsPage } from '../pages/ManageAdvertsPage'
 import { ManageRecipeRatingsPage } from '../pages/ManageRecipeRatingsPage'
+import { ManageRecipePage } from '../pages/ManageRecipePage'
 
 const Page = styled.div`
   display: flex;
@@ -57,9 +58,8 @@ export const App: React.FC = () => (
         />
         <AuthenticatedRoute
           path="/manage/recipes/:name"
-          component={RecipePage}
+          component={ManageRecipePage}
           role={ADMIN_ROLE}
-          rest={{ edit: true }}
         />
         <AuthenticatedRoute
           path="/manage/adverts"
