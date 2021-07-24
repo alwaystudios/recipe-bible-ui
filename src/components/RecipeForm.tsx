@@ -5,7 +5,13 @@ import {
   TextAreaWithConfirmation,
   TextInputWithConfirmation,
 } from '@alwaystudios/as-ui-components'
-import { CATEGORIES, Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
+import {
+  CATEGORIES,
+  Recipe,
+  RecipeValidationError,
+  toSlug,
+  validateRecipe,
+} from '@alwaystudios/recipe-bible-sdk'
 import { Category, Ingredient, Step } from '@alwaystudios/recipe-bible-sdk/dist/types'
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
@@ -105,6 +111,18 @@ export const RecipeForm: React.FC<Props> = ({
 
   const handleUpdateSteps = (steps: Step[]) => handleUpdateRecipe({ steps: toStepsApi(steps) })
 
+  const onPublish = () => {
+    if (!published) {
+      const result = validateRecipe(fromRecipeApi(recipe))
+      if (result instanceof RecipeValidationError) {
+        alert(`Recipe validation errors:\n${result.errors.reduce((acc, err) => `${acc}\n${err}`)}`)
+        return
+      }
+    }
+
+    handleUpdateRecipe({ metadata: { published: !published } })
+  }
+
   return (
     <FormContainer
       autoComplete="off"
@@ -116,7 +134,7 @@ export const RecipeForm: React.FC<Props> = ({
       <RecipeFormControls
         onDelete={() => deleteRecipe(toSlug(title)).then(() => history.push('/manage/recipes'))}
         onView={() => history.push(`/recipes/${toSlug(title)}`)}
-        onPublish={() => handleUpdateRecipe({ metadata: { published: !published } })}
+        onPublish={onPublish}
         onFocus={() => handleUpdateRecipe({ metadata: { focused: !focused } })}
         published={published}
         focused={focused}

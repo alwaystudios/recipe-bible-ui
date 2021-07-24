@@ -31,6 +31,7 @@ export const RecipeImageForm: React.FunctionComponent<Props> = ({ title, setImgS
   const [openFileDialog, setOpenFileDialog] = useState(false)
   const { tokens } = useAuthContext()
 
+  // todo: handle errors
   const handleFileUpload = async (file: File) => {
     setUploading(true)
     const { filename } = await assetUpload({

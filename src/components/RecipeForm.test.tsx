@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { RecipeForm } from './RecipeForm'
-import { testRecipe, toIngredientRecord, toSlug } from '@alwaystudios/recipe-bible-sdk'
+import { Recipe, testRecipe, toIngredientRecord, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import * as AuthContext from '../auth/AuthContext'
 import * as assetUploadModule from '../domain/assetUpload'
 import { lorem } from 'faker'
@@ -84,6 +84,18 @@ describe('recipe form', () => {
       fireEvent.click(screen.getByText('publish'))
       expect(updateRecipe).toHaveBeenCalledTimes(1)
       expect(updateRecipe).toHaveBeenCalledWith({ metadata: { published: true } })
+    })
+
+    it('handles publish CTA (invalid recipe)', () => {
+      window.alert = jest.fn()
+      updateRecipe.mockResolvedValueOnce(undefined)
+      renderForm({ title: 'invalid recipe' } as Recipe)
+      fireEvent.click(screen.getByText('publish'))
+      expect(updateRecipe).not.toHaveBeenCalled()
+      expect(window.alert).toHaveBeenCalledTimes(1)
+      expect(window.alert).toHaveBeenCalledWith(
+        `Recipe validation errors:\nmust contain at least 1 step\nmust contain at least 1 ingredient\nservings not set\ncooking time not set\nmust have at least 1 category`
+      )
     })
 
     it('handles unpublish CTA', () => {

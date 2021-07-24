@@ -29,6 +29,7 @@ export const StepForm: React.FC<Props> = ({ saveStep, recipeTitle, nextStepIndex
   const [imgSrc, setImgSrc] = useState<string>('')
   const { tokens } = useAuthContext()
 
+  // todo: handle errors
   const handleFileUpload = async (file: File) =>
     assetUpload({
       file,
