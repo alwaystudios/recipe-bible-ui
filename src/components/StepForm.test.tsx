@@ -36,7 +36,7 @@ describe('step form', () => {
   it('adds a step with an image', async () => {
     useAuthContext.mockReturnValue(testAuthContext({ tokens }))
     const imgSrc = lorem.words(2)
-    assetUpload.mockResolvedValueOnce(imgSrc)
+    assetUpload.mockResolvedValueOnce({ filename: imgSrc })
 
     const { container } = render(
       <StepForm saveStep={saveStep} nextStepIndex={nextStepIndex} recipeTitle={recipeTitle} />

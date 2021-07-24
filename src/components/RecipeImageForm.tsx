@@ -33,7 +33,7 @@ export const RecipeImageForm: React.FunctionComponent<Props> = ({ title, setImgS
 
   const handleFileUpload = async (file: File) => {
     setUploading(true)
-    const filename = await assetUpload({
+    const { filename } = await assetUpload({
       file,
       token: tokens.idToken,
       folder: `recipes/${toSlug(title)}`,

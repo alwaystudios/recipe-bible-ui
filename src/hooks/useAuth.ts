@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import auth0 from 'auth0-js'
 import { User } from '@alwaystudios/recipe-bible-sdk'
-import { AUTH0_DOMAIN, AUTH0_CLIENTID, AUTH0_CALLBACK, BASE_URL } from '../contstants'
+import { AUTH0_DOMAIN, AUTH0_CLIENTID, AUTH0_CALLBACK, BASE_URL } from '../constants'
 import { setAuth0Session } from '../auth/auth0'
 
 type UseAuth = {

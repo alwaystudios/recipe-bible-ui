@@ -1,5 +1,4 @@
 import {
-  dekebabify,
   getSlug,
   Ingredient,
   Recipe,
@@ -8,7 +7,7 @@ import {
   toIngredientRecord,
   toSlug,
 } from '@alwaystudios/recipe-bible-sdk'
-import { AWS_S3_BUCKET } from '../contstants'
+import { AWS_S3_BUCKET } from '../constants'
 
 const EMPTY_RECIPE: Recipe = {
   imgSrc: '',

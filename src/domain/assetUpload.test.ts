@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { LOCALHOST } from '../contstants'
+import { LOCALHOST } from '../constants'
 import { assetUpload } from './assetUpload'
 
 const file = new File([''], 'file.htm', { type: 'text/html' })
@@ -20,7 +20,7 @@ describe('asset upload', () => {
 
     const result = await assetUpload({ token, file, folder, assetType, filenameOverride })
 
-    expect(result).toBe(filenameOverride)
+    expect(result).toEqual({ filename: filenameOverride })
     expect(nock.isDone()).toBe(true)
   })
 
@@ -35,7 +35,37 @@ describe('asset upload', () => {
 
     const result = await assetUpload({ token, file, folder, assetType })
 
-    expect(result).toBe('file.htm')
+    expect(result).toEqual({ filename: 'file.htm' })
+    expect(nock.isDone()).toBe(true)
+  })
+
+  it('handles errors', async () => {
+    nock(LOCALHOST)
+      .post(
+        '/asset-upload?assetType=step',
+        '{"file":"data:text/html;base64,","type":"text/html","folder":"folder","filename":"file.htm"}'
+      )
+      .matchHeader('Authorization', `Bearer ${token}`)
+      .reply(400)
+
+    const result = await assetUpload({ token, file, folder, assetType })
+
+    expect(result).toEqual({ error: true })
+    expect(nock.isDone()).toBe(true)
+  })
+
+  it('handles authentication errors', async () => {
+    nock(LOCALHOST)
+      .post(
+        '/asset-upload?assetType=step',
+        '{"file":"data:text/html;base64,","type":"text/html","folder":"folder","filename":"file.htm"}'
+      )
+      .matchHeader('Authorization', `Bearer ${token}`)
+      .reply(401)
+
+    const result = await assetUpload({ token, file, folder, assetType })
+
+    expect(result).toEqual({ authError: true })
     expect(nock.isDone()).toBe(true)
   })
 })

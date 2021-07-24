@@ -3,7 +3,7 @@ import { pathOr } from 'ramda'
 import { useState } from 'react'
 import request from 'superagent'
 import { useAuthContext } from '../auth/AuthContext'
-import { API_BASE_URL } from '../contstants'
+import { API_BASE_URL } from '../constants'
 
 export type UseAdverts = {
   getAdverts: () => Promise<void>
@@ -13,6 +13,7 @@ export type UseAdverts = {
   loading: boolean
 }
 
+// todo: handle auth errors here and in management page
 export const useAdverts = (): UseAdverts => {
   const { tokens } = useAuthContext()
   const idToken = pathOr(undefined, ['idToken'], tokens)

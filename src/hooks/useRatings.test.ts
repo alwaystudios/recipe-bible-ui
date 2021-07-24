@@ -1,7 +1,7 @@
 import { testRecipeRating } from '@alwaystudios/recipe-bible-sdk'
 import { act, renderHook } from '@testing-library/react-hooks'
 import nock, { cleanAll, isDone } from 'nock'
-import { LOCALHOST } from '../contstants'
+import { LOCALHOST } from '../constants'
 import { useRatings } from './useRatings'
 
 describe('use ratings', () => {

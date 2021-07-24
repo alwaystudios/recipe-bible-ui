@@ -120,7 +120,7 @@ describe('recipe form', () => {
 
   it('handles photo upload', async () => {
     useAuthContext.mockReturnValue(testAuthContext({ tokens }))
-    assetUpload.mockResolvedValueOnce('new-img-src')
+    assetUpload.mockResolvedValueOnce({ filename: 'new-img-src' })
 
     const { container } = renderForm()
 

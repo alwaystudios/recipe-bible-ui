@@ -13,6 +13,10 @@ import { IngredientAssetUploader } from './IngredientAssetUploader'
 import Select from 'react-select'
 import { ingredientExists as ingredientExistsFnc } from '../domain/recipeForm'
 
+const Error = styled.p`
+  color: red;
+`
+
 const Container = styled.div`
   padding: 1rem 0 0 1rem;
   display: flex;
@@ -66,6 +70,7 @@ export const IngredientForm: React.FC<Props> = ({
   const [measure, setMeasure] = useState<DropDownMeasure>(toDropDownMeasure('qty'))
   const [ingredientExists, setIngredientExists] = useState(false)
   const _measures = Measures.map(toDropDownMeasure)
+  const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
     setIngredientExists(ingredientExistsFnc(ingredient, ingredients))
@@ -103,6 +108,7 @@ export const IngredientForm: React.FC<Props> = ({
             ingredient={ingredient}
             disabled={ingredientExists}
             setIngredientExists={setIngredientExists}
+            setError={setError}
           />
         )}
       </TextInputContainer>
@@ -126,6 +132,7 @@ export const IngredientForm: React.FC<Props> = ({
           defaultValue={measure}
         />
       </MeasureInputContainer>
+      {error && <Error>An error has occurred uploading the image</Error>}
     </Container>
   )
 }

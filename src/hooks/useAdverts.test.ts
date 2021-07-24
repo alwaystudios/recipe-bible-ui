@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { datatype } from 'faker'
 import nock, { cleanAll, isDone } from 'nock'
-import { LOCALHOST } from '../contstants'
+import { LOCALHOST } from '../constants'
 import { useAdverts } from './useAdverts'
 import * as AuthContext from '../auth/AuthContext'
 import { testAdvert } from '@alwaystudios/recipe-bible-sdk'

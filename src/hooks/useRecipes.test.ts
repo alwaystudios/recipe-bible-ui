@@ -2,7 +2,7 @@ import { recipeTitleTransformer, testRecipe, toSlug } from '@alwaystudios/recipe
 import { act, renderHook } from '@testing-library/react-hooks'
 import { datatype, lorem } from 'faker'
 import nock, { cleanAll, isDone } from 'nock'
-import { LOCALHOST } from '../contstants'
+import { LOCALHOST } from '../constants'
 import { useRecipes } from './useRecipes'
 import * as AuthContext from '../auth/AuthContext'
 import { testAuthContext, testTokens } from '../../test/testAuthContext'

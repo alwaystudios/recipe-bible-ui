@@ -35,7 +35,7 @@ export const StepForm: React.FC<Props> = ({ saveStep, recipeTitle, nextStepIndex
       token: tokens.idToken,
       folder: `recipes/${toSlug(recipeTitle)}`,
       assetType: 'step',
-    }).then(setImgSrc)
+    }).then(({ filename }) => setImgSrc(filename))
 
   const handleSave = (event: React.MouseEvent) => {
     event.preventDefault()

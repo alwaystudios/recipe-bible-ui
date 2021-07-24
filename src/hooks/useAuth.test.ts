@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks'
 import auth0 from 'auth0-js'
 import { mocked } from 'ts-jest/utils'
 import * as auth0Module from '../auth/auth0'
-import { AUTH0_DOMAIN, AUTH0_CLIENTID, AUTH0_CALLBACK, BASE_URL } from '../contstants'
+import { AUTH0_DOMAIN, AUTH0_CLIENTID, AUTH0_CALLBACK, BASE_URL } from '../constants'
 import { useAuth } from './useAuth'
 
 const setAuth0Session = jest.spyOn(auth0Module, 'setAuth0Session').mockReturnValue(undefined)

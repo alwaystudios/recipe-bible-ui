@@ -10,6 +10,8 @@ const ingredients = [lorem.words(2), lorem.words(2), ingredient].map(toIngredien
 const totalIngredients = ingredients.length
 
 describe('ingredients form', () => {
+  beforeEach(jest.clearAllMocks)
+
   it('prevents save where no quantity', () => {
     render(
       <IngredientForm

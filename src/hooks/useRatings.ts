@@ -2,7 +2,7 @@ import { RecipeRating, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import { pathOr, sum } from 'ramda'
 import { useState } from 'react'
 import request from 'superagent'
-import { API_BASE_URL } from '../contstants'
+import { API_BASE_URL } from '../constants'
 
 export type UseRatings = {
   getAllRatings: () => Promise<void>

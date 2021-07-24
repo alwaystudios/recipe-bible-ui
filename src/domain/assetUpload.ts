@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { API_BASE_URL } from '../contstants'
+import { API_BASE_URL } from '../constants'
 
 type FileUpload = {
   token: string
@@ -20,13 +20,22 @@ const fileToBase64 = (file: File): Promise<string | ArrayBuffer> => {
   })
 }
 
+type AssetUpload = {
+  filename?: string
+  error?: boolean
+  authError?: boolean
+}
+
+const AuthError: AssetUpload = { authError: true }
+const Error: AssetUpload = { error: true }
+
 export const assetUpload = async ({
   token,
   file,
   folder,
   assetType,
   filenameOverride,
-}: FileUpload): Promise<string> => {
+}: FileUpload): Promise<AssetUpload> => {
   const filename = filenameOverride || file.name
 
   const _file = await fileToBase64(file)
@@ -36,5 +45,8 @@ export const assetUpload = async ({
     .set('Accept', 'application/json')
     .set('Authorization', `Bearer ${token}`)
     .send({ file: _file, type: file.type, folder, filename })
-    .then(() => filename)
+    .then(() => ({
+      filename,
+    }))
+    .catch((err) => (err.message === 'Unauthorized' ? AuthError : Error))
 }

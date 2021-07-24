@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { datatype, lorem } from 'faker'
 import nock, { cleanAll, isDone } from 'nock'
-import { LOCALHOST } from '../contstants'
+import { LOCALHOST } from '../constants'
 import { useIngredients } from './useIngredients'
 import * as AuthContext from '../auth/AuthContext'
 import { toIngredientRecord } from '@alwaystudios/recipe-bible-sdk'

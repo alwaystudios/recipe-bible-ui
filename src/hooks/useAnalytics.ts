@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga'
-import { IS_OFFLINE } from '../contstants'
+import { IS_OFFLINE } from '../constants'
 
 export type UseAnalytics = {
   pageView: () => void

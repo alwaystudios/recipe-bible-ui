@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { App } from './components/App'
 import ReactGA from 'react-ga'
-import { GA_TAG, IS_OFFLINE } from './contstants'
+import { GA_TAG, IS_OFFLINE } from './constants'
 
 if (!IS_OFFLINE) {
   ReactGA.initialize(GA_TAG)

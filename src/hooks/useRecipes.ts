@@ -3,7 +3,7 @@ import { mergeDeepRight, pathOr } from 'ramda'
 import { useState } from 'react'
 import request from 'superagent'
 import { useAuthContext } from '../auth/AuthContext'
-import { API_BASE_URL } from '../contstants'
+import { API_BASE_URL } from '../constants'
 
 type GetRecipes = {
   published?: boolean | 'all'
