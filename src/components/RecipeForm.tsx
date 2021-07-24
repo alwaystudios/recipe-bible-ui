@@ -43,7 +43,6 @@ const Categories = styled.div`
   width: fit-content;
 `
 
-// todo: bug fix required in as ui components for text area with confirmation
 const StoryContainer = styled.div`
   margin: 1rem 0 0 1rem;
 

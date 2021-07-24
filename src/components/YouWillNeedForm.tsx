@@ -11,10 +11,6 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
-
-  & > button {
-    margin: 0;
-  }
 `
 
 type Props = {

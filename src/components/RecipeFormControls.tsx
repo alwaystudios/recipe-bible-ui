@@ -7,10 +7,6 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 1rem;
-
-  & > button {
-    margin: 0;
-  }
 `
 
 type Props = {

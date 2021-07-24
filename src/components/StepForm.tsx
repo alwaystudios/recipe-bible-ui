@@ -8,10 +8,6 @@ import { assetUpload } from '../domain/assetUpload'
 const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
-
-  & > button {
-    margin: 0;
-  }
 `
 
 const Container = styled.div`
