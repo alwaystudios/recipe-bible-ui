@@ -5,16 +5,10 @@ import { testRecipe, toIngredientRecord, toSlug } from '@alwaystudios/recipe-bib
 import * as AuthContext from '../auth/AuthContext'
 import * as assetUploadModule from '../domain/assetUpload'
 import { lorem } from 'faker'
-import * as useIngredientsModule from '../hooks/useIngredients'
-import { testUseIngredients } from '../../test/testUseIngredients'
 import { testAuthContext, testTokens } from '../../test/testAuthContext'
 
 const saveIngredient = jest.fn().mockResolvedValue(undefined)
-const getIngredients = jest.fn().mockResolvedValue(undefined)
 const ingredients = [lorem.words(2), lorem.words(2)].map(toIngredientRecord)
-jest
-  .spyOn(useIngredientsModule, 'useIngredients')
-  .mockReturnValue(testUseIngredients({ getIngredients, ingredients, saveIngredient }))
 
 const push = jest.fn()
 jest.mock('react-router-dom', () => ({
@@ -38,7 +32,15 @@ const deleteRecipe = jest.fn()
 const file = { content: 'content' }
 
 const renderForm = (_recipe = recipe) =>
-  render(<RecipeForm recipe={_recipe} updateRecipe={updateRecipe} deleteRecipe={deleteRecipe} />)
+  render(
+    <RecipeForm
+      recipe={_recipe}
+      updateRecipe={updateRecipe}
+      deleteRecipe={deleteRecipe}
+      ingredients={ingredients}
+      saveIngredient={saveIngredient}
+    />
+  )
 
 describe('recipe form', () => {
   beforeEach(jest.clearAllMocks)
@@ -284,7 +286,6 @@ describe('recipe form', () => {
       fireEvent.change(screen.getByRole('quantity-form-input'), { target: { value: '2' } })
       fireEvent.click(screen.getByText('save'))
 
-      expect(getIngredients).toHaveBeenCalledTimes(1)
       expect(updateRecipe).toHaveBeenCalledTimes(1)
       expect(updateRecipe).toHaveBeenCalledWith({
         ingredients: [{ name: ingredients[0], measure: 'qty', quantity: '2' }],

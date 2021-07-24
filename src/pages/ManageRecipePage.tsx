@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { RecipeForm } from '../components/RecipeForm'
 import { Spinner } from '../components/Spinner'
@@ -7,6 +7,7 @@ import { BackToLink } from '../components/BackToLink'
 import styled from '@emotion/styled'
 import { Http404 } from './404'
 import { Recipe as RecipeType } from '@alwaystudios/recipe-bible-sdk'
+import { useIngredients } from '../hooks/useIngredients'
 
 const Container = styled.div`
   display: flex;
@@ -18,17 +19,38 @@ const Container = styled.div`
 export const ManageRecipePage: React.FC = () => {
   const history = useHistory()
   const { name } = useParams<{ name: string }>()
-  const { getRecipe, recipe, loading, updateRecipe, deleteRecipe, authError } = useRecipes()
+  const {
+    getRecipe,
+    recipe,
+    loading,
+    updateRecipe,
+    deleteRecipe,
+    authError: useRecipesAuthError,
+  } = useRecipes()
+  const {
+    saveIngredient,
+    getIngredients,
+    ingredients,
+    authError: useIngredientsAuthError,
+  } = useIngredients()
 
   useEffect(() => {
-    getRecipe(name)
-  }, [])
-
-  useEffect(() => {
-    if (authError) {
+    if (useRecipesAuthError || useIngredientsAuthError) {
       history.push('/account')
     }
-  }, [authError])
+  }, [useRecipesAuthError, useIngredientsAuthError])
+
+  const [didMount, setDidMount] = useState(false)
+  useEffect(() => {
+    getIngredients()
+    getRecipe(name)
+    setDidMount(true)
+    return () => setDidMount(false)
+  }, [])
+
+  if (!didMount) {
+    return null
+  }
 
   return (
     <Spinner isLoading={loading}>
@@ -40,6 +62,8 @@ export const ManageRecipePage: React.FC = () => {
           recipe={recipe as RecipeType}
           updateRecipe={updateRecipe}
           deleteRecipe={deleteRecipe}
+          saveIngredient={saveIngredient}
+          ingredients={ingredients}
         />
       ) : (
         <Http404 />

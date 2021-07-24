@@ -10,13 +10,14 @@ export type UseIngredients = {
   saveIngredient: (ingredient: string) => Promise<void>
   ingredients: string[]
   loading: boolean
+  authError: boolean
 }
 
 export const useIngredients = (): UseIngredients => {
   const { tokens } = useAuthContext()
   const idToken = pathOr(undefined, ['idToken'], tokens)
   const [loading, setLoading] = useState<boolean>(false)
-
+  const [authError, setAuthError] = useState<boolean>(false)
   const [ingredients, setIngredients] = useState<string[]>([])
 
   const getIngredients = (): Promise<void> => {
@@ -31,12 +32,18 @@ export const useIngredients = (): UseIngredients => {
   }
 
   const saveIngredient = async (ingredient: string): Promise<void> => {
+    setAuthError(false)
+
     await request
       .put(`${API_BASE_URL}/ingredients`)
       .send({ ingredient: toIngredientRecord(ingredient) })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${idToken}`)
+      .catch((err) => {
+        setAuthError(err.message === 'Unauthorized')
+      })
+    setIngredients([...ingredients, ingredient])
   }
 
   return {
@@ -44,5 +51,6 @@ export const useIngredients = (): UseIngredients => {
     saveIngredient,
     ingredients,
     loading,
+    authError,
   }
 }

@@ -5,5 +5,6 @@ export const testUseIngredients = (overrides: Partial<UseIngredients> = {}): Use
   saveIngredient: jest.fn(),
   ingredients: [],
   loading: false,
+  authError: false,
   ...overrides,
 })

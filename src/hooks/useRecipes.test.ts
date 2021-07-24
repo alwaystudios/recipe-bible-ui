@@ -244,6 +244,7 @@ describe('use recipes', () => {
 
       await act(() => result.current.deleteRecipe(title))
 
+      expect(result.current.authError).toBe(false)
       expect(isDone()).toBe(true)
     })
 

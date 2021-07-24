@@ -48,7 +48,7 @@ describe('use ingredients', () => {
   describe('save ingredient', () => {
     it('save an ingredient', async () => {
       useAuthContext.mockReturnValue(testAuthContext({ tokens }))
-      const ingredient = 'My new ingredients'
+      const ingredient = 'My new ingredient'
       nock(LOCALHOST)
         .put(`/ingredients`, { ingredient: toIngredientRecord(ingredient) })
         .matchHeader('authorization', `Bearer ${tokens.idToken}`)
@@ -62,6 +62,24 @@ describe('use ingredients', () => {
 
       await act(() => result.current.saveIngredient(ingredient))
 
+      expect(result.current.authError).toBe(false)
+      expect(result.current.ingredients).toEqual([ingredient])
+      expect(isDone()).toBe(true)
+    })
+
+    it('handles authentication errors', async () => {
+      useAuthContext.mockReturnValue(testAuthContext({ tokens }))
+      const ingredient = 'My new ingredients'
+      nock(LOCALHOST)
+        .put(`/ingredients`, { ingredient: toIngredientRecord(ingredient) })
+        .matchHeader('authorization', `Bearer ${tokens.idToken}`)
+        .reply(401)
+
+      const { result } = renderHook(() => useIngredients())
+
+      await act(() => result.current.saveIngredient(ingredient))
+
+      expect(result.current.authError).toBe(true)
       expect(isDone()).toBe(true)
     })
   })

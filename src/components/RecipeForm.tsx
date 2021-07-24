@@ -8,11 +8,10 @@ import {
 import { CATEGORIES, Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import { Category, Ingredient, Step } from '@alwaystudios/recipe-bible-sdk/dist/types'
 import styled from '@emotion/styled'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { removeFromArray, removeObjectFromArray, updateArrayUnq } from '../domain/recipeForm'
 import { fromRecipeApi, toIngredientsApi, toStepsApi } from '../domain/recipeTransformer'
-import { useIngredients } from '../hooks/useIngredients'
 import { IngredientForm } from './IngredientForm'
 import { Ingredients } from './Ingredients'
 import { RecipeFormControls } from './RecipeFormControls'
@@ -59,9 +58,17 @@ type Props = {
   recipe: Recipe
   updateRecipe: (updates: DeepPartial<Recipe>) => Promise<void>
   deleteRecipe: (title: string) => Promise<void>
+  saveIngredient: (ingredient: string) => Promise<void>
+  ingredients: string[]
 }
 
-export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe }) => {
+export const RecipeForm: React.FC<Props> = ({
+  recipe,
+  updateRecipe,
+  deleteRecipe,
+  saveIngredient,
+  ingredients: allIngredients,
+}) => {
   const {
     title,
     story,
@@ -77,18 +84,6 @@ export const RecipeForm: React.FC<Props> = ({ recipe, updateRecipe, deleteRecipe
   } = fromRecipeApi(recipe)
   const history = useHistory()
   const [input, setInput] = useState('')
-  const { saveIngredient, getIngredients, ingredients: allIngredients } = useIngredients()
-  const [didMount, setDidMount] = useState(false)
-
-  useEffect(() => {
-    getIngredients()
-    setDidMount(true)
-    return () => setDidMount(false)
-  }, [])
-
-  if (!didMount) {
-    return null
-  }
 
   const handleUpdateRecipe = (updates: DeepPartial<Recipe>) => updateRecipe(updates)
 
