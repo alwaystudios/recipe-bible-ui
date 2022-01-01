@@ -54,8 +54,8 @@ const ButtonContainer = styled.span`
 
 const TitleContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: left;
 
   & > h1 {
     margin-right: 2rem;
@@ -63,6 +63,15 @@ const TitleContainer = styled.div`
 
   & > div.star-ratings {
     margin-bottom: 0.5rem;
+  }
+
+  @media only screen and (max-width: ${SMALL_SCREEN}px) {
+    align-items: center;
+    text-align: center;
+
+    & > h1 {
+      margin: 0;
+    }
   }
 `
 
