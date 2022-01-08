@@ -171,17 +171,17 @@ describe('recipe form', () => {
       renderForm(testRecipe({ categories: ['Meat'] }))
       fireEvent.click(screen.getByText('Categories'))
 
-      fireEvent.click(screen.getByText('Chicken'))
+      fireEvent.click(screen.getByText('Poultry'))
 
       expect(updateRecipe).toHaveBeenCalledTimes(1)
-      expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Meat', 'Chicken'] })
+      expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Meat', 'Poultry'] })
     })
 
     it('removes a category', () => {
-      renderForm(testRecipe({ categories: ['Chicken', 'Meat'] }))
+      renderForm(testRecipe({ categories: ['Poultry', 'Meat'] }))
       fireEvent.click(screen.getByText('Categories'))
 
-      fireEvent.click(screen.getByText('Chicken'))
+      fireEvent.click(screen.getByText('Poultry'))
 
       expect(updateRecipe).toHaveBeenCalledTimes(1)
       expect(updateRecipe).toHaveBeenCalledWith({ categories: ['Meat'] })

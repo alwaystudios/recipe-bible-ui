@@ -37,7 +37,7 @@ describe('Whats cooking page', () => {
     expect(RecipeGallery.mock.calls[0][0].defaultOption).toBe('Latest')
     expect(RecipeGallery.mock.calls[0][0].recipes).toBe(recipes)
     expect(RecipeGallery.mock.calls[0][0].options).toEqual({
-      Chicken: expect.anything(),
+      Poultry: expect.anything(),
       Desserts: expect.anything(),
       Fish: expect.anything(),
       Latest: expect.anything(),

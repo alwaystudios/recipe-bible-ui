@@ -1,4 +1,4 @@
-import { Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
+import { normalizeRecipe, Recipe, toSlug } from '@alwaystudios/recipe-bible-sdk'
 import { mergeDeepRight, pathOr } from 'ramda'
 import { useState } from 'react'
 import request from 'superagent'
@@ -43,7 +43,7 @@ export const useRecipes = (): UseRecipes => {
       .query({ field, published, focused })
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
-      .then((res) => setRecipes(pathOr<Recipe[]>([], ['body', 'data'], res)))
+      .then((res) => setRecipes(pathOr<Recipe[]>([], ['body', 'data'], res).map(normalizeRecipe)))
       .catch(() => setRecipes([]))
       .finally(() => setLoading(false))
   }
@@ -55,7 +55,7 @@ export const useRecipes = (): UseRecipes => {
       .get(`${API_BASE_URL}/recipes/${toSlug(title)}`)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
-      .then((res) => setRecipe(pathOr<Recipe>(undefined, ['body', 'data'], res)))
+      .then((res) => setRecipe(normalizeRecipe(pathOr<Recipe>(undefined, ['body', 'data'], res))))
       .catch(() => setRecipe(undefined))
       .finally(() => setLoading(false))
   }
@@ -111,7 +111,7 @@ export const useRecipes = (): UseRecipes => {
 
     await request
       .put(`${API_BASE_URL}/recipes/${toSlug(recipe.title)}`)
-      .send(updatedRecipe)
+      .send(normalizeRecipe(updatedRecipe))
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${idToken}`)
