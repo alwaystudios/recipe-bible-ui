@@ -2,20 +2,20 @@
 # yarn lockfile v1
 
 
-"@alwaystudios/as-react-hooks@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@alwaystudios/as-react-hooks/-/as-react-hooks-1.0.2.tgz#47642babd6c1fb3f8582360c6adb1a62db34ebcc"
-  integrity sha512-hjtOo/LoWV2+wnu9paSR2W0IDrEGDeN+rddhDmEGqYVA0YvkDF6V1H3FpN+wfrd/+aC/6kRACaPNBTRC2ugrOA==
+"@alwaystudios/as-react-hooks@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@alwaystudios/as-react-hooks/-/as-react-hooks-1.0.4.tgz#902647b3d0ba5949674ada99673ed3a22bf0519f"
+  integrity sha512-2SUUom/8g5JVca4y1CjYtig+9PsAhEufYjQUTNcRHGNQJQTJCJcleef8TZWaQ4CruW3i6PyK0bor7j5aNoIG5Q==
   dependencies:
     "@alwaystudios/as-utils" "^1.0.16"
     ramda "^0.27.1"
     react "^17.0.2"
     universal-cookie "^4.0.4"
 
-"@alwaystudios/as-ui-components@^2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@alwaystudios/as-ui-components/-/as-ui-components-2.0.8.tgz#a258a20af11dc814538385391fab2ebfe083c81e"
-  integrity sha512-v8qRTYfcz+Gki3Md1kjIwiJzasnoQJdttZOFUKx/5Thqj4v/VIgDcjh0R/i2LLm/2Xm0Mu/euQK0Kj3+lszzRQ==
+"@alwaystudios/as-ui-components@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@alwaystudios/as-ui-components/-/as-ui-components-2.0.10.tgz#7987384d635cee79734d01c725005af10083e19d"
+  integrity sha512-QXiKCWseCXKI9urDwwAurH0ImlDI8Yuc5sSoEoetS4BUmYxTlznob723IDRWBB5CmswkkR62QPAjt+FPLbwW4Q==
   dependencies:
     "@alwaystudios/as-utils" "^1.0.16"
     array-move "^3.0.1"
@@ -37,10 +37,10 @@
     promised-csv "^1.0.1"
     ramda "^0.27.1"
 
-"@alwaystudios/recipe-bible-sdk@^2.0.21":
-  version "2.0.21"
-  resolved "https://registry.yarnpkg.com/@alwaystudios/recipe-bible-sdk/-/recipe-bible-sdk-2.0.21.tgz#fda9fa4c647dfecca1eff5c3c8d44459de084f4e"
-  integrity sha512-qajx5rnC9N0NYcRETwXubB2uIeI5BSKfseG6b1ofgg5Z06Xwnt/9dQC16NTcVHMkYXezl1BGKmiyBzj57VMiIw==
+"@alwaystudios/recipe-bible-sdk@^2.0.22":
+  version "2.0.22"
+  resolved "https://registry.yarnpkg.com/@alwaystudios/recipe-bible-sdk/-/recipe-bible-sdk-2.0.22.tgz#fc0c8cac9b9a8bec881e1605516aee160d1647a9"
+  integrity sha512-O8UhqwrtYWvCd4FXHRcRX6vb5Vj3z7+pzySOMFgFAe5GdZsnlpYPq36wIvbeNTz8hKMvR6fAY5cymjv3wWCIig==
   dependencies:
     faker "^5.1.0"
     ramda "^0.27.1"

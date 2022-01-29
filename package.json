@@ -1,6 +1,6 @@
 {
   "name": "recipe-bible-ui",
-  "version": "2.0.43",
+  "version": "2.0.44",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -31,9 +31,9 @@
   },
   "homepage": "https://github.com/alwaystudios/recipe-bible-ui#readme",
   "dependencies": {
-    "@alwaystudios/as-react-hooks": "^1.0.2",
-    "@alwaystudios/as-ui-components": "^2.0.8",
-    "@alwaystudios/recipe-bible-sdk": "^2.0.21",
+    "@alwaystudios/as-react-hooks": "^1.0.4",
+    "@alwaystudios/as-ui-components": "^2.0.10",
+    "@alwaystudios/recipe-bible-sdk": "^2.0.22",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.3.0",
