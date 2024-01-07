@@ -21,7 +21,6 @@ import { ManageRecipesPage } from '../pages/ManageRecipesPage'
 import { AdminMenu } from './AdminMenu'
 import { Http404 } from '../pages/404'
 import { IngredientsPage } from '../pages/IngredientsPage'
-import { Adverts } from './Adverts'
 import { ManageAdvertsPage } from '../pages/ManageAdvertsPage'
 import { ManageRecipeRatingsPage } from '../pages/ManageRecipeRatingsPage'
 import { ManageRecipePage } from '../pages/ManageRecipePage'
@@ -83,7 +82,6 @@ export const App: React.FC = () => (
         <Route component={Http404} />
       </Switch>
     </Page>
-    <Adverts />
     <Footer />
   </AuthProvider>
 )
